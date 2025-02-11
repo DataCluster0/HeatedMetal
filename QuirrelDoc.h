@@ -551,7 +551,7 @@ class Game // Native
 
 	class PlayerController
 	{
-		/// @brief Returns the currently controller entity
+		/// @brief Returns the controller entity
 		Entity* Entity();
 
 		/// @brief Use eTeam from the core module
@@ -563,7 +563,7 @@ class Game // Native
 			Invalid
 		};
 
-		/// @brief Returns the controllers team
+		/// @brief Returns the controller team
 		Team GetTeam();
 
 		/// @brief Returns the current instance of a weapon being held by the controller
