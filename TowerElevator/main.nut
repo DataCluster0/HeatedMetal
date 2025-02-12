@@ -150,7 +150,7 @@ function Exit() {
 }
 
 function RoundStart(WorldID) {
-	if (!Game.IsHost() || WorldID != eMap.Tower && Game.GetTimeOfDay() != eTimeOfDay.Night) // Tower
+	if (!Game.IsHost() || WorldID != eMap.Tower) // Tower
 		return;
 
 	Exit()

@@ -256,22 +256,26 @@ void AddCallback_Shutdown();
 void AddCallback_Update();
 
 /// @brief Weapon Callbacks
-/// @param WeaponComponent Weapon
+/// @param WeaponComponent | Weapon
 void AddCallback_WeaponZoomIn();   // Weapon has zoomed in
 void AddCallback_WeaponZoomOut();  // Weapon has zoomed out
 void AddCallback_WeaponFire();	   // Weapon started firing
 void AddCallback_WeaponFireStop(); // Weapon stopped firing
 
+/// @brief Called when a player uses a melee
+/// @param PlayerController | Player
+void AddCallback_Melee();
+
 /// @brief Called when a bullet hits the ground
-/// @param Vector3 Start
-/// @param Vector3 End
-/// @param Vector3 Type_Normal
-/// @param float Delta
-/// @param Entity HitEntity
+/// @param Vector3 | Start
+/// @param Vector3 | End
+/// @param Vector3 | Type_Normal
+/// @param float   | Delta
+/// @param Entity  | HitEntity
 void AddCallback_BulletHit();
 
-/// @brief Calls at Round Start/End returns the current WorldID check core enums.nut for the ids
-/// @param ObjectID
+/// @brief Calls at Round Startreturns the current WorldID check core enums.nut for the ids
+/// @param ObjectID | WorldID
 void AddCallback_RoundStart();
 
 /////////////////////////////////////////////
@@ -564,13 +568,23 @@ class Game // Native
 		};
 
 		/// @brief Returns the controller team
-		Team GetTeam();
+		Team Team();
 
 		/// @brief Returns the current instance of a weapon being held by the controller
 		WeaponComponent* Weapon();
 
 		/// @brief Returns the damage component instance
 		DamageComponent* Damage();
+
+		/// @brief Returns the ObjectID of the equipped primary
+		uint64 PrimaryID();
+
+		/// @brief Returns the ObjectID of the equipped secondary
+		uint64 SecondaryID();
+
+		/// @brief Returns the ObjectID of the character
+		/// enum eCharacter in the core module 
+		uint64 CharacterID();
 	};
 
 	class View
@@ -662,9 +676,9 @@ class Game // Native
 	void CreateExplosion(Vector3 Origin, ExplosionType Type);
 
 	/// @brief Fires a raycast from and to the specified origin coordinates
-	/// @param Start Start Origin
-	/// @param End End Origin
-	/// @param Penetration Max bullet penetration / how many casts will be done
+	/// @param Start       | Start Origin
+	/// @param End		   | End Origin
+	/// @param Penetration | Max bullet penetration / how many casts will be done
 	RaycastResult Raycast(Vector3 Start, Vector3 End, uint8 Penetration);
 
 	/////////////////////////////////////////////
