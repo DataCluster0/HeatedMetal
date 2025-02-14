@@ -13,7 +13,7 @@ function TeamWin(Team) {
 
 		local Entity = Player.Entity()
 		if (Entity) {
-            // Player ent always contains a damage component
+			// Player ent always contains a damage component
 			Entity.DamageComponent().SetHealth(0)
 		}
 	}
@@ -25,13 +25,13 @@ function TeamWin(Team) {
 function GetHealth(Player) {
 	if (!Player) return null;
 
-    local Entity = Player.Entity();
-    if (!Entity)  return null;
+	local Entity = Player.Entity();
+	if (!Entity) return null;
 
 	return Entity.DamageComponent();
 }
 
 return {
 	TeamWin,
-    GetHealth
+	GetHealth
 }

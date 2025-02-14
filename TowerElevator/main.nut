@@ -37,8 +37,7 @@ local PartList = [
 	0x15B5493131, // OmniLight 2
 ]
 
-function AddParts(List)
-{
+function AddParts(List) {
 	foreach(ObjectID in List) {
 		let Ent = Game.GetEntity(ObjectID);
 

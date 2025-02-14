@@ -215,7 +215,7 @@ void Yield();
 /// @return did sleep
 bool Sleep(uint32 MilliSeconds);
 
-/// @brief Check if the key is currently pressed
+/// @brief Check if the key is currently pressed (Client Side)
 /// @return Was the key pressed
 bool IsKeyPressed(string KeyName);
 
@@ -228,19 +228,19 @@ MiddleMouse RightShift LeftShift NumLock Pageup Pagedown
 Pause ScrollLock Shift Space Tab Up XButton1 XButton2
 */
 
-/// @brief Returns the current delta time
+/// @brief Returns the current delta time.
 float DeltaTime();
 
-/// @brief Returns a random float from 0.f to {Max}
+/// @brief Returns a random float from 0.f to {Max}.
 float RandomFloat(float Max);
 
-/// @brief Returns a random float from {Min} to {Max}
+/// @brief Returns a random float from {Min} to {Max}.
 float RandomFloatRange(float Min, float Max);
 
-/// @brief Returns a random int from 0 to {Max}
+/// @brief Returns a random int from 0 to {Max}.
 int64 RandomInt(int64 Max);
 
-/// @brief Returns a random int from {Min} to {Max}
+/// @brief Returns a random int from {Min} to {Max}.
 int64 RandomIntRange(int64 Min, int64 Max);
 
 /////////////////////////////////////////////
@@ -249,22 +249,42 @@ int64 RandomIntRange(int64 Min, int64 Max);
 // !! RoundStart is kept across world reloads. !!
 // !! Every other Callback is cleared. !!
 
-/// @brief Calls when the user requests the modules to be shutdown
+/// @brief Calls when the user requests the modules to be shutdown.
 void AddCallback_Shutdown();
 
-/// @brief Calls every game tick
+/// @brief Calls every game tick.
 void AddCallback_Update();
 
-/// @brief Weapon Callbacks
+/// @brief Weapon Callbacks.
 /// @param WeaponComponent | Weapon
 void AddCallback_WeaponZoomIn();   // Weapon has zoomed in
 void AddCallback_WeaponZoomOut();  // Weapon has zoomed out
 void AddCallback_WeaponFire();	   // Weapon started firing
 void AddCallback_WeaponFireStop(); // Weapon stopped firing
 
-/// @brief Called when a player uses a melee
+/////////////////////////////////////////////
+// PLAYER CONTROLLER CALLBACKS
+/////////////////////////////////////////////
 /// @param PlayerController | Player
+
+/// @brief Called on Controller Death.
+void AddCallback_PlayerDeath();
+
+/// @brief Called on Controller Spawn/Respawn
+void AddCallback_PlayerSpawn();
+
+/// @brief Toggle Callbacks
+void AddCallback_LeanRight();
+void AddCallback_LeanLeft();
+void AddCallback_Crouch();
+void AddCallback_Prone();
+
 void AddCallback_Melee();
+void AddCallback_Interact();
+void AddCallback_AccessDrone();
+void AddCallback_Ping();
+
+/////////////////////////////////////////////
 
 /// @brief Called when a bullet hits the ground
 /// @param Vector3 | Start
@@ -477,9 +497,8 @@ class Game // Native
 
 		/// @brief DeActivate/ReActivate all of the components of an entity
 		/// Use this to temporarily Disable entities
-
-		bool IsActive();
-		void SetIsActive(bool IsActive);
+		bool GetActive();
+		void SetActive(bool IsActive);
 
 		/// @brief Returns the Damage Component if the entity has one
 		DamageComponent* DamageComponent();
@@ -652,7 +671,7 @@ class Game // Native
 	///////////////////////////////////////////// Utilities
 
 	/// @brief Creates a dust particle at a certain location
-	/// Has a hard limit of 100 (will conflict with paintball mode and dust painting)
+	/// Has a hard limit of 100 (will conflict Dust Painting)
 	void CreateDust(Vector3 Origin, float Radius, Color Color);
 
 	/// @brief Use eExplosionType from the core module
@@ -666,8 +685,8 @@ class Game // Native
 		ClusterCharge,
 		Shumika,
 		EMP,
-
 		ExplosionBelt,
+		LVExplosiveLance
 	};
 
 	/// @brief Creates an explosion at the specified origin

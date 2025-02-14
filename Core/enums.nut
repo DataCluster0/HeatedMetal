@@ -28,8 +28,8 @@ global enum eExplosion
 	ClusterCharge,
 	Shumika,
 	EMP,
-
 	ExplosionBelt,
+	LVExplosiveLance
 };
 
 global enum NotificationType
