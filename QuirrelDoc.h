@@ -369,6 +369,8 @@ class Game // Native
 
 	class WeaponComponent : Component
 	{
+		// Changes are client side
+
 		class AmmoWeaponData
 		{
 			/// @brief Should the clip remove ammo on firing a shot
@@ -482,6 +484,11 @@ class Game // Native
 		Vector3 GetForward();
 		Vector3 GetUp();
 
+		/// @brief Gets the GLOBAL origin of the bone (returns entity origin if not found).
+		/// Enum can be found in the core module (eBone).
+		/// @param Bone | Index
+		Vector3 GetBoneOrigin(uint32 Bone);
+
 		/// @brief Sets an outline of the entity (client side)
 		void SetOutline(Color Color);
 
@@ -500,6 +507,9 @@ class Game // Native
 		bool GetActive();
 		void SetActive(bool IsActive);
 
+		/// @brief Hide all visuals
+		void SetIsHidden(bool IsHidden);
+
 		/// @brief Returns the Damage Component if the entity has one
 		DamageComponent* DamageComponent();
 
@@ -513,6 +523,8 @@ class Game // Native
 
 	class VolumetricFog
 	{
+		// Client Side
+
 		/// @brief Get/Set if fog is enabled
 		bool IsEnabled();
 		void SetIsEnabled(bool IsEnabled);
@@ -548,6 +560,8 @@ class Game // Native
 
 	class Skylight
 	{
+		// Client Side
+
 		/// @brief Get/Set the suns lighting Intensity
 		float GetSunIntensity();
 		void SetSunIntensity(float Intensity);
@@ -608,6 +622,8 @@ class Game // Native
 
 	class View
 	{
+		// Client Side
+
 		/// @brief Get camera Right
 		/// @return Returns the right direction vector of the camera as a quaternion.
 		Quaternion Right();
@@ -678,27 +694,37 @@ class Game // Native
 	enum ExplosionType : uint32
 	{
 		NitroCell,
+		Impact,
 		Smoke,
+		Gas,
 		Flash,
 		Dazzler,
 		ConcussionMine,
+		ConcussionGrenade,
+		ContactGrenade,
 		ClusterCharge,
 		Shumika,
+		Volcan,
 		EMP,
-		ExplosionBelt,
-		LVExplosiveLance
+		Airjab,
+		AirjabOld,
+	    LVExplosiveLance,
+		ExplosionBelt
 	};
 
 	/// @brief Creates an explosion at the specified origin
 	/// Effects have a hard limit for some time
 	/// Maximum of 50 calls per 5 seconds
-	void CreateExplosion(Vector3 Origin, ExplosionType Type);
+	/// @param Origin      | Explosion Origin
+	/// @param Type		   | Explosion Type
+	/// @param Owner       | Who takes the credit (Optional)
+	void CreateExplosion(Vector3 Origin, ExplosionType Type, PlayerController Owner /*optional*/);
 
-	/// @brief Fires a raycast from and to the specified origin coordinates
+	/// @brief Fires a raycast from and to the specified origin coordinates (Uses projectile collision)
 	/// @param Start       | Start Origin
 	/// @param End		   | End Origin
-	/// @param Penetration | Max bullet penetration / how many casts will be done
-	RaycastResult Raycast(Vector3 Start, Vector3 End, uint8 Penetration);
+	/// @param Count       | How many surfaces does it go trough
+	RaycastResult Raycast(Vector3 Start, Vector3 End, uint8 Count);
 
 	/////////////////////////////////////////////
 

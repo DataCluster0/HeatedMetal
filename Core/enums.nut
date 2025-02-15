@@ -21,15 +21,22 @@ global enum eTeam
 global enum eExplosion
 {
 	NitroCell,
+	Impact,
 	Smoke,
+	Gas,
 	Flash,
 	Dazzler,
 	ConcussionMine,
+	ConcussionGrenade,
+	ContactGrenade,
 	ClusterCharge,
 	Shumika,
+	Volcan,
 	EMP,
-	ExplosionBelt,
-	LVExplosiveLance
+	Airjab,
+	AirjabOld,
+	LVExplosiveLance,
+	ExplosionBelt
 };
 
 global enum NotificationType
@@ -90,6 +97,40 @@ global enum eCaliber {
 	Generic_Rifle   = 0xE6589B1F, // Normal Rifle
 	Generic_Smg     = 0x617A0088, // Normal SMG
 };
+
+
+global enum eBone
+{
+	Reference,
+	CameraNode,
+	GroundNode,
+
+	Root,
+	Head,
+	Neck,
+	Hips,
+	Spine,
+	Spine1,
+	Spine2,
+
+
+	LeftLeg,
+	LeftFoot,
+	LeftShoulder,
+	LeftArm,
+	LeftHand,
+	LeftForearm,
+	LeftAss,
+
+	RightLeg,
+	RightFoot,
+	RightShoulder,
+	RightArm,
+	RightHand,
+	RightForearm,
+	RightAss,
+}
+
 
 global enum eCharacter
 {
