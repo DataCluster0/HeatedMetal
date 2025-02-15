@@ -596,7 +596,7 @@ class Game // Native
 		{
 			A,
 			B,
-			Count,
+			Spectator,
 			Invalid
 		};
 

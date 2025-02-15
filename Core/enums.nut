@@ -14,7 +14,7 @@ global enum eTeam
 {
 	A,
 	B,
-	Count,
+	Spectator,
 	Invalid
 }
 
