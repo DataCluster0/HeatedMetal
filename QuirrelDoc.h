@@ -369,8 +369,6 @@ class Game // Native
 
 	class WeaponComponent : Component
 	{
-		// Changes are client side
-
 		class AmmoWeaponData
 		{
 			/// @brief Should the clip remove ammo on firing a shot
@@ -514,6 +512,7 @@ class Game // Native
 		DamageComponent* DamageComponent();
 
 		/// @brief Returns the Weapon Component if the entity has one
+		/// Only returns on host and changes are updated every 5s
 		WeaponComponent* WeaponComponent();
 
 		/// @brief Returns the Destruction Component if the entity has one
@@ -591,6 +590,9 @@ class Game // Native
 		/// @brief Returns the controller entity
 		Entity* Entity();
 
+		/// @brief Sets the controllers entity origin
+		void SetOrigin(Vector3 Origin)
+
 		/// @brief Use eTeam from the core module
 		enum Team : uint8
 		{
@@ -609,11 +611,14 @@ class Game // Native
 		/// @brief Returns the damage component instance
 		DamageComponent* Damage();
 
-		/// @brief Returns the ObjectID of the equipped primary
+		/// @brief Returns the ObjectID of the equipped Primary
 		uint64 PrimaryID();
 
-		/// @brief Returns the ObjectID of the equipped secondary
+		/// @brief Returns the ObjectID of the equipped Secondary
 		uint64 SecondaryID();
+
+		/// @brief Returns the ObjectID of the equipped Tertiary
+		uint64 TertiaryID();
 
 		/// @brief Returns the ObjectID of the character
 		/// enum eCharacter in the core module 
