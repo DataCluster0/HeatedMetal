@@ -624,6 +624,19 @@ class Game // Native
 		/// @brief Returns the damage component instance
 		DamageComponent* Damage();
 
+		/// @brief Defined as eItemSlot in core module
+		enum ItemSlot
+		{
+			Primary,
+			Secondary,
+			PrimaryGadget,
+			SecondaryGadget,
+			Character // Causes bugs use with caution
+		};
+
+		/// @brief Swaps the currently equipped item with the provided ObjectID
+		void SetItemSlot(ItemSlot Slot, uint64 ObjectID);
+
 		/// @brief Returns the ObjectID of the equipped Primary
 		uint64 PrimaryID();
 
@@ -632,6 +645,18 @@ class Game // Native
 
 		/// @brief Returns the ObjectID of the equipped Tertiary
 		uint64 TertiaryID();
+
+		/// @brief Returns the ObjectID of the equipped Primary Gadget
+		uint64 PrimaryGadgetID();
+
+		/// @brief Returns the ObjectID of the equipped Secondary Gadget
+		uint64 SecondaryGadgetID();
+
+		/// @brief Returns the ObjectID of the equipped Headgear
+		uint64 HeadgearID();
+
+		/// @brief Returns the ObjectID of the equipped Uniform
+		uint64 UniformID();
 
 		/// @brief Returns the ObjectID of the character
 		/// enum eCharacter in the core module 

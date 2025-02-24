@@ -18,6 +18,15 @@ global enum eTeam
 	Invalid
 }
 
+global enum eItemSlot
+{
+	Primary,
+	Secondary,
+	PrimaryGadget,
+	SecondaryGadget,
+	Character // Causes bugs use with caution
+};
+
 global enum eExplosion
 {
 	NitroCell,
@@ -192,7 +201,9 @@ global enum eCharacter
     NOKK       = 0x37802D16C3,
     PULSE      = 0x37802D16C4,
     RECRUITATK = 0x45AC0BAA36,
-    RECRUITDEF = 0x45AC0BAA4B
+    RECRUITDEF = 0x45AC0BAA4B,
+
+    SPECTER    = 0x3000045AC0BAA4B,
 }
 
 return {
