@@ -1,5 +1,5 @@
 //////////////////////////////////////////////
-// QUERREL DEFINITIONS
+// QUIRREL DEFINITIONS
 /////////////////////////////////////////////
 
 /////////////////////////////////////////////
@@ -302,13 +302,13 @@ void AddCallback_Ping();
 /// @brief Called when a bullet hits the ground
 /// @param Vector3 | Start
 /// @param Vector3 | End
-/// @param Vector3 | Type_Normal
+/// @param Vector3 | Normal
 /// @param float   | Delta
 /// @param Entity  | HitEntity
 void AddCallback_BulletHit();
 
-/// @brief Calls at Round Startreturns the current WorldID check core enums.nut for the ids
-/// @param ObjectID | WorldID
+/// @brief Called at Round Start
+/// @param ObjectID | WorldID (eMap in core module)
 void AddCallback_RoundStart();
 
 /////////////////////////////////////////////
@@ -459,7 +459,7 @@ class Game // Native
 		/// @brief Returns the Damage Data instance for the weapon
 		DamageWeaponData* GetDamageData();
 
-		/// @brief Returns the Accuracy Datainstance for the weapon
+		/// @brief Returns the Accuracy Data instance for the weapon
 		AccuracyWeaponData* GetAccuracyData();
 
 		/// @brief Set/Get the current clip count
