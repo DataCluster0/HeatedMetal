@@ -697,7 +697,7 @@ class Game // Native
 		float Delta();
 
 		/// @brief Get the hit normal
-		Vector3 Type_Normal();
+		Vector3 Normal();
 
 		/// @brief Get the entity if one was hit
 		Entity* Entity();
