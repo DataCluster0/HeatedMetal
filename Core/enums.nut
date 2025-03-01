@@ -100,11 +100,6 @@ global enum eDamageType
 	Value_38,
 }
 
-enum class DamageType : uint32_t
-{
-
-};
-
 global enum eMap
 {
 	Neighborhood   = 0x431BA741C3,
