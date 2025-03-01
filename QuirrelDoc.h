@@ -307,6 +307,14 @@ void AddCallback_Ping();
 /// @param Entity  | HitEntity
 void AddCallback_BulletHit();
 
+/// @brief Called when damage is caused
+/// @param DamageComponent   | Hit Damage Component
+/// @param uint32            | Taken Damage
+/// @param uint32            | Damage Type (eDamageType)
+/// @param PlayerController  | Attacker
+/// @param PlayerController  | Victim
+void AddCallback_Damage();
+
 /// @brief Called at Round Start
 /// @param ObjectID | WorldID (eMap in core module)
 void AddCallback_RoundStart();

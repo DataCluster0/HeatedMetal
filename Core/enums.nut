@@ -1,3 +1,11 @@
+global enum NotificationType
+{
+	Info,
+	Warning,
+	Error,
+	Success
+};
+
 global enum eGamestate
 {
 	Splash,          // 0 Splash Screen
@@ -9,6 +17,7 @@ global enum eGamestate
 	Loading,         // 6 Loading
 	InGame,          // 7 In-Game
 }
+
 
 global enum eTeam
 {
@@ -48,12 +57,52 @@ global enum eExplosion
 	ExplosionBelt
 };
 
-global enum NotificationType
+global enum eDamageType
 {
-	Info,
-	Warning,
-	Error,
-	Success
+	Bullet,
+	Melee,
+	Explosive,
+	Falling,
+	Regeneration,
+	Unknown,
+	Debris,
+	ThrownObjec,
+	BledOut,
+	Gas,
+	ThermalExplosion,
+	MeleeGadget,
+	BarbedWire,
+	Electric
+	Reinforcement,
+	FragExplosion,
+	Paralyzed,
+	EMP,
+	BreakAll,
+	CleanUp,
+	InterrogateKill,
+	MeleeFinisher,
+	Toxic,
+	ToxicExplosion,
+	Pneumatic,
+	BodyContact,
+	ContactExplosion,
+	Flash,
+	ParasiteSpike,
+	Value_29,
+	Value_30,
+	Value_31,
+	Value_32,
+	Value_33,
+	Value_34,
+	Value_35,
+	Fire,
+	Value_37,
+	Value_38,
+}
+
+enum class DamageType : uint32_t
+{
+
 };
 
 global enum eMap
@@ -106,40 +155,6 @@ global enum eCaliber {
 	Generic_Rifle   = 0xE6589B1F, // Normal Rifle
 	Generic_Smg     = 0x617A0088, // Normal SMG
 };
-
-
-global enum eBone
-{
-	Reference,
-	CameraNode,
-	GroundNode,
-
-	Root,
-	Head,
-	Neck,
-	Hips,
-	Spine,
-	Spine1,
-	Spine2,
-
-
-	LeftLeg,
-	LeftFoot,
-	LeftShoulder,
-	LeftArm,
-	LeftHand,
-	LeftForearm,
-	LeftAss,
-
-	RightLeg,
-	RightFoot,
-	RightShoulder,
-	RightArm,
-	RightHand,
-	RightForearm,
-	RightAss,
-}
-
 
 global enum eCharacter
 {
@@ -205,6 +220,39 @@ global enum eCharacter
 
     SPECTER    = 0x3000045AC0BAA4B,
 }
+
+global enum eBone
+{
+	Reference,
+	CameraNode,
+	GroundNode,
+
+	Root,
+	Head,
+	Neck,
+	Hips,
+	Spine,
+	Spine1,
+	Spine2,
+
+
+	LeftLeg,
+	LeftFoot,
+	LeftShoulder,
+	LeftArm,
+	LeftHand,
+	LeftForearm,
+	LeftAss,
+
+	RightLeg,
+	RightFoot,
+	RightShoulder,
+	RightArm,
+	RightHand,
+	RightForearm,
+	RightAss,
+}
+
 
 return {
 
