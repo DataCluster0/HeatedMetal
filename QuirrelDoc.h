@@ -268,6 +268,10 @@ void AddCallback_Shutdown();
 /// @brief Calls every game tick.
 void AddCallback_Update();
 
+/// @brief Called when the user enters a console command (client side)
+/// @param String | entered command line
+void AddCallback_ConsoleCommand();
+
 /// @brief Weapon Callbacks.
 /// @param WeaponComponent | Weapon
 void AddCallback_WeaponZoomIn();   // Weapon has zoomed in
@@ -612,7 +616,7 @@ class Game // Native
 		Entity* Entity();
 
 		/// @brief Sets the controllers entity origin
-		void SetOrigin(Vector3 Origin)
+		void SetOrigin(Vector3 Origin);
 
 		/// @brief Use eTeam from the core module
 		enum Team : uint8

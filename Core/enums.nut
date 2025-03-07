@@ -210,10 +210,16 @@ global enum eCharacter
     NOMAD      = 0x37802D16C2,
     NOKK       = 0x37802D16C3,
     PULSE      = 0x37802D16C4,
+
     RECRUITATK = 0x45AC0BAA36,
     RECRUITDEF = 0x45AC0BAA4B,
 
-    SPECTER    = 0x3000045AC0BAA4B,
+	// HM Operators
+    SPECTER    = 0x45B110AA4B,
+	DEADEYE    = 0x45B110BA36,
+	BAPHOMET   = 0x45B110CA36,
+	JADE       = 0x37853246BE,
+	MIRAGE     = 0x37853256BE,
 }
 
 global enum eBone
