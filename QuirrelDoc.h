@@ -792,6 +792,9 @@ class Game // Native
 	/// @brief Returns an array of PlayerController instances
 	Array<PlayerController*> GetPlayerList();
 
+	/// @brief Returns an array of AI Entity instances
+	Array<Entity*> GetAIList();
+
 	/// @brief Returns the current skylight instance
 	Skylight* GetSkylight();
 
@@ -816,6 +819,10 @@ class Game // Native
 	uint32 GetGameState();
 
 	/////////////////////////////////////////////
+
+	/// @brief Returns existing duplicates of an entity
+	/// @param ObjectID | Master ObjectID
+	Array<Entity*> GetDuplicatedEntities(uint64 ObjectID);
 
 	/// @brief Get Entity if an instance exists
 	/// @return Returns an Entity instance of an Object
