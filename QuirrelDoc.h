@@ -394,6 +394,18 @@ class Game // Native
 
 	class WeaponComponent : Component
 	{
+
+		class DamageWeaponData
+		{
+			/// @brief Set/Get Health Damage
+			uint32 GetDamage();
+			void SetDamage(uint32 Damage);
+
+			/// @brief Set/Get Environmental Damage
+			uint32 GetDamageEnv();
+			void SetDamageEnv(uint32 Damage);
+		};
+
 		class AmmoWeaponData
 		{
 			/// @brief Should the clip remove ammo on firing a shot
@@ -423,56 +435,79 @@ class Game // Native
 			void SetCaliber(uint32 Caliber);
 		};
 
-		class DamageWeaponData
-		{
-			/// @brief Set/Get Health Damage
-			uint32 GetDamage();
-			void SetDamage(uint32 Damage);
-
-			/// @brief Set/Get Environmental Damage
-			uint32 GetDamageEnv();
-			void SetDamageEnv(uint32 Damage);
-		};
-
 		class AccuracyWeaponData
 		{
-			/// @brief Set/Get Base Accuracy
+			/// @brief Set/Get base accuracy
 			float GetBase();
 			void SetBase(float Value);
 
-			/// @brief Set/Get Walk Accuracy
+			/// @brief Set/Get Walk accuracy
 			float GetWalk();
 			void SetWalk(float Value);
 
-			/// @brief Set/Get Crouch Accuracy
+			/// @brief Set/Get crouch accuracy
 			float GetCrouch();
 			void SetCrouch(float Value);
 
-			/// @brief Set/Get Prone Accuracy
+			/// @brief Set/Get prone accuracy
 			float GetProne();
 			void SetProne(float Value);
 
-			/// @brief Set/Get Aim Accuracy
+			/// @brief Set/Get aim accuracy
 			float GetAim();
 			void SetAim(float Value);
 
-			/// @brief Set/Get Weapon Fire Accuracy
+			/// @brief Set/Get Weapon fire accuracy
 			float GetFire();
 			void SetFire(float Value);
 
-			/// @brief Set/Get Fast Recovery (Accuracy recovers really fast)
+			/// @brief Set/Get fast recovery (Instant spread recovery)
 			bool GetFastRecovery();
 			void SetFastRecovery(bool Statement);
 		};
 
-		/// @brief Returns the Ammo Data instance for the weapon
-		AmmoWeaponData* GetAmmoData();
+		class AnimationWeaponData
+		{
+			/// @brief Set/Get Weapon draw speed
+			float GetDraw();
+			void SetDraw(float Value);
+
+			/// @brief Set/Get Weapon holster speed
+			float GetHolster();
+			void SetHolster(float Value);
+
+			/// @brief Set/Get Weapon aim speed during sprint
+			float GetSprintZoomIn();
+			void SetSprintZoomIn(float Value);
+
+			/// @brief Set/Get Weapon aim speed
+			float GetZoomIn();
+			void SetZoomIn(float Value);
+
+			/// @brief Set/Get Weapon de-aim speed
+			float GetZoomOut();
+			void SetZoomOut(float Value);
+
+			/// @brief Set/Get Weapon manual reload speed
+			float GetReloadManual();
+			void SetReloadManual(float Value);
+
+			/// @brief Set/Get Weapon automatic reload speed
+			float GetReloadAuto();
+			void SetReloadAuto(float Value);
+		};
 
 		/// @brief Returns the Damage Data instance for the weapon
 		DamageWeaponData* GetDamageData();
 
+		/// @brief Returns the Ammo Data instance for the weapon
+		AmmoWeaponData* GetAmmoData();
+
 		/// @brief Returns the Accuracy Data instance for the weapon
 		AccuracyWeaponData* GetAccuracyData();
+
+		/// @brief Returns the Animation Data instance for the weapon
+		AnimationWeaponData* GetAnimationData();
 
 		/// @brief Set/Get the current clip count
 		uint32 GetAmmo();
@@ -480,6 +515,9 @@ class Game // Native
 
 		/// @brief Returns true if the weapon is reloading
 		bool IsReloading();
+
+		/// @brief Returns weapon data name (wip names most of the time)
+		string Name();
 	};
 
 	class Entity : ManagedObject
