@@ -27,6 +27,17 @@ global enum eTeam
 	Invalid
 }
 
+global enum eAlliance
+{
+	Neutral,
+	Rainbow,
+	Terrorist,
+	TeamA,
+	TeamB,
+	NA,
+	TeamMax,
+};
+
 global enum eItemSlot
 {
 	Primary,
@@ -150,6 +161,8 @@ global enum eCaliber {
 	Generic_Rifle   = 0xE6589B1F, // Normal Rifle
 	Generic_Smg     = 0x617A0088, // Normal SMG
 };
+
+
 
 global enum eWeapon
 {

@@ -25,7 +25,7 @@ typedef uint8;
 typedef uint16;
 typedef uint32;
 typedef uint64;
-typedef quirrelfunc;
+typedef function;
 
 template <typename Type>
 struct Array
@@ -219,6 +219,10 @@ bool Sleep(uint32 MilliSeconds);
 /// @return Was the key pressed
 bool IsKeyPressed(string KeyName);
 
+/// @brief Registers a console command
+/// @param Array<String> | Arguments
+bool RegisterCommand(function Func, string Name, string Arguments, string Description);
+
 ///////////////////////////////////////////// Modules
 
 /// @return Is the module currently loaded?
@@ -255,73 +259,6 @@ int64 RandomInt(int64 Max);
 
 /// @brief Returns a random int from {Min} to {Max}.
 int64 RandomIntRange(int64 Min, int64 Max);
-
-/////////////////////////////////////////////
-// CALLBACKS
-/////////////////////////////////////////////
-// !! RoundStart is kept across world reloads. !!
-// !! Every other Callback is cleared. !!
-
-/// @brief Calls when the user requests the modules to be shutdown.
-void AddCallback_Shutdown();
-
-/// @brief Calls every game tick.
-void AddCallback_Update();
-
-/// @brief Called when the user enters a console command (client side)
-/// @param String | entered command line
-void AddCallback_ConsoleCommand();
-
-/// @brief Weapon Callbacks.
-/// @param WeaponComponent | Weapon
-void AddCallback_WeaponZoomIn();   // Weapon has zoomed in
-void AddCallback_WeaponZoomOut();  // Weapon has zoomed out
-void AddCallback_WeaponFire();	   // Weapon started firing
-void AddCallback_WeaponFireStop(); // Weapon stopped firing
-
-/////////////////////////////////////////////
-// PLAYER CONTROLLER CALLBACKS
-/////////////////////////////////////////////
-/// @param PlayerController | Player
-
-/// @brief Called on Controller Death.
-void AddCallback_PlayerDeath();
-
-/// @brief Called on Controller Spawn/Respawn
-void AddCallback_PlayerSpawn();
-
-/// @brief Toggle Callbacks
-void AddCallback_LeanRight();
-void AddCallback_LeanLeft();
-void AddCallback_Crouch();
-void AddCallback_Prone();
-
-void AddCallback_Melee();
-void AddCallback_Interact();
-void AddCallback_AccessDrone();
-void AddCallback_Ping();
-
-/////////////////////////////////////////////
-
-/// @brief Called when a bullet hits the ground
-/// @param Vector3 | Start
-/// @param Vector3 | End
-/// @param Vector3 | Normal
-/// @param float   | Delta
-/// @param Entity  | HitEntity
-void AddCallback_BulletHit();
-
-/// @brief Called when damage is caused
-/// @param DamageComponent   | Hit Damage Component
-/// @param uint32            | Taken Damage
-/// @param uint32            | Damage Type (eDamageType)
-/// @param PlayerController  | Attacker
-/// @param PlayerController  | Victim
-void AddCallback_Damage();
-
-/// @brief Called at Round Start
-/// @param ObjectID | WorldID (eMap in core module)
-void AddCallback_RoundStart();
 
 /////////////////////////////////////////////
 
@@ -876,3 +813,102 @@ class Game // Native
 
 	/////////////////////////////////////////////
 };
+
+
+/////////////////////////////////////////////
+// CALLBACKS
+/////////////////////////////////////////////
+
+// !! RoundStart is kept across world reloads. !!
+// !! Every other Callback is cleared. !!
+
+/// @brief Called when the user requests the modules to be shutdown.
+void AddCallback_Shutdown(function Func);
+
+/// @brief Called every game tick.
+void AddCallback_Update(function Func);
+
+/// @brief Called at Round Start
+/// @param ObjectID | WorldID (eMap in core module)
+void AddCallback_RoundStart(function Func);
+
+/// @brief Called when a bullet hits the ground
+/// @param Vector3 | Start
+/// @param Vector3 | End
+/// @param Vector3 | Normal
+/// @param float   | Delta
+/// @param Entity  | Hit Entity
+void AddCallback_BulletHit(function Func);
+
+/// @brief Called when damage is caused
+/// @param DamageComponent   | Hit Damage Component
+/// @param uint32            | Taken Damage
+/// @param uint32            | Damage Type (eDamageType)
+/// @param PlayerController  | Attacker
+/// @param PlayerController  | Victim
+void AddCallback_Damage(function Func);
+
+/////////////////////////////////////////////
+// WEAPON CALLBACKS
+/////////////////////////////////////////////
+/// @param WeaponComponent | Weapon
+
+/// @brief Weapon has zoomed in
+void AddCallback_WeaponZoomIn(function Func);   
+
+/// @brief Weapon has zoomed out
+void AddCallback_WeaponZoomOut(function Func);
+
+/// @brief Weapon started firing
+void AddCallback_WeaponFire(function Func);	 
+
+/// @brief Weapon stopped firing
+void AddCallback_WeaponFireStop(function Func);
+
+/////////////////////////////////////////////
+// PLAYER CONTROLLER CALLBACKS
+/////////////////////////////////////////////
+/// @param PlayerController | Player
+
+/// @brief Called on Controller Death.
+void AddCallback_PlayerDeath(function Func);
+
+/// @brief Called on Controller Spawn/Respawn
+void AddCallback_PlayerSpawn(function Func);
+
+/// @brief Toggle Callbacks
+void AddCallback_LeanRight(function Func);
+void AddCallback_LeanLeft(function Func);
+void AddCallback_Crouch(function Func);
+void AddCallback_Prone(function Func);
+
+void AddCallback_Melee(function Func);
+void AddCallback_Interact(function Func);
+void AddCallback_AccessDrone(function Func);
+void AddCallback_Ping(function Func);
+
+/////////////////////////////////////////////
+// GAMEMODE CALLBACKS
+/////////////////////////////////////////////
+
+/// @brief Called when a Defuser is deployed
+/// @param PlayerController  | Instigator
+/// @param uint32            | Alliance (eAlliance)
+/// @param Entity            | Bomb
+void AddCallback_DefuserDeployed(function Func);
+
+/// @brief Called when a Defuser is sabotaged
+/// @param PlayerController  | Instigator
+/// @param uint32            | Alliance (eAlliance)
+void AddCallback_DefuserSabotaged(function Func);
+
+/// @brief Called when a Defuser finishes defusing
+/// @param PlayerController  | Instigator
+/// @param uint32            | Alliance (eAlliance)
+/// @param Entity            | Bomb
+void AddCallback_DefuserSucceded(function Func);
+
+/// @brief Called when a Player Drop/Picks up a Defuser 
+/// @param PlayerController  | Instigator
+void AddCallback_DefuserDropped(function Func);
+void AddCallback_DefuserPickedUp(function Func);
