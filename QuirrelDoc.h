@@ -26,6 +26,7 @@ typedef uint16;
 typedef uint32;
 typedef uint64;
 typedef function;
+typedef table;
 
 template <typename Type>
 struct Array
@@ -215,6 +216,15 @@ void Yield();
 /// @return did sleep
 bool Sleep(uint32 MilliSeconds);
 
+/* KeyNames
+0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+- = , . ; / ` [ \ ] ' F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
+Backspace Capslock Ctrl Delete Down End Enter Esc Home Insert
+RightAlt LeftAlt RightCtrl LeftCtrl RightMouse LeftMouse
+MiddleMouse RightShift LeftShift NumLock Pageup Pagedown
+Pause ScrollLock Shift Space Tab Up XButton1 XButton2
+*/
+
 /// @brief Check if the key is currently pressed (Client Side)
 /// @return Was the key pressed
 bool IsKeyPressed(string KeyName);
@@ -223,7 +233,14 @@ bool IsKeyPressed(string KeyName);
 /// @param Array<String> | Arguments
 bool RegisterCommand(function Func, string Name, string Arguments, string Description);
 
-///////////////////////////////////////////// Modules
+/// @return Heated Metal version string (Ex: 0.1.8)
+string HMVersion();
+
+/// @return Heated Metal version int (Ex: 0x018)
+uint32 HMVersionInt();
+
+///////////////////////////////////////////// 
+// Modules
 
 /// @return Is the module currently loaded?
 bool IsModuleLoaded(string ModuleName);
@@ -235,15 +252,6 @@ uint32 GetModuleVersion(string ModuleName);
 string GetModuleVersionString(string ModuleName);
 
 /////////////////////////////////////////////
-
-/* KeyNames
-0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-- = , . ; / ` [ \ ] ' F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
-Backspace Capslock Ctrl Delete Down End Enter Esc Home Insert
-RightAlt LeftAlt RightCtrl LeftCtrl RightMouse LeftMouse
-MiddleMouse RightShift LeftShift NumLock Pageup Pagedown
-Pause ScrollLock Shift Space Tab Up XButton1 XButton2
-*/
 
 /// @brief Returns the current delta time.
 float DeltaTime();
@@ -260,36 +268,61 @@ int64 RandomInt(int64 Max);
 /// @brief Returns a random int from {Min} to {Max}.
 int64 RandomIntRange(int64 Min, int64 Max);
 
-/////////////////////////////////////////////
+///////////////////////////////////////////// 
+// Network
+typedef PlayerController;
+
+/// @brief Sends a table over the network (see AddCallback_NetworkTable)
+/// @param string           | Table name for callback
+/// @param table            | Table | Accepted Values : bool, int, float, string
+/// @param PlayerController | Server only option (only sends the table to that player)
+void SendNetworkTable(string Name, table Table, PlayerController Receiver /*Server Optional*/);
+
+///////////////////////////////////////////// 
 
 class Renderer // SDK Native
 {
 	/// @brief Returns the current display size as a Vector2.
 	Vector2 GetDisplaySize();
 
-	/// @brief Draws a 3D text at the specified origin.
-	bool Text(Vector3 Origin, string Text, Color Color);
-
-	/// @briefDraws a 3D line from start to end with specified thickness.
-	bool Line(Vector3 StartOrigin, Vector3 EndOrigin, Color Color, float Thickness = 1.0);
-
-	/// @brief Draws a 3D rectangle.
-	bool Rectangle(Vector3 Origin, Vector3 Angles, float Width, float Height, Color Color, float Thickness = 1.0);
-
-	/// @briefDraws a 3D circle.
-	bool Circle(Vector3 Origin, Vector3 Angles, float Radius, int NumSegments, Color Color, float Thickness = 1.0);
-
-	/// @brief Draws a 3D cylinder.
-	bool Cylinder(Vector3 Origin, Vector3 Angles, float Radius, float Height, int NumSegments, Color Color, float Thickness = 1.0);
-
-	/// @brief Draws a 3D Sphere.
-	bool Sphere(Vector3 Origin, Vector3 Angles, float Radius, int NumSegments, Color Color, float Thickness = 1.0);
-
-	/// @brief Draws a 3D cube.
-	bool Cube(Vector3 Origin, Vector3 Angles, float Size, Color Color, float Thickness = 1.0);
-
 	/// @brief Calculates alpha value based on distance.
 	float DistanceToAlpha(float Distance, float MaxDistance, float MinAlpha = 25.0, float MaxAlpha = 255.0);
+
+	///////////////////////////////////////////// 
+	// 3D
+
+	/// @brief Draws a 3D text at the specified origin.
+	bool Text(string Text, Vector3 Origin, Color Color);
+
+	/// @brief Draws a 3D line from start to end with specified thickness.
+	bool Line(Vector3 StartOrigin, Vector3 EndOrigin, Color Color, float Thickness);
+
+	/// @brief Draws a 3D rectangle.
+	bool Rectangle(Vector3 Origin, Vector3 Angles, float Width, float Height, Color Color, float Thickness);
+
+	/// @brief Draws a 3D circle.
+	bool Circle(Vector3 Origin, Vector3 Angles, float Radius, int NumSegments, Color Color, float Thickness);
+
+	/// @brief Draws a 3D cylinder.
+	bool Cylinder(Vector3 Origin, Vector3 Angles, float Radius, float Height, int NumSegments, Color Color, float Thickness);
+
+	/// @brief Draws a 3D Sphere.
+	bool Sphere(Vector3 Origin, Vector3 Angles, float Radius, int NumSegments, Color Color, float Thickness);
+
+	/// @brief Draws a 3D cube.
+	bool Cube(Vector3 Origin, Vector3 Angles, float Size, Color Color, float Thickness);
+
+	///////////////////////////////////////////// 
+	// 2D
+
+	/// @brief Draws a text at specified screen coordinates
+	bool Text2D(string Text, Vector2 ScreenPos, Color Color);
+
+	/// @brief Draws a line from and to the specified screen coordinates
+	bool Line2D(Vector2 Start, Vector2 End, Color Color, float Thickness);
+
+	/// @brief Draws a circle at specified screen coordinates
+	bool Circle2D(Vector2 ScreenPos, Color Color, float Radius, int NumSegments, float Thickness);
 };
 
 // vs code forward
@@ -587,11 +620,8 @@ class Game // Native
 
 	class PlayerController
 	{
-		/// @brief Returns the controller entity
-		Entity* Entity();
-
-		/// @brief Sets the controllers entity origin
-		void SetOrigin(Vector3 Origin);
+		/// @brief Returns the name of the player
+		string Name();
 
 		/// @brief Use eTeam from the core module
 		enum Team : uint8
@@ -604,6 +634,12 @@ class Game // Native
 
 		/// @brief Returns the controller team
 		Team Team();
+
+		/// @brief Returns the controller entity
+		Entity* Entity();
+
+		/// @brief Sets the controllers entity origin
+		void SetOrigin(Vector3 Origin);
 
 		/// @brief Returns the current instance of a weapon being held by the controller
 		WeaponComponent* Weapon();
@@ -814,7 +850,6 @@ class Game // Native
 	/////////////////////////////////////////////
 };
 
-
 /////////////////////////////////////////////
 // CALLBACKS
 /////////////////////////////////////////////
@@ -847,6 +882,22 @@ void AddCallback_BulletHit(function Func);
 /// @param PlayerController  | Attacker
 /// @param PlayerController  | Victim
 void AddCallback_Damage(function Func);
+
+/// @brief Called when an entity effect is caused
+/// @param Entity   | Instigator
+/// @param Entity   | Source
+/// @param uint32   | Effect Type (eEntityEffect)
+void AddCallback_EntityEffect(function Func);
+
+/////////////////////////////////////////////
+// NETWORK CALLBACKS
+/////////////////////////////////////////////
+
+/// @brief Called when a server or client sends a network table (see SendNetworkTable)
+/// @param string             | Table Name
+/// @param table              | Table
+/// @param PlayerController   | Sender (null if sent from server)
+void AddCallback_NetworkTable(function Func);
 
 /////////////////////////////////////////////
 // WEAPON CALLBACKS
