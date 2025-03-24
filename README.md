@@ -6,7 +6,7 @@
 
 # Features
 - Enhanced **Main Menu**
-https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/Screenshot1.png?raw=true
+![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/Screenshot1.png)
 - All ***Attachments*** for all **Weapons**
 ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/Screenshot2.png)
 - All ***Uniforms*** & ***Headgears*** for all **Operators**
