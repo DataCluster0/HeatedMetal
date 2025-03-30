@@ -119,6 +119,10 @@ class Color
 	static Color Rainbow(float Speed);
 };
 
+//////////////////////////////////////////////
+// Utility Classes
+/////////////////////////////////////////////
+
 class Timer
 {
 	Timer(bool StartNow);
@@ -278,7 +282,9 @@ typedef PlayerController;
 /// @param PlayerController | Server only option (only sends the table to that player)
 void SendNetworkTable(string Name, table Table, PlayerController Receiver /*Server Optional*/);
 
-///////////////////////////////////////////// 
+//////////////////////////////////////////////
+// Renderer class
+/////////////////////////////////////////////
 
 class Renderer // SDK Native
 {
@@ -327,6 +333,10 @@ class Renderer // SDK Native
 
 // vs code forward
 class Entity;
+
+//////////////////////////////////////////////
+// Game class
+/////////////////////////////////////////////
 
 class Game // Native
 {
@@ -738,8 +748,9 @@ class Game // Native
 		Array<CastHit> Hits();
 	};
 
-	///////////////////////////////////////////// Time
-
+	//////////////////////////////////////////////
+	// Game Time Functions
+	/////////////////////////////////////////////
 	/// @return Is the Phase Timer Paused
 	bool IsTimerPaused();
 
@@ -750,7 +761,21 @@ class Game // Native
 	void SetTimerRemaining(int32 TimeInSeconds);
 	float GetTimerRemaining();
 
-	///////////////////////////////////////////// Utilities
+	//////////////////////////////////////////////
+	// Game Round Functions
+	/////////////////////////////////////////////
+	// (eAlliance)
+
+	/// @brief Force wins the current round for that Allience
+	void SetRoundWin(uint32 Alliance);
+
+	/// @brief Set/Get the current match round wins
+	void SetRoundWinCount(uint32 Alliance, uint32 Count);
+	uint32 GetRoundWinCount(uint32 Alliance);
+
+	//////////////////////////////////////////////
+	// Utility Functions
+	/////////////////////////////////////////////
 
 	/// @brief Creates a dust particle at a certain location
 	/// Has a hard limit of 100 (will conflict Dust Painting)
@@ -796,6 +821,12 @@ class Game // Native
 
 	/// @return Are we the host?
 	bool IsHost();
+
+	/// @return Is the current host config in ThirdPerson?
+	bool IsThirdPerson();
+
+	/// @return Is the current host config in RTS?
+	bool IsRTS();
 
 	/// @brief Get the local PlayerController instance
 	PlayerController* GetLocalPlayer();

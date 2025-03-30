@@ -18,7 +18,6 @@ global enum eGamestate
 	InGame,          // 7 In-Game
 }
 
-
 global enum eTeam
 {
 	A,
