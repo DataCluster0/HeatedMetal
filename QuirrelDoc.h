@@ -662,8 +662,11 @@ class Game // Native
 		{
 			Primary,
 			Secondary,
+			Tertiary,
+
 			PrimaryGadget,
 			SecondaryGadget,
+
 			Character // Causes bugs use with caution
 		};
 

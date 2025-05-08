@@ -41,6 +41,8 @@ global enum eItemSlot
 {
 	Primary,
 	Secondary,
+	Tertiary,
+
 	PrimaryGadget,
 	SecondaryGadget,
 	Character // Causes bugs use with caution
@@ -224,24 +226,32 @@ global enum eTimeOfDay
 	Halloween     = 0x2450CDB74D,
 }
 
-global enum eCaliber {
-	Invalid_Caliber = 0x0,        // Invalid Caliber (Should result in a default caliber)
-	Blowtorch       = 0x7CFE9C27, // Mavericks Blowtorch
-	DP27            = 0x8616E1E0, // Tachanka's DP27
-	DP27_Turret     = 0x033BC036, // Tachanka's DP27 (Stationary Turret)
-	Kali_Sniper     = 0xDB87EF30, // Kali's Sniper Rifle CRX300 / Golden Gun
-	Skeletonkey     = 0x487C2569, // Buck's Skeleton Key
-	Generic_Pistol  = 0x0D67F306, // Normal Pistol
-	Generic_Rifle   = 0xE6589B1F, // Normal Rifle
-	Generic_Smg     = 0x617A0088, // Normal SMG
-};
-
-
-
-global enum eWeapon
+global enum eCaliber
 {
-	DeathMachine = 0x0
-}
+	Default,
+
+	// Bullet
+	Bullet_SuperLow = 0xD67F306,
+	Bullet_Low = 0x617A0088,
+	Bullet_Mid = 0xE6589B1F,
+	Bullet_High = 0x95773E2,
+	Bullet_SuperHigh = 0x33BC036,
+	Bullet_MaxPower = 0xC5F80148,
+
+	Bullet_BOSG = 0x5E9182B4,
+	Bullet_CSRX300 = 0xDB87EF30,
+	Bullet_DMR = 0x7887498A,
+	Bullet_DP27 = 0x8616E1E0,
+
+	// Shell
+	Shell_Low = 0x4E56EB23,
+	Shell_Mid = 0xC97470B4,
+	Shell_High = 0x487C2569,
+
+	// Gadget
+	Gadget_BarrageTurret = 0x6B541DED,
+	Gadget_BlowTorch = 0x7CFE9C27,
+};
 
 global enum eCharacter
 {
@@ -311,7 +321,11 @@ global enum eCharacter
 	DEADEYE    = 0x45B110BA36,
 	BAPHOMET   = 0x45B110CA36,
 	JADE       = 0x37853246BE,
-	MIRAGE     = 0x37853256BE,
+	MIRAGE     = 0x45B110EA4B,
+	XRAY       = 0x45B110FA36,
+
+	RAZOR      = 0x45B1111A4B
+	MONARCH    = 0x45B1110A4B
 }
 
 global enum eBone
