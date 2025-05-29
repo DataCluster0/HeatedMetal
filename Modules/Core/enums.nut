@@ -78,13 +78,13 @@ global enum eDamageType
 	Regeneration,
 	Unknown,
 	Debris,
-	ThrownObjec,
+	ThrownObject,
 	BledOut,
 	Gas,
 	ThermalExplosion,
 	MeleeGadget,
 	BarbedWire,
-	Electric
+	Electric,
 	Reinforcement,
 	FragExplosion,
 	Paralyzed,
@@ -100,16 +100,16 @@ global enum eDamageType
 	ContactExplosion,
 	Flash,
 	ParasiteSpike,
-	Value_29,
-	Value_30,
-	Value_31,
-	Value_32,
-	Value_33,
-	Value_34,
-	Value_35,
+	Laser,
+	Concussion,
+	BlowTorch,
+	TaserShield,
+	ReverseFriendlyFire,
+	SelfDestroyed,
+	AreaControl,
 	Fire,
-	Value_37,
-	Value_38,
+	BreachKick,
+	BreakWall
 }
 
 global enum eEntityEffect
@@ -146,45 +146,44 @@ global enum eEntityEffect
 	TagDeviceScanning,
 	AudioAlarmAffected,
 	EpiShot,
-	Value_32,
+	HighlightedWithOutline,
 	TagDeviceRevealed,
-	Value_34,
-	Value_35,
-	Value_36,
-	Value_37,
-	Value_38,
-	Value_39,
-	Value_40,
+	LaserAffected,
+	TaserShieldEnter,
+	TaserShieldExit,
+	BlowTorchSlowdown,
+	UsingTaserShield,
+	Stealth,
+	PushBack,
 	NeuropathyDistance,
-	Value_42,
-	Value_43,
-	Value_44,
-	Value_45,
-	Value_46,
-	Value_47,
-	Value_48,
-	Value_49,
-	Value_50,
-	Value_51,
-	Value_52,
+	LogicBombExit,
+	LogicBombExitByDuration,
+	SmartGlasses,
+	CameraInvisibility,
+	CameraGlitch,
+	CameraGlitchOutro,
+	SilentStep,
+	CameraInvisibilityObservationToolFeedback,
+	CameraInvisibilityOutro,
+	FireDOT,
+	SmokeOpacityReduction,
 	Value_53,
-	Value_54,
-	Value_55,
-	Value_56,
-	Value_57,
-	Value_58,
-	Value_59,
-	Value_60,
-	Value_61,
-	Value_62,
-	Value_63,
-	Value_64,
-	Value_65,
-	Value_66,
-	Value_67,
-	Value_68,
-	Value_69,
-	Count
+	Dash,
+	WeakConcussion,
+	ClimbHatch,
+	ControllableDecoy,
+	ControllableDecoyDeploy,
+	ControllingControllableDecoy,
+	JammerWarning
+	BreakWall_DEPRECATED,
+	PostDash,
+	PostClimbHatch,
+	LowFrequencySound,
+	LowFrequencySoundOutro,
+	ControllableDecoyDeployFailed,
+	PostControllingControllableDecoy,
+	WaterBreachSplash,
+	LaserDOT,
 };
 
 global enum eMap
@@ -218,17 +217,18 @@ global enum eMap
 global enum eTimeOfDay
 {
 	Default       = 0xA45F6E8E,
-	Day_Default   = 0xA45F7850,
-	Night_Default = 0xA45F7851,
 	SmokeMode     = 0x637399FB,
+
+	Day_Default   = 0xA45F7850,
 	Day           = 0x19438604,
+
+	Night_Default = 0xA45F7851,
 	Night         = 0x19438605,
-	Halloween     = 0x2450CDB74D,
 }
 
 global enum eCaliber
 {
-	Default,
+	None,
 
 	// Bullet
 	Bullet_SuperLow = 0xD67F306,
@@ -317,15 +317,19 @@ global enum eCharacter
 	RECRUITDEF = 0x45AC0BAA4B,
 
 	// HM Operators
-	SPECTER    = 0x45B110AA4B,
-	DEADEYE    = 0x45B110BA36,
-	BAPHOMET   = 0x45B110CA36,
-	JADE       = 0x37853246BE,
-	MIRAGE     = 0x45B110EA4B,
-	XRAY       = 0x45B110FA36,
 
-	RAZOR      = 0x45B1111A4B
-	MONARCH    = 0x45B1110A4B
+	// ATK
+	DEADEYE    = 0x95AC10BA36,
+	BAPHOMET   = 0x95AC10CA36,
+	XRAY       = 0x95AC10FA36,
+	CHAOS      = 0x95AC112A36
+
+	// DEF
+	SPECTER    = 0x95AC10AA4B,
+	JADE       = 0x87803246BE,
+	MIRAGE     = 0x95AC10EA4B,
+	MONARCH    = 0x95AC110A4B,
+	RAZOR      = 0x95AC111A4B,
 }
 
 global enum eBone
