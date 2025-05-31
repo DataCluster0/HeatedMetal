@@ -10,32 +10,32 @@
 # Information
 >[!TIP]
 > Default Keybinds:
-> - **F1** Console
-> - **F2** Configurator (Playlist, Weapon editor, etc..)
-> - **F3** Map Editor
+> - **F1**: Console
+> - **F2**: Configurator (Playlist, Weapon Editor, etc.)
+> - **F3**: Map Editor
 > - Use ``Setup`` in the **Console** to make keybind changes.
 
 >[!IMPORTANT]
-> - **VULKAN IS NOT SUPPORTED**
-> - The **Host** can give **Admin** permissions to other **players** (Console -> Network -> Connections)
-> - **Admin** Permissions will allow the player to use the ***Editor*** and other features along side the ***Host***.
-> - **Quirrel** Documentation can be found ![Here](https://github.com/DataCluster0/HeatedMetal/blob/main/QuirrelDoc.h)
+> - The **Host** can give **Admin** permissions to other **players** (Console -> Network -> Connections).
+> - **Admin** permissions will allow the player to use the ***Editor*** and other features alongside the ***Host***.
+> - **Quirrel** documentation can be found [here](https://github.com/DataCluster0/HeatedMetal/blob/main/QuirrelDoc.h).
 
 # Installation
 >[!WARNING]
->Requirements:
->- Medium or above In-Game textures
->- The latest [**Visual C++ Redistributables**](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+> Requirements:
+> - ***Vulkan executable is not supported (use DXVK).***
+> - Medium or above in-game textures.
+> - The latest [**Visual C++ Redistributables**](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 
 >[!NOTE]
->**Files have to be installed into the base Shadow Legacy folder**
->File Structure:
+> - **Files must be installed into the base Shadow Legacy folder.**
+> - File Structure:
+> ```
+> HeatedMetal/HeatedMetal.dll
+> DefaultArgs.dll
+> RainbowSix.exe
+> ```
 
-```
-HeatedMetal/HeatedMetal.dll
-DefaultArgs.dll
-RainbowSix.exe
-```
 
 # Features
 
