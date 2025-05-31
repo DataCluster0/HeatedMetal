@@ -13,6 +13,7 @@
 > - **F1** Console
 > - **F2** Configurator (Playlist, Weapon editor, etc..)
 > - **F3** Map Editor
+> - Use ``Setup`` in the **Console** to make keybind changes.
 
 >[!IMPORTANT]
 > - **VULKAN IS NOT SUPPORTED**
