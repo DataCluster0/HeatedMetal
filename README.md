@@ -4,7 +4,7 @@
 
 # About
 > [!NOTE]
-> Heated Metal is an SDK for Tom Clancy's Rainbow Six Siege
+> Heated Metal is an SDK for Tom Clancy's Rainbow Six Siege (Year 5)
 
 >[!IMPORTANT]
 > Supported Seasons:
