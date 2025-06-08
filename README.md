@@ -4,8 +4,13 @@
 
 # About
 > [!NOTE]
-> Heated Metal is an SDK for Shadow Legacy
-> - ***Y5S3.3.1_C5789341_D1135607_S40332_15018155***
+> Heated Metal is an SDK for Tom Clancy's Rainbow Six Siege
+
+>[!IMPORTANT]
+> Supported Seasons:
+> - ***Neon Dawn - Y5S4.2.0_C5914517_D1181197_S40892_15241382 ( HM [Latest](https://github.com/DataCluster0/HeatedMetal/releases/latest) )***
+> - ***Shadow Legacy - Y5S3.3.1_C5789341_D1135607_S40332_15018155 ( HM [0.2.3](https://github.com/DataCluster0/HeatedMetal/releases/0.2.3) )***
+> - These game builds can be downloaded [**Here**](https://puppetino.github.io/Throwback-FAQ/Pages/downloaders.html)
 
 # Information
 >[!TIP]
@@ -24,7 +29,7 @@
 >[!WARNING]
 > Requirements:
 > - ***Vulkan executable is not supported (use DXVK).***
-> - Medium or above in-game textures.
+> - Medium or above in-game textures. ***(Shadow Legacy Only)***
 > - The latest [**Visual C++ Redistributables**](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 
 >[!NOTE]
