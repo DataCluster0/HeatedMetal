@@ -33,7 +33,7 @@
 > - The latest [**Visual C++ Redistributables**](https://aka.ms/vs/17/release/vc_redist.x64.exe)
 
 >[!NOTE]
-> - **Files must be installed into the base Shadow Legacy folder.**
+> - **Files must be installed into the game root folder.**
 > - File Structure:
 > ```
 > HeatedMetal/HeatedMetal.dll
