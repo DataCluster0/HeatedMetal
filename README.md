@@ -28,9 +28,10 @@
 # Installation
 >[!WARNING]
 > Requirements:
-> - ***Vulkan executable is not supported (use DXVK).***
-> - Medium or above in-game textures. ***(Shadow Legacy Only)***
 > - The latest [**Visual C++ Redistributables**](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+> - Medium or above in-game textures. ***(Shadow Legacy Only)***
+> - ***Vulkan executable is not supported (use DXVK).***
+> - Disable ***external*** overlay's **(Might cause UI to not render)**
 
 >[!NOTE]
 > - **Files must be installed into the game root folder.**
@@ -40,7 +41,6 @@
 > DefaultArgs.dll
 > RainbowSix.exe
 > ```
-
 
 # Features
 
