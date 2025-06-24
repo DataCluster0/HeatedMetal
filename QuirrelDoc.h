@@ -63,6 +63,7 @@ class Vector3
 	Vector3 Round(float Precision);
 	float Dot(Vector3 Other);
 	Vector3 Cross(Vector3 Other);
+	float Distance(Vector3 Other);
 };
 
 class Vector4
