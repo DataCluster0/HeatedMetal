@@ -1,0 +1,98 @@
+[
+  {
+    "ID": -1,
+    "ImageID": "0xA115A2742",
+    "Title": "Discord",
+    "Subtitle": "discord.gg/JGA9WPF4K8",
+    "Description": [
+      "Consider joining the Official Throwback Discord for support or community made content!"
+    ]
+  },
+  {
+    "ID": 1,
+    "ImageID": "0x5F1983C05",
+    "Title": "Patch Notes",
+    "Subtitle": "v0.2.8",
+    "Description": [
+      "Fixes:",
+      "* Backend Fixes & Optimizations.",
+      "* Menu crash fixes.",
+      "* Save corruption fixes",
+      "* Input handling fixes",
+      "* Menu rendering fixes",
+      "Additions:",
+      "+ In-game news",
+      "+ New attack operator.",
+      "+ Operator visual changes.",
+      "+ New operator weapons.",
+      "",
+      "Check latest GitHub release for more details."
+    ]
+  },
+  {
+    "ID": 2,
+    "ImageID": "0x39488F366D",
+    "Title": "New operator Hellion",
+    "Subtitle": "v0.2.8",
+    "Description": [
+      "Hellion Inventory:",
+      "Primary: K1A, UMP45, FMG-9",
+      "Secondary: P226, 1911 TACOPS",
+      "Primary Gadget: Abbadon drone (4x)",
+      "Secondary Gadget: Flashbang (2x)",
+      "\nAbbadon drone Notes:",
+      "Duration: 5s",
+      "Explosion Rate: 0.6s",
+      "\nGadget description:",
+      "Its an explosive replica of RAM.",
+      "It has no camera controls and is invulnerable to damage.",
+      "Explosions only occur when its is on the ground or colliding with a wall.",
+      "\nIn-game setting notes:",
+      "Enabling Advanced Drone Deployment is recommended."
+    ]
+  },
+  {
+    "ID": 3,
+    "ImageID": "0x3361460768",
+    "Title": "Attacker Changes",
+    "Subtitle": "v0.2.8",
+    "Description": [
+      "Deadeye:",
+      "+ M590A1",
+      "+ .44 Mag Semi-Auto",
+      "Baphomet:",
+      "+ FO-12",
+      "+ SMG-11",
+      "X-Ray:",
+      "+ 9x19VSN",
+      "+ 5.7 USG",
+      "Chaos:",
+      "+ 9mm C1",
+      "+ P229",
+      "Nitro:",
+      "+ P229",
+      "Chaos:",
+      "+ 9mm C1",
+      "+ P229"
+    ]
+  },
+  {
+    "ID": 4,
+    "ImageID": "0x1D103DF9BB",
+    "Title": "Defender Changes",
+    "Subtitle": "v0.2.8",
+    "Description": [
+      "Specter:",
+      "+ TYPE-89",
+      "+ M45 MEUSOC",
+      "Jade:",
+      "+ V308",
+      "X-Ray:",
+      "+ 9x19VSN",
+      "+ 5.7 USG",
+      "Mirage:",
+      "+ 417",
+      "+ P12"
+    ]
+  }
+]
