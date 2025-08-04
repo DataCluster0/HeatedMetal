@@ -94,5 +94,19 @@
       "+ 417",
       "+ P12"
     ]
+  },
+  {
+    "ID": 5,
+    "ImageID": "0x5F1983C05",
+    "Title": "Patch Notes",
+    "Subtitle": "v0.2.8.1",
+    "Description": [
+      "Fixes:",
+      "* Backend Optimizations.",
+      "* Crash Fixes.",
+      "* Editor saving fixes.",
+      "",
+      "Check latest GitHub release for more details."
+    ]
   }
 ]
