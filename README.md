@@ -1,6 +1,6 @@
 ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/Logo.png)
 # Discord
-- [Operation Throwback](https://discord.gg/JGA9WPF4K8)
+- [Heated Metal](https://discord.gg/7mR9VxBxWd)
 
 # About
 > [!NOTE]

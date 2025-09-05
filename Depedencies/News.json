@@ -3,9 +3,9 @@
     "ID": -1,
     "ImageID": "0xA115A2742",
     "Title": "Discord",
-    "Subtitle": "discord.gg/JGA9WPF4K8",
+    "Subtitle": "discord.gg/7mR9VxBxWd",
     "Description": [
-      "Consider joining the Official Throwback Discord for support or community made content!"
+      "Consider joining the Official Discord for support or community made content!"
     ]
   },
   {
@@ -105,6 +105,34 @@
       "* Backend Optimizations.",
       "* Crash Fixes.",
       "* Editor saving fixes.",
+      "",
+      "Check latest GitHub release for more details."
+    ]
+  },
+  {
+    "ID": 6,
+    "ImageID": "0x47059C8D98",
+    "Title": "New operator Shellshock",
+    "Subtitle": "v0.2.9",
+    "Description": [
+      "Shellshock Inventory:",
+      "Primary: MP5-SD, MP5, MP5-K",
+      "Secondary: P9, USP 40",
+      "Primary Gadget: Shrapnel Grenade (4x)",
+      "Secondary Gadget: Hard Breach Charge"
+    ]
+  },
+  {
+    "ID": 7,
+    "ImageID": "0x5F1983C05",
+    "Title": "Patch Notes",
+    "Subtitle": "v0.2.9",
+    "Description": [
+      "Fixes:",
+      "* Backend Improvements.",
+      "Additions:",
+      "+ New attack operator.",
+      "+ UI changes.",
       "",
       "Check latest GitHub release for more details."
     ]
