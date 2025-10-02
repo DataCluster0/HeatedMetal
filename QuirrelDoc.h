@@ -258,6 +258,9 @@ string GetModuleVersionString(string ModuleName);
 
 /////////////////////////////////////////////
 
+/// @brief Returns the current engine time. (Time from game start)
+float EngineTime();
+
 /// @brief Returns the current delta time.
 float DeltaTime();
 

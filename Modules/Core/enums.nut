@@ -53,6 +53,12 @@ global enum eExplosion
 	NitroCell,
 	Impact,
 	Smoke,
+	SmokeSnowball,
+	BreachCharge,
+	HardBreachCharge,
+	ExothermicCharge,
+	Claymore,
+	Bonfire,
 	Gas,
 	Flash,
 	Dazzler,
@@ -320,18 +326,10 @@ global enum eCharacter
 	// HM Operators
 
 	// ATK
-	DEADEYE    = 0x95AC10BA36,
-	BAPHOMET   = 0x95AC10CA36,
-	XRAY       = 0x95AC10FA36,
-	CHAOS      = 0x95AC112A36,
-	NITRO      = 0x95AC113A36,
-
-	// DEF
-	SPECTER    = 0x95AC10AA36,
-	JADE       = 0x87803246B,
-	MIRAGE     = 0x95AC10EA4B,
-	MONARCH    = 0x95AC10FA4B,
-	RAZOR      = 0x95AC111A4B,
+	SHELLSHOCK = 0x95AC115A36
+	HELLION    = 0x95AC114A36
+	NITRO      = 0x95AC113A36
+	XRAY       = 0x95AC10FA36
 }
 
 global enum eBone

@@ -15,8 +15,7 @@
 # Information
 >[!TIP]
 > Default Keybinds:
-> - **F1**: Console
-> - **F2**: Configurator (Playlist, Weapon Editor, etc.)
+> - **F1**: Context Menu (Console, Inventory, Etc..)
 > - **F3**: Map Editor
 > - Use ``Setup`` in the **Console** to make keybind changes.
 
