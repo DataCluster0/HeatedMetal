@@ -241,8 +241,12 @@ bool RegisterCommand(function Func, string Name, string Arguments, string Descri
 /// @return Heated Metal version string (Ex: 0.1.8)
 string HMVersion();
 
-/// @return Heated Metal version int (Ex: 0x018)
-uint32 HMVersionInt();
+/// @return Heated Metal Major ver number
+uint32 HMMajor();
+uint32 HMMinor();
+uint32 HMPatch();
+uint32 HMRevision();
+uint32 HMRevisionPatch();
 
 ///////////////////////////////////////////// 
 // Modules
