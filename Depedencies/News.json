@@ -9,44 +9,16 @@
     ]
   },
   {
-    "ID": 6,
-    "ImageID": "0x47059C8D98",
-    "Title": "New operator Shellshock",
-    "Subtitle": "v0.2.9",
-    "Description": [
-      "Shellshock Inventory:",
-      "Primary: MP5-SD, MP5, MP5-K",
-      "Secondary: P9, USP 40",
-      "Primary Gadget: Shrapnel Grenade (4x)",
-      "Secondary Gadget: Hard Breach Charge"
-    ]
-  },
-  {
-    "ID": 7,
+    "ID": 9,
     "ImageID": "0x5F1983C05",
     "Title": "Patch Notes",
-    "Subtitle": "v0.2.9",
-    "Description": [
-      "Fixes:",
-      "* Backend Improvements.",
-      "Additions:",
-      "+ New attack operator.",
-      "+ UI changes.",
-      "",
-      "Check latest GitHub release for more details."
-    ]
-  },
-  {
-    "ID": 8,
-    "ImageID": "0x5F1983C05",
-    "Title": "Patch Notes",
-    "Subtitle": "v0.3.0 R1",
+    "Subtitle": "v0.3.0",
     "Description": [
       "Fixes:",
       "* Backend Improvements.",
       "* Crash Fixes",
       "Additions:",
-      "+ UI Rework.",
+      "+ Editor Rework.",
       "+ Other Improvements.",
       "",
       "Check latest GitHub release for more details."
