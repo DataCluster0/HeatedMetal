@@ -7,7 +7,7 @@ function RegisterModuleImpl(Name, Table) {
 
 	function Remove() {
 		if (Name in Globals)
-			delete Globals[Name]
+			Globals.rawdelete(Name)
 	}
 
 	AddCallback_Shutdown(Remove)
@@ -17,7 +17,7 @@ function Init() {
 	Globals["RegisterModule"] <- RegisterModuleImpl
 
 	function Remove() {
-		delete Globals["RegisterModule"]
+		Globals.rawdelete("RegisterModule")
 	}
 
 	AddCallback_Shutdown(Remove)
