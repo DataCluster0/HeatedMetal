@@ -981,6 +981,37 @@ void AddCallback_AccessDrone(function Func);
 void AddCallback_Ping(function Func);
 
 /////////////////////////////////////////////
+// GADGET CALLBACKS
+/////////////////////////////////////////////
+
+/// @brief Called when a Gadget is spawned
+/// @param PlayerController  | Instigator
+/// @param Entity            | Gadget
+void AddCallback_GadgetSpawned(function Func);
+
+/// @brief Called when a Gadget has stuck to a wall
+/// @param PlayerController  | Instigator
+/// @param Entity            | Gadget
+void AddCallback_GadgetStickied(function Func);
+
+/// @brief Called when a Gadget has blown up
+/// @param PlayerController  | Instigator
+/// @param Entity            | Gadget
+void AddCallback_GadgetDetonated(function Func);
+
+/////////////////////////////////////////////
+// CHARACTER CALLBACKS
+/////////////////////////////////////////////
+
+/// @brief Called when a Character has started to fall
+/// @param PlayerController  | Instigator
+void AddCallback_CharacterFalling(function Func);
+
+/// @brief Called when a Character has landed
+/// @param PlayerController  | Instigator
+void AddCallback_CharacterLanding(function Func);
+
+/////////////////////////////////////////////
 // GAMEMODE CALLBACKS
 /////////////////////////////////////////////
 

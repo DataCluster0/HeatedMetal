@@ -1,6 +1,10 @@
 ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/Logo.png)
+
 # Discord
 - [Heated Metal](https://discord.gg/7mR9VxBxWd)
+
+# Donations
+<a href="https://www.buymeacoffee.com/DataCluster0" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-yellow.png" style="width: 217px !important; height: 60px !important;" >
 
 # About
 > [!NOTE]
@@ -42,57 +46,27 @@
 > ```
 
 # Features
+Full extended scripting language (***Quarrel***)
+Multi-pick for all operators
+# Enhanced Main Menu
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/MainMenu.gif" style="width: 500px !important; height: 300px !important;" >
 
-<details>
-<summary><h2>General</h2></summary>
-  
-- Full extended scripting language (***Quarrel***)
-- Multi-pick for all operators
-- ## Enhanced Main Menu
-- - ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/MainMenu.gif)
-</details>
+<summary><h2>Unrestricted Items</h2></summary>
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CharacterHeadgear.gif" style="width: 500px !important; height: 300px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CharacterUniform.gif" style="width: 500px !important; height: 300px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponAttachments.png" style="width: 500px !important; height: 250px !important;" >
 
-<details>
-<summary><h2>Unrestricted Cosmetics</h2></summary>
-  
-- ### Headgear
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CharacterHeadgear.gif)
-- ### Uniforms
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CharacterUniform.gif)
-- ### Attachments
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponAttachments.png)
-</details>
-
-<details>
 <summary><h2>Map Editor</h2></summary>
-  
-- ### Modes
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/EditorModes.gif)
-- ### World Settings
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/EditorWorld.gif)
-</details>
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/EditorModes.gif" style="width: 500px !important; height: 300px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/EditorWorld.gif" style="width: 500px !important; height: 300px !important;" >
 
-
-<details>
 <summary><h2>Restored Content</h2></summary>
-  
-- ### Cut Weapons
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CutContent1.png)
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CutContent2.png)
-- ### Unique uniforms (Recruits)
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/RecruitUniforms.png)
-</details>
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CutContent1.png" style="width: 500px !important; height: 200px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CutContent2.png" style="width: 500px !important; height: 200px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/RecruitUniforms.png" style="width: 500px !important; height: 250px !important;" >
 
-<details>
 <summary><h2>Custom Features</h2></summary>
-  
-- ### Operators
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/OperatorAlbumATK.png)
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/OperatorAlbumDEF.png)
-- ## Attachment Skins
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponAttachmentSkins.gif)
-- ## Weapon Inspecting
-- ![](https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponInspect.gif)
-</details>
-
-# And more!
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/OperatorAlbumATK.png" style="width: 500px !important; height: 300px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/OperatorAlbumDEF.png" style="width: 500px !important; height: 300px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponAttachmentSkins.gif" style="width: 500px !important; height: 300px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponInspect.gif" style="width: 500px !important; height: 300px !important;" >

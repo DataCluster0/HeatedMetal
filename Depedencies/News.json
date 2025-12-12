@@ -23,5 +23,15 @@
       "",
       "Check latest GitHub release for more details."
     ]
+  },
+  {
+    "ID": 10,
+    "ImageID": "0x5F1983C05",
+    "Title": "Patch Notes",
+    "Subtitle": "v0.3.1",
+    "Description": [
+      "",
+      "Check latest GitHub release for more details."
+    ]
   }
 ]
