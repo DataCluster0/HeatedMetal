@@ -2,34 +2,22 @@
   {
     "ID": -1,
     "ImageID": "0xA115A2742",
-    "Title": "Discord",
+    "Title": "Consider Discord",
     "Subtitle": "discord.gg/7mR9VxBxWd",
     "Description": [
       "Consider joining the Official Discord for support or community made content!"
     ]
   },
   {
-    "ID": 9,
+    "ID": 11,
     "ImageID": "0x5F1983C05",
-    "Title": "Patch Notes",
-    "Subtitle": "v0.3.0",
+    "Title": "Patch Notes ( v0.3.3 )",
+    "Subtitle": "v0.3.3",
     "Description": [
-      "Fixes:",
-      "* Backend Improvements.",
-      "* Crash Fixes",
-      "Additions:",
-      "+ Editor Rework.",
-      "+ Other Improvements.",
-      "",
-      "Check latest GitHub release for more details."
-    ]
-  },
-  {
-    "ID": 10,
-    "ImageID": "0x5F1983C05",
-    "Title": "Patch Notes",
-    "Subtitle": "v0.3.1",
-    "Description": [
+      "Improved:",
+      "+ Editor.",
+      "+ Main Menu.",
+      "+ Auto Loading.",
       "",
       "Check latest GitHub release for more details."
     ]
