@@ -50,20 +50,13 @@ function Network(Name, Table, Sender)
 {
     if(Name != NetworkName) return;
 
-    switch (Table.Type) {
-        case "buy":
-        {
-            BuyServerIml(Sender)
-            break;
-        }
-        case "buyr":
-        {
-            BuyRspImpl(Table)
-            break;
-        }
-
-        default:
-        break;
+    if (Table.Type == "buy")
+    {
+        BuyServerIml(Sender)
+    }
+    else
+    {
+        BuyRspImpl(Table)
     }
 }
 

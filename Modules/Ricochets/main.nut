@@ -7,6 +7,7 @@ local math = require("math")
 const RICOCHET_COUNT = 2
 
 const RICOCHET_DEBUG = false
+const DamageAmount = 10
 
 local BulletTable = {}
 
@@ -21,7 +22,7 @@ function DebugDraw() {
 	}
 
 	foreach(Bullet in BulletRemoveQueue) {
-		delete BulletTable[Bullet]
+		BulletTable.rawdelete(Bullet)
 	}
 }
 
@@ -61,12 +62,7 @@ function Bullet(Start, End, Normal, Delta, Entity) {
 
 				local Ent = Hit.Entity()
 				if (Ent) {
-					local Damage = Ent.DamageComponent()
-					if (Damage) {
-						Damage.SetHealth(math.clamp(Damage.GetHealth() - 5, 0, Damage.GetMaxHealth()))
-
-						return;
-					}
+					Ent.TakeDamage(DamageAmount, eDamageType.Bullet);
 				}
 
 

@@ -1,7 +1,7 @@
 {
     "Name": "HMCore",
     "Author": "Zer0Bytes",
-    "Version" : 1,
-    "VersionString" : "1.0.0",
+    "Version" : 2,
+    "VersionString" : "0.3.4.1",
     "Priority": 99
 }
