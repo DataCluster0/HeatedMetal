@@ -21,5 +21,19 @@
       "",
       "Check latest GitHub release for more details."
     ]
+  },
+  {
+    "ID": 12,
+    "ImageID": "0x5F1983C05",
+    "Title": "Patch Notes ( v0.3.5 )",
+    "Subtitle": "v0.3.5",
+    "Description": [
+      "Fixed:",
+      "* Gameplay.",
+      "Improved:",
+      "+ Editor.",
+      "",
+      "Check latest GitHub release for more details."
+    ]
   }
 ]
