@@ -30,7 +30,7 @@ function Command(Args)
 	print("Prep phase skip | Disabled!")
 }
 
-RegisterCommand(Start, "StartSkibidi", "", "Run like hell");
+RegisterCommand( Command, "SkipPrepPhase", "", "");
 
 return {
 

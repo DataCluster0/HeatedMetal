@@ -1,9 +1,8 @@
-global enum eNotifType
+global enum eTeamColor
 {
-	Info,
-	Warning,
-	Error,
-	Success
+	Neutral,
+	Color0,
+	Color1
 };
 
 global enum eGamestate

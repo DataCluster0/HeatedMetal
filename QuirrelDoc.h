@@ -577,6 +577,10 @@ class Game // Native
 		/// @brief Returns the Destruction Component if the entity has one
 		/// Disable this to disable destruction
 		Component* DestructionComponent();
+
+		/// @brief Returns the Physics Component if the entity has one
+		/// Disable this to disable Collision
+		Component* PhysicComponent();
 	};
 
 	class VolumetricFog
@@ -835,6 +839,13 @@ class Game // Native
 	/// @param End		   | End Origin
 	/// @param Count       | How many surfaces does it go trough
 	RaycastResult Raycast(Vector3 Start, Vector3 End, uint8 Count);
+
+	/// @brief Adds a In-Game notification (Kill feed)
+	/// @param Text       | Notification Text
+	/// @param Color 	  | What color the notification is going to be. (eTeamColor)
+	/// @param Replicate  | Should we send this to clients. (Server optional | Default : false)
+	/// @param Receiver   | Who Receives the notification if empty and Replicate is true will replicate to everyone. (Server optional)
+	void AddNotification(string Text, uint32 Color, bool Replicate /*optional*/, PlayerController Receiver /*optional*/);
 
 	/////////////////////////////////////////////
 

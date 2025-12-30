@@ -57,7 +57,7 @@ function BulletHit(start, end, normal, delta, entity) {
 }
 
 function RespawnToilets() {
-	local father = Game.GetEntity(0x5D1947CD9)
+	local father = Game.GetEntity(0x1E600B8D1C7C7F0)
 	if (!father)
 		return
 
@@ -137,11 +137,11 @@ function Main() {
 	print("Skibidi Init")
 }
 
-function Start(strarray) {
+function start(strarray) {
 	Main()
 }
 
-RegisterCommand(Start, "StartSkibidi", "", "Run like hell");
+RegisterCommand(start, "StartSkibidi", "", "Run like hell");
 
 return {
 
