@@ -369,4 +369,23 @@ global enum eBone {
 	RightAss,
 }
 
+global enum eCollisionTag
+{
+	Default,
+	Static,
+	Pawn,
+	AIPawn,
+	Drone,
+	Grenade,
+	Dynamic,
+	Interactive,
+	DetectionZone,
+	Ragdoll,
+	BarbedWire,
+	Glass,
+	WorldItem,
+	Invisible,
+	InvisibleRappelCollision
+};
+
 return {}

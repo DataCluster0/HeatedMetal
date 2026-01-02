@@ -229,7 +229,7 @@ bool Sleep(uint32 MilliSeconds);
 Backspace Capslock Ctrl Delete Down End Enter Esc Home Insert
 RightAlt LeftAlt RightCtrl LeftCtrl RightMouse LeftMouse
 MiddleMouse RightShift LeftShift NumLock Pageup Pagedown
-Pause ScrollLock Shift Space Tab Up XButton1 XButton2
+Pause ScrollLock Shift Space Tab Up Mouse4 Mouse5
 */
 
 /// @brief Check if the key is currently pressed (Client Side)
@@ -510,6 +510,13 @@ class Game // Native
 		string Name();
 	};
 
+	class PhysicComponent : Component
+	{
+		/// @brief Set/Get Collision Tag (eCollisionTag)
+		uint32 GetCollisionTag();
+		void SetCollisionTag(uint32 Tag);
+	};
+
 	class Entity : ManagedObject
 	{
 		/// @brief Get the name of the entity
@@ -529,6 +536,10 @@ class Game // Native
 		/// @brief Set/Get the entity Scale
 		Vector3 GetScale();
 		void SetScale(Vector3 Scale);
+
+		/// @brief Set/Get the entity Min/Max
+		Vector3 GetMin();
+		Vector3 GetMax();
 
 		/// @brief Gets the entity Up/Right/Forward vector
 		Vector3 GetRight();
@@ -580,7 +591,7 @@ class Game // Native
 
 		/// @brief Returns the Physics Component if the entity has one
 		/// Disable this to disable Collision
-		Component* PhysicComponent();
+		PhysicComponent* PhysicComponent();
 	};
 
 	class VolumetricFog
@@ -755,11 +766,11 @@ class Game // Native
 		/// @brief Get the hit normal
 		Vector3 Normal();
 
-		/// @brief Get the entity if one was hit
+		/// @brief Get the entity
 		Entity* Entity();
 
-		/// @brief Get the collision component if one was hit
-		Component* Component();
+		/// @brief Get the Physic Component
+		PhysicComponent* Component();
 	};
 
 	class RaycastResult
