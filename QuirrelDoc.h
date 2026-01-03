@@ -17,14 +17,14 @@
 
 typedef const char* string;
 
-typedef signed char     int8;
-typedef short           int16;
-typedef int             int32;
-typedef long long       int64;
+typedef signed char int8;
+typedef short int16;
+typedef int int32;
+typedef long long int64;
 
-typedef unsigned char   uint8;
-typedef unsigned short  uint16;
-typedef unsigned int    uint32;
+typedef unsigned char uint8;
+typedef unsigned short uint16;
+typedef unsigned int uint32;
 typedef unsigned long long uint64;
 
 typedef function;
@@ -34,6 +34,10 @@ template <typename Type>
 struct Array
 {
 };
+
+// forward
+typedef class PlayerController;
+typedef class Entity;
 
 //////////////////////////////////////////////
 // Math Classes
@@ -243,14 +247,14 @@ bool RegisterCommand(function Func, string Name, string Arguments, string Descri
 /// @return Heated Metal version string (Ex: 0.1.8)
 string HMVersion();
 
-/// @return Heated Metal Major ver number
+/// @return Heated Metal version numbers.
 uint32 HMMajor();
 uint32 HMMinor();
 uint32 HMPatch();
 uint32 HMRevision();
 uint32 HMRevisionPatch();
 
-///////////////////////////////////////////// 
+/////////////////////////////////////////////
 // Modules
 
 /// @return Is the module currently loaded?
@@ -282,9 +286,8 @@ int64 RandomInt(int64 Max);
 /// @brief Returns a random int from {Min} to {Max}.
 int64 RandomIntRange(int64 Min, int64 Max);
 
-///////////////////////////////////////////// 
+/////////////////////////////////////////////
 // Network
-typedef PlayerController;
 
 /// @brief Sends a table over the network (see AddCallback_NetworkTable)
 /// @param string           | Table name for callback
@@ -304,7 +307,7 @@ class Renderer // SDK Native
 	/// @brief Calculates alpha value based on distance.
 	float DistanceToAlpha(float Distance, float MaxDistance, float MinAlpha = 25.0, float MaxAlpha = 255.0);
 
-	///////////////////////////////////////////// 
+	/////////////////////////////////////////////
 	// 3D
 
 	/// @brief Draws a 3D text at the specified origin.
@@ -328,7 +331,7 @@ class Renderer // SDK Native
 	/// @brief Draws a 3D cube.
 	bool Cube(Vector3 Origin, Vector3 Angles, float Size, Color Color, float Thickness);
 
-	///////////////////////////////////////////// 
+	/////////////////////////////////////////////
 	// 2D
 
 	/// @brief Draws a text at specified screen coordinates
@@ -340,9 +343,6 @@ class Renderer // SDK Native
 	/// @brief Draws a circle at specified screen coordinates
 	bool Circle2D(Vector2 ScreenPos, Color Color, float Radius, int NumSegments, float Thickness);
 };
-
-// vs code forward
-class Entity;
 
 //////////////////////////////////////////////
 // Game class
@@ -384,6 +384,16 @@ class Game // Native
 
 	class WeaponComponent : Component
 	{
+
+		/// @brief Returns weapon data name (wip names most of the time)
+		string Name();
+
+		/// @brief Returns true if the weapon is reloading
+		bool IsReloading();
+
+		/// @brief Set/Get the current clip count
+		uint32 GetAmmo();
+		void SetAmmo(uint32 Value);
 
 		class DamageWeaponData
 		{
@@ -498,16 +508,6 @@ class Game // Native
 
 		/// @brief Returns the Animation Data instance for the weapon
 		AnimationWeaponData* GetAnimationData();
-
-		/// @brief Set/Get the current clip count
-		uint32 GetAmmo();
-		void SetAmmo(uint32 Value);
-
-		/// @brief Returns true if the weapon is reloading
-		bool IsReloading();
-
-		/// @brief Returns weapon data name (wip names most of the time)
-		string Name();
 	};
 
 	class PhysicComponent : Component
@@ -541,7 +541,7 @@ class Game // Native
 		Vector3 GetMin();
 		Vector3 GetMax();
 
-		/// @brief Gets the entity Up/Right/Forward vector
+		/// @brief Get the entity Up/Right/Forward vector
 		Vector3 GetRight();
 		Vector3 GetForward();
 		Vector3 GetUp();
@@ -578,6 +578,9 @@ class Game // Native
 		/// @brief Take damage by amount and type.
 		void TakeDamage(int32 Amount, uint32 DamageType);
 
+		/// @brief Will make each client sync the entities component data (Host Only)
+		void SyncComponents();
+
 		/// @brief Returns the Damage Component if the entity has one
 		DamageComponent* DamageComponent();
 
@@ -593,6 +596,287 @@ class Game // Native
 		/// Disable this to disable Collision
 		PhysicComponent* PhysicComponent();
 	};
+
+	class PlayerController
+	{
+		/// @brief Returns the name of the player
+		string Name();
+
+		/// @brief Use eTeam from the core module
+		enum Team : uint8
+		{
+			A,
+			B,
+			Spectator,
+			Invalid
+		};
+
+		/// @brief Returns the controller team
+		Team Team();
+
+		/// @brief Returns the PlayerID of the controller
+		uint64 PlayerID();
+
+		/// @brief Returns the spectated controller if spectating
+		PlayerController* Spectator();
+
+		/// @brief Returns the controller entity
+		Entity* Entity();
+
+		/// @brief Sets the controllers entity origin
+		void SetOrigin(Vector3 Origin);
+
+		/// @brief Returns the current instance of a weapon being held by the controller
+		WeaponComponent* Weapon();
+
+		/// @brief Returns the damage component instance
+		DamageComponent* Damage();
+
+		/// @brief Defined as eItemSlot in core module
+		enum ItemSlot
+		{
+			Primary,
+			Secondary,
+			Tertiary,
+
+			PrimaryGadget,
+			SecondaryGadget,
+
+			Character // Causes bugs use with caution
+		};
+
+		/// @brief Swaps the currently equipped item with the provided ObjectID
+		void SetItemSlot(ItemSlot Slot, uint64 ObjectID);
+
+		/// @brief Returns the ObjectID of the equipped Primary
+		uint64 PrimaryID();
+
+		/// @brief Returns the ObjectID of the equipped Secondary
+		uint64 SecondaryID();
+
+		/// @brief Returns the ObjectID of the equipped Tertiary
+		uint64 TertiaryID();
+
+		/// @brief Returns the ObjectID of the equipped Primary Gadget
+		uint64 PrimaryGadgetID();
+
+		/// @brief Returns the ObjectID of the equipped Secondary Gadget
+		uint64 SecondaryGadgetID();
+
+		/// @brief Returns the ObjectID of the equipped Headgear
+		uint64 HeadgearID();
+
+		/// @brief Returns the ObjectID of the equipped Uniform
+		uint64 UniformID();
+
+		/// @brief Returns the ObjectID of the character
+		/// enum eCharacter in the core module
+		uint64 CharacterID();
+	};
+
+	//////////////////////////////////////////////
+	// Controller & Entity Functions
+	/////////////////////////////////////////////
+
+	/// @brief Get the local PlayerController instance
+	PlayerController* GetLocalPlayer();
+
+	/// @brief Get the local view PlayerController instance
+	/// (if the local PlayerController is spectating an other PlayerController this will return the spectated PlayerController)
+	PlayerController* GetViewPlayer();
+
+	/// @brief Get PlayerController instance by PlayerID
+	PlayerController* GetPlayerByID();
+
+	/// @brief Returns an array of PlayerController instances
+	Array<PlayerController*> GetPlayerList();
+
+	/// @brief Returns an array of AI Entity instances
+	Array<Entity*> GetAIList();
+
+	/////////////////////////////////////////////
+
+	/// @brief Returns existing duplicates of an entity
+	/// @param ObjectID | Master ObjectID
+	Array<Entity*> GetDuplicatedEntities(uint64 ObjectID);
+
+	/// @brief Get Entity if an instance exists
+	/// @return Returns an Entity instance of an Object
+	Entity* GetEntity(uint64 ObjectID);
+
+	/// @brief Create an Entity from external preloads
+	/// @return Returns a duplicated entity
+	Entity* CreateExternalEntity(uint64 ObjectID);
+
+	/////////////////////////////////////////////
+
+	/// @brief Get Object pointer if exists
+	/// @return Returns a Pointer instance of an Object
+	Pointer* GetObject(uint64 ObjectID);
+
+	//////////////////////////////////////////////
+	// Game State Functions
+	/////////////////////////////////////////////
+
+	/// @return Are we the host?
+	bool IsHost();
+
+	/// @return Is the current host config in ThirdPerson?
+	bool IsThirdPerson();
+
+	/// @return Is the current host config in RTS?
+	bool IsRTS();
+
+	/// @brief Returns the ObjectID of the current World
+	uint64 GetWorld();
+
+	/// @brief Returns the ObjectID of the current GameMode
+	uint64 GetGameMode();
+
+	/// @brief Returns the ObjectID of the current Time Of Day layer
+	uint64 GetTimeOfDay();
+
+	/// @brief Returns the ObjectID of the current AI Difficulty layer
+	uint64 GetDifficulty();
+
+	/// @return Returns the current game state
+	uint32 GetGameState();
+
+	//////////////////////////////////////////////
+	// Game Time Functions
+	/////////////////////////////////////////////
+
+	/// @return Is the Phase Timer Paused
+	bool IsTimerPaused();
+
+	/// @brief Pause/Unpause the Phase Timer
+	void SetTimerPaused(bool IsPaused);
+
+	/// @brief Set/Get the phase timers time
+	void SetTimerRemaining(int32 TimeInSeconds);
+	float GetTimerRemaining();
+
+	//////////////////////////////////////////////
+	// Game Round Functions
+	/////////////////////////////////////////////
+	// (eAlliance)
+
+	/// @brief Force wins the current round for that Allience
+	void SetRoundWin(uint32 Alliance);
+
+	/// @brief Set/Get the current match round wins
+	void SetRoundWinCount(uint32 Alliance, uint32 Count);
+	uint32 GetRoundWinCount(uint32 Alliance);
+
+	//////////////////////////////////////////////
+	// Game Utility Functions
+	/////////////////////////////////////////////
+
+	/// @brief Adds a In-Game notification (Kill feed)
+	/// @param Text       | Notification Text
+	/// @param Color 	  | What color the notification is going to be. (eTeamColor)
+	/// @param Replicate  | Should we send this to clients. (Server optional | Default : false)
+	/// @param Receiver   | Who Receives the notification if empty and Replicate is true will replicate to everyone. (Server optional)
+	void AddNotification(string Text, uint32 Color, bool Replicate /*optional*/, PlayerController Receiver /*optional*/);
+
+	/// @brief Creates a dust particle at a certain location
+	/// Has a hard limit of 100 (will conflict with Dust Painting)
+	void CreateDust(Vector3 Origin, float Radius, Color Color);
+
+	/// @brief Use eExplosionType from the core module
+	enum ExplosionType : uint32
+	{
+		NitroCell,
+		Impact,
+		Smoke,
+		Gas,
+		Flash,
+		Dazzler,
+		ConcussionMine,
+		ConcussionGrenade,
+		ContactGrenade,
+		ClusterCharge,
+		Shumika,
+		Volcan,
+		EMP,
+		Airjab,
+		AirjabOld,
+		LVExplosiveLance,
+		ExplosionBelt
+	};
+
+	/// @brief Creates an explosion at the specified origin
+	/// Effects have a hard limit for some time
+	/// Maximum of 50 calls per 5 seconds
+	/// @param Origin      | Explosion Origin
+	/// @param Type		   | Explosion Type
+	/// @param Owner       | Who takes the credit (Optional)
+	void CreateExplosion(Vector3 Origin, ExplosionType Type, PlayerController Owner /*optional*/);
+
+	class CastHit
+	{
+		/// @brief Get the hit origin
+		Vector3 Origin();
+
+		/// @brief Get the hit delta
+		float Delta();
+
+		/// @brief Get the hit normal
+		Vector3 Normal();
+
+		/// @brief Get the entity
+		Entity* Entity();
+
+		/// @brief Get the Physic Component
+		PhysicComponent* Component();
+	};
+
+	class RaycastResult
+	{
+		/// @brief Did the raycast hit anything?
+		bool DidHit();
+
+		/// @brief Get the array of hits
+		Array<CastHit> Hits();
+	};
+
+	/// @brief Fires a raycast from and to the specified origin coordinates (Uses projectile collision)
+	/// @param Start       | Start Origin
+	/// @param End		   | End Origin
+	/// @param Count       | How many surfaces does it go trough
+	RaycastResult Raycast(Vector3 Start, Vector3 End, uint8 Count);
+
+	//////////////////////////////////////////////
+	// Camera & Skylight
+	/////////////////////////////////////////////
+
+	class View
+	{
+		/// @brief Get camera Right
+		/// @return Returns the right direction vector of the camera as a quaternion.
+		Quaternion Right();
+
+		/// @brief Get camera Up
+		/// @return Returns the up direction vector of the camera as a quaternion.
+		Quaternion Up();
+
+		/// @brief  Get camera Forward
+		/// @return Returns the forward direction vector of the camera as a Vector4.
+		Vector4 Forward();
+
+		/// @brief Get camera Origin
+		/// @return Returns the position of the camera in the world as a Vector4.
+		Vector4 Origin();
+
+		/// @brief Get Camera Fov
+		/// @return Returns the field of view of the camera as a Vector2.
+		Vector2 Fov();
+	};
+
+	/// @brief Returns the current view camera instance
+	View* GetCamera();
+
+	/////////////////////////////////////////////
 
 	class VolumetricFog
 	{
@@ -659,265 +943,8 @@ class Game // Native
 		VolumetricFog GetVolumetricFog();
 	};
 
-	class PlayerController
-	{
-		/// @brief Returns the name of the player
-		string Name();
-
-		/// @brief Use eTeam from the core module
-		enum Team : uint8
-		{
-			A,
-			B,
-			Spectator,
-			Invalid
-		};
-
-		/// @brief Returns the controller team
-		Team Team();
-
-		/// @brief Returns the controller entity
-		Entity* Entity();
-
-		/// @brief Sets the controllers entity origin
-		void SetOrigin(Vector3 Origin);
-
-		/// @brief Returns the current instance of a weapon being held by the controller
-		WeaponComponent* Weapon();
-
-		/// @brief Returns the damage component instance
-		DamageComponent* Damage();
-
-		/// @brief Defined as eItemSlot in core module
-		enum ItemSlot
-		{
-			Primary,
-			Secondary,
-			Tertiary,
-
-			PrimaryGadget,
-			SecondaryGadget,
-
-			Character // Causes bugs use with caution
-		};
-
-		/// @brief Swaps the currently equipped item with the provided ObjectID
-		void SetItemSlot(ItemSlot Slot, uint64 ObjectID);
-
-		/// @brief Returns the ObjectID of the equipped Primary
-		uint64 PrimaryID();
-
-		/// @brief Returns the ObjectID of the equipped Secondary
-		uint64 SecondaryID();
-
-		/// @brief Returns the ObjectID of the equipped Tertiary
-		uint64 TertiaryID();
-
-		/// @brief Returns the ObjectID of the equipped Primary Gadget
-		uint64 PrimaryGadgetID();
-
-		/// @brief Returns the ObjectID of the equipped Secondary Gadget
-		uint64 SecondaryGadgetID();
-
-		/// @brief Returns the ObjectID of the equipped Headgear
-		uint64 HeadgearID();
-
-		/// @brief Returns the ObjectID of the equipped Uniform
-		uint64 UniformID();
-
-		/// @brief Returns the ObjectID of the character
-		/// enum eCharacter in the core module 
-		uint64 CharacterID();
-	};
-
-	class View
-	{
-		// Client Side
-
-		/// @brief Get camera Right
-		/// @return Returns the right direction vector of the camera as a quaternion.
-		Quaternion Right();
-
-		/// @brief Get camera Up
-		/// @return Returns the up direction vector of the camera as a quaternion.
-		Quaternion Up();
-
-		/// @brief  Get camera Forward
-		/// @return Returns the forward direction vector of the camera as a Vector4.
-		Vector4 Forward();
-
-		/// @brief Get camera Origin
-		/// @return Returns the position of the camera in the world as a Vector4.
-		Vector4 Origin();
-
-		/// @brief Get Camera Fov
-		/// @return Returns the field of view of the camera as a Vector2.
-		Vector2 Fov();
-	};
-
-	class CastHit
-	{
-		/// @brief Get the hit origin
-		Vector3 Origin();
-
-		/// @brief Get the hit delta
-		float Delta();
-
-		/// @brief Get the hit normal
-		Vector3 Normal();
-
-		/// @brief Get the entity
-		Entity* Entity();
-
-		/// @brief Get the Physic Component
-		PhysicComponent* Component();
-	};
-
-	class RaycastResult
-	{
-		/// @brief Did the raycast hit anything?
-		bool DidHit();
-
-		/// @brief Get the array of hits
-		Array<CastHit> Hits();
-	};
-
-	//////////////////////////////////////////////
-	// Game Time Functions
-	/////////////////////////////////////////////
-	/// @return Is the Phase Timer Paused
-	bool IsTimerPaused();
-
-	/// @brief Pause/Unpause the Phase Timer
-	void SetTimerPaused(bool IsPaused);
-
-	/// @brief Set/Get the phase timers time
-	void SetTimerRemaining(int32 TimeInSeconds);
-	float GetTimerRemaining();
-
-	//////////////////////////////////////////////
-	// Game Round Functions
-	/////////////////////////////////////////////
-	// (eAlliance)
-
-	/// @brief Force wins the current round for that Allience
-	void SetRoundWin(uint32 Alliance);
-
-	/// @brief Set/Get the current match round wins
-	void SetRoundWinCount(uint32 Alliance, uint32 Count);
-	uint32 GetRoundWinCount(uint32 Alliance);
-
-	//////////////////////////////////////////////
-	// Utility Functions
-	/////////////////////////////////////////////
-
-	/// @brief Creates a dust particle at a certain location
-	/// Has a hard limit of 100 (will conflict Dust Painting)
-	void CreateDust(Vector3 Origin, float Radius, Color Color);
-
-	/// @brief Use eExplosionType from the core module
-	enum ExplosionType : uint32
-	{
-		NitroCell,
-		Impact,
-		Smoke,
-		Gas,
-		Flash,
-		Dazzler,
-		ConcussionMine,
-		ConcussionGrenade,
-		ContactGrenade,
-		ClusterCharge,
-		Shumika,
-		Volcan,
-		EMP,
-		Airjab,
-		AirjabOld,
-	    LVExplosiveLance,
-		ExplosionBelt
-	};
-
-	/// @brief Creates an explosion at the specified origin
-	/// Effects have a hard limit for some time
-	/// Maximum of 50 calls per 5 seconds
-	/// @param Origin      | Explosion Origin
-	/// @param Type		   | Explosion Type
-	/// @param Owner       | Who takes the credit (Optional)
-	void CreateExplosion(Vector3 Origin, ExplosionType Type, PlayerController Owner /*optional*/);
-
-	/// @brief Fires a raycast from and to the specified origin coordinates (Uses projectile collision)
-	/// @param Start       | Start Origin
-	/// @param End		   | End Origin
-	/// @param Count       | How many surfaces does it go trough
-	RaycastResult Raycast(Vector3 Start, Vector3 End, uint8 Count);
-
-	/// @brief Adds a In-Game notification (Kill feed)
-	/// @param Text       | Notification Text
-	/// @param Color 	  | What color the notification is going to be. (eTeamColor)
-	/// @param Replicate  | Should we send this to clients. (Server optional | Default : false)
-	/// @param Receiver   | Who Receives the notification if empty and Replicate is true will replicate to everyone. (Server optional)
-	void AddNotification(string Text, uint32 Color, bool Replicate /*optional*/, PlayerController Receiver /*optional*/);
-
-	/////////////////////////////////////////////
-
-	/// @return Are we the host?
-	bool IsHost();
-
-	/// @return Is the current host config in ThirdPerson?
-	bool IsThirdPerson();
-
-	/// @return Is the current host config in RTS?
-	bool IsRTS();
-
-	/// @brief Get the local PlayerController instance
-	PlayerController* GetLocalPlayer();
-
-	/// @brief Returns an array of PlayerController instances
-	Array<PlayerController*> GetPlayerList();
-
-	/// @brief Returns an array of AI Entity instances
-	Array<Entity*> GetAIList();
-
 	/// @brief Returns the current skylight instance
 	Skylight* GetSkylight();
-
-	/// @brief Returns the current view camera instance
-	View* GetCamera();
-
-	/////////////////////////////////////////////
-
-	/// @brief Returns the ObjectID of the current World
-	uint64 GetWorld();
-
-	/// @brief Returns the ObjectID of the current GameMode
-	uint64 GetGameMode();
-
-	/// @brief Returns the ObjectID of the current Time Of Day layer
-	uint64 GetTimeOfDay();
-
-	/// @brief Returns the ObjectID of the current AI Difficulty layer
-	uint64 GetDifficulty();
-
-	/// @return Returns the current game state
-	uint32 GetGameState();
-
-	/////////////////////////////////////////////
-
-	/// @brief Returns existing duplicates of an entity
-	/// @param ObjectID | Master ObjectID
-	Array<Entity*> GetDuplicatedEntities(uint64 ObjectID);
-
-	/// @brief Get Entity if an instance exists
-	/// @return Returns an Entity instance of an Object
-	Entity* GetEntity(uint64 ObjectID);
-
-	/// @brief Create an Entity from external preloads
-	/// @return Returns a duplicated entity
-	Entity* CreateExternalEntity(uint64 ObjectID);
-
-	/// @brief Get Object pointer if exists
-	/// @return Returns a Pointer instance of an Object
-	Pointer* GetObject(uint64 ObjectID);
 
 	/////////////////////////////////////////////
 };
@@ -977,13 +1004,13 @@ void AddCallback_NetworkTable(function Func);
 /// @param WeaponComponent | Weapon
 
 /// @brief Weapon has zoomed in
-void AddCallback_WeaponZoomIn(function Func);   
+void AddCallback_WeaponZoomIn(function Func);
 
 /// @brief Weapon has zoomed out
 void AddCallback_WeaponZoomOut(function Func);
 
 /// @brief Weapon started firing
-void AddCallback_WeaponFire(function Func);	 
+void AddCallback_WeaponFire(function Func);
 
 /// @brief Weapon stopped firing
 void AddCallback_WeaponFireStop(function Func);
@@ -1062,7 +1089,7 @@ void AddCallback_DefuserSabotaged(function Func);
 /// @param Entity            | Bomb
 void AddCallback_DefuserSucceded(function Func);
 
-/// @brief Called when a Player Drop/Picks up a Defuser 
+/// @brief Called when a Player Drops/Picks up a Defuser
 /// @param PlayerController  | Instigator
 void AddCallback_DefuserDropped(function Func);
 void AddCallback_DefuserPickedUp(function Func);
