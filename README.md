@@ -14,7 +14,7 @@
 > Supported Seasons:
 > - ***Neon Dawn - Y5S4.2.0_C5914517_D1181197_S40892_15241382 ( HM [Latest](https://github.com/DataCluster0/HeatedMetal/releases) )***
 > - ***Shadow Legacy - Y5S3.3.1_C5789341_D1135607_S40332_15018155 ( HM [0.2.3](https://github.com/DataCluster0/HeatedMetal/releases/0.2.3) )***
-> - These game builds can be downloaded [**Here**](https://puppetino.github.io/Throwback-FAQ/Pages/downloaders.html)
+> - These game builds can be downloaded [**Here**](https://github.com/JOJOVAV/r6-downloader/releases)
 
 # Information
 >[!TIP]
