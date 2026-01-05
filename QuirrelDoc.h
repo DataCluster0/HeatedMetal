@@ -26,6 +26,7 @@ typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
 typedef unsigned long long uint64;
+typedef unsigned long long objectid;
 
 typedef function;
 typedef table;
@@ -302,7 +303,7 @@ void SendNetworkTable(string Name, table Table, PlayerController Receiver /*Serv
 class Renderer // SDK Native
 {
 	/// @brief Returns the current display size as a Vector2.
-	Vector2 GetDisplaySize();
+	Vector2 DisplaySize();
 
 	/// @brief Calculates alpha value based on distance.
 	float DistanceToAlpha(float Distance, float MaxDistance, float MinAlpha = 25.0, float MaxAlpha = 255.0);
@@ -313,8 +314,14 @@ class Renderer // SDK Native
 	/// @brief Draws a 3D text at the specified origin.
 	bool Text(string Text, Vector3 Origin, Color Color);
 
+	/// @brief Draws a 3D text at the specified origin.
+	bool TextScaled(string Text, Vector3 Origin,f loat FontSize, Color Color);
+
 	/// @brief Draws a 3D line from start to end with specified thickness.
 	bool Line(Vector3 StartOrigin, Vector3 EndOrigin, Color Color, float Thickness);
+
+	/// @brief Draws a 3D triangle.
+	bool Triangle(Vector3 Origin, Vector3 Point1, Vector3 Point2, Vector3 Point3, Vector3 Point, Color Color, float Thickness);
 
 	/// @brief Draws a 3D rectangle.
 	bool Rectangle(Vector3 Origin, Vector3 Angles, float Width, float Height, Color Color, float Thickness);
@@ -337,11 +344,100 @@ class Renderer // SDK Native
 	/// @brief Draws a text at specified screen coordinates
 	bool Text2D(string Text, Vector2 ScreenPos, Color Color);
 
+	/// @brief Draws a text at specified screen coordinates with the specified font scale
+	bool Text2DScaled(string Text, Vector2 ScreenPos, float FontSize, Color Color);
+
 	/// @brief Draws a line from and to the specified screen coordinates
 	bool Line2D(Vector2 Start, Vector2 End, Color Color, float Thickness);
 
 	/// @brief Draws a circle at specified screen coordinates
 	bool Circle2D(Vector2 ScreenPos, Color Color, float Radius, int NumSegments, float Thickness);
+
+	class Element
+	{
+		/// @brief Is this element being drawing?
+		bool Active;
+
+		/// @brief Is this element disabled?
+		bool Disabled;
+	};
+
+	class ElementText : Element
+	{
+		/// @brief What color is the text
+		Color Color;
+	};
+
+	class Button : Element
+	{
+		/// @brief How big is the button?
+		Vector2 Size;
+	};
+
+	class SliderInt : Element
+	{
+		/// @brief Current Value
+		const int32 Value;
+
+		/// @brief Slider Min/Max
+		const int32 Min;
+		const int32 Max;
+	};
+
+	class SliderFloat : Element
+	{
+		/// @brief Current Value
+		const float Value;
+
+		/// @brief Slider Min/Max
+		const float Min;
+		const float Max;
+	};
+
+	class Gui : Element
+	{	
+		/// @brief Adds a tree node
+		Gui* Tree(string Name, bool OpenByDefault);
+
+		/// @brief Adds text
+		ElementText* Text(string Text);
+
+		/// @brief Adds a seperator
+		Element* SameLine();
+
+		/// @brief Adds a seperator
+		Element* Seperator();
+
+		/// @brief Adds a text seperator
+		ElementText* SeperatorText(string Text);
+		
+		/// @brief Adds a button
+		Button* Button(string Name, function Callback);
+
+		/// @brief Adds a toggle
+		/// @param bool | Changed Value
+		Element* Toggle(string Name, bool InitialValue, function Callback);
+
+		/// @brief Adds an int slider
+		/// @param int32 | Changed Value
+		SliderInt* SliderInt(string Name, int32 InitialValue, int32 Min, int32 Max, function Callback);
+
+		/// @brief Adds an float slider
+		/// @param float | Changed Value
+		SliderFloat* SliderFloat(string Name, float InitialValue, float Min, float Max, function Callback);
+	};
+
+	class Window : Gui
+	{
+		/// @brief Background Alpha
+		float Alpha = 1.0;
+	};
+
+	/// @brief Creates a window instance.
+	/// Use Window.Active = true to enable the window.
+	/// @param string  | Window Name
+	/// @param Vector2 | Window Size
+	Window* CreateWindow(string Name, Vector2 Size);
 };
 
 //////////////////////////////////////////////
@@ -353,11 +449,14 @@ class Game // Native
 	// Only Derived
 	class ManagedObject
 	{
-		uint64 ObjectID;
+		objectid ObjectID;
 	};
 
 	class Component : ManagedObject
 	{
+		/// @brief Returns the component name
+		string Name();
+
 		/// @brief Get the Components Owned Entity
 		/// @return Owner Entity
 		Entity* Entity();
@@ -384,7 +483,6 @@ class Game // Native
 
 	class WeaponComponent : Component
 	{
-
 		/// @brief Returns weapon data name (wip names most of the time)
 		string Name();
 
@@ -517,10 +615,22 @@ class Game // Native
 		void SetCollisionTag(uint32 Tag);
 	};
 
+	class SpawnedGadgetComponent : Component
+	{
+		/// @brief Returns the owner of this gadget
+		PlayerController* Owner();
+
+		/// @brief Returns the gadget ObjectID
+		objectid GadgetID();
+	};
+
 	class Entity : ManagedObject
 	{
 		/// @brief Get the name of the entity
 		string Name();
+
+		/// @brief Check if the entity still exists and is not unloaded
+		bool IsValid();
 
 		/// @brief Set/Get the entity World Origin
 		Vector3 GetOrigin();
@@ -573,13 +683,30 @@ class Game // Native
 		void SetIsHidden(bool IsHidden);
 
 		/// @brief Victim takes damage by amount and type (attribution).
-		void GiveDamage(int32 Amount, uint32 DamageType, uint64 VictimID);
+		void GiveDamage(int32 Amount, uint32 DamageType, objectid VictimID /* Entity */);
 
 		/// @brief Take damage by amount and type.
 		void TakeDamage(int32 Amount, uint32 DamageType);
 
+		////////////////////////////////////////////////
+
 		/// @brief Will make each client sync the entities component data (Host Only)
 		void SyncComponents();
+
+		/// @brief Does the entity have this component?
+		bool HasComponent(string Name);
+
+		/// @brief Get all components
+		Array<Component*> GetComponents();
+
+		/// @brief Get all components that have a matching name (Case sensitive)
+		Array<Component*> GetComponentsByName(string Name);
+
+		/// @brief Get a component by index
+		/// @return Returns null if the index is invalid
+		Component* GetComponentByIndex(uint32 Index);
+
+		////////////////////////////////////////////////
 
 		/// @brief Returns the Damage Component if the entity has one
 		DamageComponent* DamageComponent();
@@ -595,6 +722,9 @@ class Game // Native
 		/// @brief Returns the Physics Component if the entity has one
 		/// Disable this to disable Collision
 		PhysicComponent* PhysicComponent();
+
+		/// @brief Returns the Gadget Component if the entity has one
+		SpawnedGadgetComponent* GadgetComponent();
 	};
 
 	class PlayerController
@@ -646,32 +776,32 @@ class Game // Native
 		};
 
 		/// @brief Swaps the currently equipped item with the provided ObjectID
-		void SetItemSlot(ItemSlot Slot, uint64 ObjectID);
+		void SetItemSlot(ItemSlot Slot, objectid ObjectID);
 
 		/// @brief Returns the ObjectID of the equipped Primary
-		uint64 PrimaryID();
+		objectid PrimaryID();
 
 		/// @brief Returns the ObjectID of the equipped Secondary
-		uint64 SecondaryID();
+		objectid SecondaryID();
 
 		/// @brief Returns the ObjectID of the equipped Tertiary
-		uint64 TertiaryID();
+		objectid TertiaryID();
 
 		/// @brief Returns the ObjectID of the equipped Primary Gadget
-		uint64 PrimaryGadgetID();
+		objectid PrimaryGadgetID();
 
 		/// @brief Returns the ObjectID of the equipped Secondary Gadget
-		uint64 SecondaryGadgetID();
+		objectid SecondaryGadgetID();
 
 		/// @brief Returns the ObjectID of the equipped Headgear
-		uint64 HeadgearID();
+		objectid HeadgearID();
 
 		/// @brief Returns the ObjectID of the equipped Uniform
-		uint64 UniformID();
+		objectid UniformID();
 
 		/// @brief Returns the ObjectID of the character
 		/// enum eCharacter in the core module
-		uint64 CharacterID();
+		objectid CharacterID();
 	};
 
 	//////////////////////////////////////////////
@@ -698,21 +828,31 @@ class Game // Native
 
 	/// @brief Returns existing duplicates of an entity
 	/// @param ObjectID | Master ObjectID
-	Array<Entity*> GetDuplicatedEntities(uint64 ObjectID);
+	Array<Entity*> GetDuplicatedEntities(objectid ObjectID);
+
+	/// @brief Returns static entity list
+	Array<Entity*> GetEntityList();
+
+	/// @brief Returns static entity list of all entities that contain that component
+	/// @param String | Component Name (Case Sensitive)
+	Array<Entity*> GetEntityListByComponent(string Name);
+
+	/// @brief Returns local entity list in objectid form (use GetEntity)
+	Array<objectid> GetEntityListLocal();
 
 	/// @brief Get Entity if an instance exists
 	/// @return Returns an Entity instance of an Object
-	Entity* GetEntity(uint64 ObjectID);
+	Entity* GetEntity(objectid ObjectID);
 
-	/// @brief Create an Entity from external preloads
+	/// @brief Create an Entity from external addons
 	/// @return Returns a duplicated entity
-	Entity* CreateExternalEntity(uint64 ObjectID);
+	Entity* CreateExternalEntity(objectid ObjectID);
 
 	/////////////////////////////////////////////
 
 	/// @brief Get Object pointer if exists
 	/// @return Returns a Pointer instance of an Object
-	Pointer* GetObject(uint64 ObjectID);
+	Pointer* GetObject(objectid ObjectID);
 
 	//////////////////////////////////////////////
 	// Game State Functions
@@ -726,6 +866,14 @@ class Game // Native
 
 	/// @return Is the current host config in RTS?
 	bool IsRTS();
+
+	/// @return Is the current player in the editor?
+	bool IsEditor();
+
+	/// @return Is the hud disabled?
+	bool IsHudEnabled();
+
+	/////////////////////////////////////////////
 
 	/// @brief Returns the ObjectID of the current World
 	uint64 GetWorld();
@@ -783,8 +931,8 @@ class Game // Native
 	/// Has a hard limit of 100 (will conflict with Dust Painting)
 	void CreateDust(Vector3 Origin, float Radius, Color Color);
 
-	/// @brief Use eExplosionType from the core module
-	enum ExplosionType : uint32
+	/// @brief Use eExplosion from the core module
+	enum eExplosion : uint32
 	{
 		NitroCell,
 		Impact,
@@ -811,7 +959,7 @@ class Game // Native
 	/// @param Origin      | Explosion Origin
 	/// @param Type		   | Explosion Type
 	/// @param Owner       | Who takes the credit (Optional)
-	void CreateExplosion(Vector3 Origin, ExplosionType Type, PlayerController Owner /*optional*/);
+	void CreateExplosion(Vector3 Origin, eExplosion Type, PlayerController Owner /*optional*/);
 
 	class CastHit
 	{
@@ -844,7 +992,11 @@ class Game // Native
 	/// @param Start       | Start Origin
 	/// @param End		   | End Origin
 	/// @param Count       | How many surfaces does it go trough
+	/// @param Character
 	RaycastResult Raycast(Vector3 Start, Vector3 End, uint8 Count);
+
+	/// @brief Uses character gravity filtering instead of projectiles.
+	RaycastResult RaycastCharacter(Vector3 Start, Vector3 End, uint8 Count);
 
 	//////////////////////////////////////////////
 	// Camera & Skylight

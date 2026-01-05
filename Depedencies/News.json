@@ -9,29 +9,15 @@
     ]
   },
   {
-    "ID": 11,
+    "ID": 13,
     "ImageID": "0x5F1983C05",
-    "Title": "Patch Notes ( v0.3.3 )",
-    "Subtitle": "v0.3.3",
+    "Title": "Patch Notes ( v0.3.7 )",
+    "Subtitle": "v0.3.7",
     "Description": [
-      "Improved:",
-      "+ Editor.",
-      "+ Main Menu.",
-      "+ Auto Loading.",
-      "",
-      "Check latest GitHub release for more details."
-    ]
-  },
-  {
-    "ID": 12,
-    "ImageID": "0x5F1983C05",
-    "Title": "Patch Notes ( v0.3.5 )",
-    "Subtitle": "v0.3.5",
-    "Description": [
-      "Fixed:",
-      "* Gameplay.",
-      "Improved:",
-      "+ Editor.",
+      "* Bug Fixes.",
+      "* Optimizations",
+      "+ New Quirrel Functions.",
+
       "",
       "Check latest GitHub release for more details."
     ]
