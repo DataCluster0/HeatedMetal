@@ -315,7 +315,7 @@ class Renderer // SDK Native
 	bool Text(string Text, Vector3 Origin, Color Color);
 
 	/// @brief Draws a 3D text at the specified origin.
-	bool TextScaled(string Text, Vector3 Origin,f loat FontSize, Color Color);
+	bool TextScaled(string Text, Vector3 Origin, float FontSize, Color Color);
 
 	/// @brief Draws a 3D line from start to end with specified thickness.
 	bool Line(Vector3 StartOrigin, Vector3 EndOrigin, Color Color, float Thickness);
