@@ -783,7 +783,7 @@ class Game // Native
 	/// Has a hard limit of 100 (will conflict with Dust Painting)
 	void CreateDust(Vector3 Origin, float Radius, Color Color);
 
-	/// @brief Use eExplosionType from the core module
+	/// @brief Use eExplosion from the core module
 	enum ExplosionType : uint32
 	{
 		NitroCell,
