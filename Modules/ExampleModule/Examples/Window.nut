@@ -4,35 +4,34 @@ let {
 } = require("HeatedMetal")
 
 
-local Window = Renderer.CreateWindow("Quirrel Window", Vector2(400.0, 400.0));
-{
-	Window.Text("Hello World!");
+local Window = Renderer.CreateWindow("Quirrel Window", Vector2(600.0, 400.0));
 
-	Window.SeperatorText("Sliders")
+function CreateLayout() {
+	local Tab = Window.Tab("Layout")
+
+
+	Tab.SeperatorText("Sliders")
 
 	{
-		Window.SliderFloat("Window Alpha", 1.0, 0.0, 1.0, function(NewValue) {
-			Window.Alpha = NewValue;
-		})
 
-		Window.SliderInt("Slider Int", 5, 0, 10, function(NewValue) {})
+		Tab.SliderInt("Slider Int", 5, 0, 10, function(NewValue) {})
+		Tab.SliderFloat("Slider Float", 1.0, 0.0, 10.0, function(NewValue) {})
+	}
 
-		Window.SliderFloat("Window Float", 1.0, 0.0, 10.0, function(NewValue) {})
+	////////////////////////////////////////////
+
+	Tab.SeperatorText("Same Line")
+
+	{
+		Tab.Button("Button1", function() {})
+		Tab.SameLine()
+		Tab.Button("Button2", function() {})
 	}
 
 
-	Window.SeperatorText("Same Line")
-
 	{
-		Window.Button("Button1", function() {})
-		Window.SameLine()
-		Window.Button("Button2", function() {})
-	}
-
-
-	{
-		local Seperator = Window.SeperatorText("Colored Seperator")
-		local Text = Window.Text("Colored Text");
+		local Seperator = Tab.SeperatorText("Colors")
+		local Text = Tab.Text("Colored Text");
 
 		local NewColor = Color(0.0, 1, 0.0, 1.0);
 
@@ -42,58 +41,56 @@ local Window = Renderer.CreateWindow("Quirrel Window", Vector2(400.0, 400.0));
 
 	/////////////////////////////////////////
 
-	Window.SeperatorText("Buttons")
+	Tab.SeperatorText("Buttons")
 
 	{
-		Window.Button("Print Text", function() {
+		Tab.Button("Print Text", function() {
 			print("Hello from button!");
 		});
 
-		local BigButton = Window.Button("Big Button!", function() {});
+		Tab.Selectable("Print Text", function() {
+			print("Hello from selectable!");
+		});
+
+		local BigButton = Tab.Button("Big Button!", function() {});
 		BigButton.Size = Vector2(380.0, 40.0)
 
 	}
 
+	////////////////////////////////////////////
 
-	Window.SeperatorText("Element Properties")
+	Tab.SeperatorText("Element Properties")
 
 	{
-		local HideMeText = Window.Text("Hide Me Text!");
-		Window.Button("Hide Text", function() {
+		local HideMeText = Tab.Text("Hide Me Text!");
+		Tab.Button("Hide Text", function() {
 			HideMeText.Active = !HideMeText.Active
 		});
 	}
 
+	////////////////////////////////////////////
 
-	Window.SeperatorText("Buttons")
+	Tab.SeperatorText("Buttons")
 
 	{
 		local ToggleState = false
-		local Toggle1 = Window.Toggle("Toggle", ToggleState, function(NewValue) {
+		local Toggle1 = Tab.Toggle("Toggle", ToggleState, function(NewValue) {
 			ToggleState = NewValue;
 		})
 
-		Window.Toggle("Disable Toggle", false, function(NewValue) {
+		Tab.Toggle("Disable Toggle", false, function(NewValue) {
 			Toggle1.Disabled = NewValue;
 		})
 	}
 
-	Window.SeperatorText("Error Handling")
-
-	{
-		Window.Toggle("Invalid arg size", false, function() {})
-
-		Window.Button("Runtime Error", function() {
-			Game.GetEntity(0x0).Name()
-		});
-	}
+	////////////////////////////////////////////
 
 	/////////////////////////////////////////
 
-	Window.SeperatorText("Trees")
+	Tab.SeperatorText("Trees")
 
 	{
-		local Tree1 = Window.Tree("Tree 1", true);
+		local Tree1 = Tab.Tree("Tree 1", true);
 		{
 			Tree1.Text("Tree 2");
 			{
@@ -102,8 +99,97 @@ local Window = Renderer.CreateWindow("Quirrel Window", Vector2(400.0, 400.0));
 			}
 		}
 	}
+}
+
+function CreateErrors()
+{
+	local Tab = Window.Tab("Errors")
+
+	Tab.SeperatorText("Error Handling")
+
+	{
+		Tab.Toggle("Invalid arg size", false, function() {})
+
+		Tab.Button("Runtime Error", function() {
+			Game.GetEntity(0x0).Name()
+		});
+	}
 
 }
+
+
+function CreateProperties() {
+	local Tab = Window.Tab("Properties")
+
+	local TextPos = Tab.Text("Position : X " + Window.Position.x + " Y " + Window.Position.y);
+	local TextSize = Tab.Text("Size : X " + Window.Size.x + " Y " + Window.Size.y);
+
+	Tab.Button("Update Text", function() {
+		TextPos.SetText("Position : X " + Window.Position.x + " Y " + Window.Position.y);
+		TextSize.SetText("Size : X " + Window.Size.x + " Y " + Window.Size.y);
+	});
+
+	Tab.Seperator();
+
+	Tab.SliderFloat("Alpha", 1.0, 0.0, 1.0, function(NewValue) {
+		Window.Alpha = NewValue;
+	})
+
+	Tab.Button("Move to center", function() {
+		Window.SetPosition((Renderer.DisplaySize() - Window.Size) * 0.5);
+	});
+
+	Tab.Button("Half the size", function() {
+		Window.SetSize(Window.Size * 0.5);
+	});
+}
+
+function CreateFlags() {
+	local Tab = Window.Tab("Flags")
+
+	Tab.SeperatorText("Window")
+
+	Tab.Toggle("Block Input", true, function(NewValue) {
+		Window.BlockInput = NewValue;
+	});
+
+	Tab.Toggle("No TitleBar", false, function(NewValue) {
+		Window.NoTitleBar = NewValue;
+	});
+
+	Tab.Toggle("No ScrollBar", false, function(NewValue) {
+		Window.NoScrollBar = NewValue;
+	});
+
+
+	Tab.Toggle("Auto Resize", false, function(NewValue) {
+		Window.AutoResize = NewValue;
+	});
+
+
+
+	Tab.SeperatorText("User Actions")
+
+
+	Tab.Toggle("No Resize", false, function(NewValue) {
+		Window.NoResize = NewValue;
+	});
+
+	Tab.Toggle("No Move", false, function(NewValue) {
+		Window.NoMove = NewValue;
+	});
+
+	Tab.Toggle("No Collapse", false, function(NewValue) {
+		Window.NoCollapse = NewValue;
+	});
+}
+
+
+CreateLayout();
+CreateErrors();
+CreateProperties();
+CreateFlags();
+
 
 function Command(Args) {
 	Window.Active = !Window.Active;

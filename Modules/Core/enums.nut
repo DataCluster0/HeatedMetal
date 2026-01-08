@@ -30,8 +30,8 @@ global enum eAlliance
 	Neutral,
 	Rainbow,
 	Terrorist,
-	TeamA,
-	TeamB,
+	TeamA, // Attackers
+	TeamB, // Defenders
 	NA,
 	TeamMax,
 };

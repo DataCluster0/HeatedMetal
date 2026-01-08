@@ -5,9 +5,11 @@ local {
 
 local math = require("math")
 
-local ToiletTable = {};
+local EntityTable = {};
 
-function ToiletAction(ent, data) {
+local MasterEntity = 0x1E600B8D1C7C7F0;
+
+function Action(ent, data) {
 	if (!ent)
 		return
 
@@ -20,7 +22,7 @@ function ToiletAction(ent, data) {
 
 	local dmg = data.Target.DamageComponent()
 	if (!dmg || dmg.GetHealth() <= 0) {
-		ToiletTable.rawdelete(ent)
+		EntityTable.rawdelete(ent)
 		ent.RemoveFromWorld()
 		return
 	}
@@ -41,23 +43,23 @@ function ToiletAction(ent, data) {
 }
 
 function BulletHit(start, end, normal, delta, entity) {
-	if (!(entity in ToiletTable))
+	if (!(entity in EntityTable))
 		return
 
-	local d = ToiletTable[entity]
+	local d = EntityTable[entity]
 	d.Health = math.Clamp(d.Health - 10, 0, d.MaxHealth)
 
 	if (d.Health > 0)
 		Game.CreateDust(end, 0.2, Color.RGB(255, 0, 0, 255))
 	else {
-		ToiletTable.rawdelete(entity)
+		EntityTable.rawdelete(entity)
 		Game.CreateDust(end, 2, Color.RGB(255, 0, 0, 255))
 		entity.RemoveFromWorld()
 	}
 }
 
-function RespawnToilets() {
-	local father = Game.GetEntity(0x1E600B8D1C7C7F0)
+function RespawnObjects() {
+	local father = Game.GetEntity(MasterEntity)
 	if (!father)
 		return
 
@@ -73,8 +75,7 @@ function RespawnToilets() {
 		local pos = plyEnt.GetOrigin()
 		local count = 50
 
-		for (local n = 0; n < count; ++n)
-		{
+		for (local n = 0; n < count; ++n) {
 			local angle = (2 * math.PI / count) * n
 			local offsetX = math.cos(angle) * radius
 			local offsetZ = math.sin(angle) * radius
@@ -86,7 +87,7 @@ function RespawnToilets() {
 			//if (destr) destr.SetActive(false)
 
 			local health = RandomIntRange(100, 200)
-			ToiletTable[toilet] <- {
+			EntityTable[toilet] <- {
 				Target = plyEnt,
 				Rotation = RandomFloatRange(0, 360),
 				MoveSpeed = 0.05,
@@ -98,28 +99,27 @@ function RespawnToilets() {
 	}
 }
 
-function EngineFrame()
-{
+function EngineFrame() {
 
-	if (ToiletTable.len() <= 0) {
-		RespawnToilets()
+	if (EntityTable.len() <= 0) {
+		RespawnObjects()
 	}
 
-	foreach(Ent, data in ToiletTable) {
-		ToiletAction(Ent, data);
+	foreach(Ent, data in EntityTable) {
+		Action(Ent, data);
 	}
 }
 
 function Shutdown() {
 
-	foreach(Ent, data in ToiletTable) {
+	foreach(Ent, data in EntityTable) {
 		if (Ent)
 			Ent.RemoveFromWorld();
 	}
 
-	ToiletTable.clear()
+	EntityTable.clear()
 
-	print("Skibidi Exit")
+	print("ObjectCircle exit")
 }
 
 function Main() {
@@ -128,20 +128,20 @@ function Main() {
 
 	//Sleep(4000.0)
 
-	RespawnToilets()
+	RespawnObjects()
 
 	AddCallback_Update(EngineFrame)
 	//AddCallback_BulletHit(BulletHit)
 	AddCallback_Shutdown(Shutdown)
 
-	print("Skibidi Init")
+	print("ObjectCircle Init")
 }
 
 function start(strarray) {
 	Main()
 }
 
-RegisterCommand(start, "StartSkibidi", "", "Run like hell");
+RegisterCommand(start, "TestObjectCircle", "", "");
 
 return {
 

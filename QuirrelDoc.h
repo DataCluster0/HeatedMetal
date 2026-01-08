@@ -131,8 +131,11 @@ class Color
 // Utility Classes
 /////////////////////////////////////////////
 
+/// @brief Uses a seconds | 1.0 = Second or | 0.5 = Half a second
 class Timer
 {
+	/// @brief Creates a timer
+	/// @param StartNow should the timer start counting from creation time?
 	Timer(bool StartNow);
 
 	/// @brief Starts the timer.
@@ -144,7 +147,7 @@ class Timer
 	/// @brief Gets the elapsed time in seconds.
 	float ElapsedTime();
 
-	/// @brief Checks if a specified duration has elapsed.
+	/// @brief Checks if a specified duration has elapsed. (Resets timer if true)
 	bool HasElapsed(float time);
 };
 
@@ -237,13 +240,24 @@ MiddleMouse RightShift LeftShift NumLock Pageup Pagedown
 Pause ScrollLock Shift Space Tab Up Mouse4 Mouse5
 */
 
-/// @brief Check if the key is currently pressed (Client Side)
+/// @brief Check if the key is was pressed.
 /// @return Was the key pressed
 bool IsKeyPressed(string KeyName);
 
+/// @brief Check if the key is currently not being held.
+/// @return Is the key not being held.
+bool IsKeyUp(string KeyName);
+
+/// @brief Check if the key is currently being held.
+/// @return Is the key being held.
+bool IsKeyDown(string KeyName);
+
+/// @brief Registers a keybind
+bool RegisterKeybind(string KeyName, function Callback);
+
 /// @brief Registers a console command
 /// @param Array<String> | Arguments
-bool RegisterCommand(function Func, string Name, string Arguments, string Description);
+bool RegisterCommand(function Callback, string Name, string Arguments, string Description);
 
 /// @return Heated Metal version string (Ex: 0.1.8)
 string HMVersion();
@@ -339,19 +353,7 @@ class Renderer // SDK Native
 	bool Cube(Vector3 Origin, Vector3 Angles, float Size, Color Color, float Thickness);
 
 	/////////////////////////////////////////////
-	// 2D
-
-	/// @brief Draws a text at specified screen coordinates
-	bool Text2D(string Text, Vector2 ScreenPos, Color Color);
-
-	/// @brief Draws a text at specified screen coordinates with the specified font scale
-	bool Text2DScaled(string Text, Vector2 ScreenPos, float FontSize, Color Color);
-
-	/// @brief Draws a line from and to the specified screen coordinates
-	bool Line2D(Vector2 Start, Vector2 End, Color Color, float Thickness);
-
-	/// @brief Draws a circle at specified screen coordinates
-	bool Circle2D(Vector2 ScreenPos, Color Color, float Radius, int NumSegments, float Thickness);
+	/// Window Elements
 
 	class Element
 	{
@@ -364,8 +366,14 @@ class Renderer // SDK Native
 
 	class ElementText : Element
 	{
-		/// @brief What color is the text
+		/// @brief Current text.
+		const string Text;
+
+		/// @brief What color is the text.
 		Color Color;
+
+		/// @brief Update text
+		void SetText(string Text);
 	};
 
 	class Button : Element
@@ -395,7 +403,7 @@ class Renderer // SDK Native
 	};
 
 	class Gui : Element
-	{	
+	{
 		/// @brief Adds a tree node
 		Gui* Tree(string Name, bool OpenByDefault);
 
@@ -410,9 +418,12 @@ class Renderer // SDK Native
 
 		/// @brief Adds a text seperator
 		ElementText* SeperatorText(string Text);
-		
+
 		/// @brief Adds a button
 		Button* Button(string Name, function Callback);
+
+		/// @brief Adds a selectable
+		Element* Selectable(string Name, function Callback);
 
 		/// @brief Adds a toggle
 		/// @param bool | Changed Value
@@ -429,18 +440,180 @@ class Renderer // SDK Native
 
 	class Window : Gui
 	{
-		/// @brief Background Alpha
+		/// @brief Create a tab element.
+		Gui* Tab(string Name);
+
+		/// @brief Resize the window.
+		void SetSize(Vector2 Size);
+
+		/// @brief Move the window to a position on the screen.
+		void SetPosition(Vector2 Position);
+
+		/////////////////////////////////////////////
+
+		/// @brief Background Alpha.
 		float Alpha = 1.0;
+
+		/// @brief Current window size.
+		const Vector2 Size;
+
+		/// @brief Current window position.
+		const Vector2 Position;
+
+		/////////////////////////////////////////////
+
+		/// @brief Should the window block input to the game?
+		bool BlockInput = true;
+
+		/// @brief Should the window auto resize?
+		bool AutoResize;
+
+		/// @brief Disable the title bar.
+		bool NoTitleBar;
+
+		/// @brief Disable the window from having a scroll bar
+		bool NoScrollBar;
+
+		/////////////////////////////////////////////
+
+		/// @details User Action
+		/// @brief Disable the window from being resized.
+		bool NoResize;
+
+		/// @details User Action
+		/// @brief Disable the window from being moved.
+		bool NoMove;
+
+		/// @details User Action
+		/// @brief Disable the window from being collapsed.
+		bool NoCollapse;
 	};
+
+	/////////////////////////////////////////////
+	/// Overlay Elements
+
+	class ElementOverlay : Element
+	{
+		/// @brief Is the Element filled?
+		bool Filled;
+
+		/// @brief Is the Element outlined?
+		bool Outlined;
+
+		/// @brief Is the Element centered?
+		bool Centered;
+
+		/// @brief Does the Element have a border?
+		bool Bordered;
+
+		/// @brief Element Thickness
+		float Thickness = 1.0;
+
+		/// @brief Element Color
+		Color Color;
+	};
+
+	class OverlayText : ElementOverlay
+	{	
+		/// @brief Update text
+		void SetText(string Text);
+
+		/// @brief What are we rendering?
+		const string Text;
+
+		/// @brief How is the text?
+		float Scale = 1.0;
+
+		/// @brief Where is the text being drawn at?
+		Vector2 Position;
+	};
+
+	class OverlayLine : ElementOverlay
+	{
+		/// @brief Where does the line start at?
+		Vector2 Start;
+
+		/// @brief Where does the line end?
+		Vector2 End;
+	};
+
+	class OverlayCircle : ElementOverlay
+	{
+		/// @brief Where are we drawing the circle at?
+		Vector2 Position;
+
+		/// @brief How big is the circle?
+		float Radius = 1.0;
+
+		/// @brief How many segments does the circle have?
+		int Segments = 0;
+	};
+
+	class OverlayTriangle : ElementOverlay
+	{
+		/// @brief Where are we drawing the triangle edges at?
+		Vector2 Position1;
+		Vector2 Position2;
+		Vector2 Position3;
+	};
+
+	class OverlayRectangle : ElementOverlay
+	{
+		/// @brief Where are we drawing the Rectangle?
+		Vector2 Position;
+
+		/// @brief How big is the Rectangle?
+		Vector2 Size;
+
+		/// @brief How rounded are the edges?
+		float Rounding = 0.0;
+	};
+
+	class OverlayQuad : ElementOverlay
+	{
+		/// @brief Where are we drawing the Quad edges at?
+		Vector2 Position1;
+		Vector2 Position2;
+		Vector2 Position3;
+		Vector2 Position4;
+	};
+
+	class Overlay : Element
+	{
+		/// @brief Add text.
+		OverlayText* Text(string Text, Vector2 Position);
+
+		/// @brief Add a line.
+		OverlayLine* Line(Vector2 Start, Vector2 End);
+
+		/// @brief Add a circle.
+		OverlayCircle* Circle(Vector2 Position, float Radius, int Segments);
+
+		/// @brief Add a triangle
+		OverlayTriangle* Triangle(Vector2 Position1, Vector2 Position2, Vector2 Position3);
+
+		/// @brief Add a Rectangle
+		OverlayRectangle* Rectangle(Vector2 Position, Vector2 Size, float Rounding);
+
+		/// @brief Add a Quad
+		OverlayQuad* Quad(Vector2 Position1, Vector2 Position2, Vector2 Position3, Vector2 Position4);
+	};
+
+	/////////////////////////////////////////////
+
 
 	/// @brief Creates a window instance.
 	/// Use Window.Active = true to enable the window.
 	/// @param string  | Window Name
 	/// @param Vector2 | Window Size
 	Window* CreateWindow(string Name, Vector2 Size);
+
+	/// @brief Creates a overlay instance.
+	/// Use Overlay.Active = true to enable the overlay.
+	Overlay* CreateOverlay();
 };
 
-//////////////////////////////////////////////
+/////////////////////////////////////////////
 // Game class
 /////////////////////////////////////////////
 
@@ -632,6 +805,15 @@ class Game // Native
 		/// @brief Check if the entity still exists and is not unloaded
 		bool IsValid();
 
+		/// @brief Was the entity created from quirrel?
+		bool IsQuirrel();
+
+		/// @brief Is the entity a editor duplicate?
+		bool IsEditor();
+
+		/// @brief Is the entity a local?
+		bool IsLocal();
+
 		/// @brief Set/Get the entity World Origin
 		Vector3 GetOrigin();
 		void SetOrigin(Vector3 Origin);
@@ -668,6 +850,10 @@ class Game // Native
 		/// @return Duplicated Entity
 		Entity* Duplicate();
 
+		/// @brief Get a clone of this entity with a seeded objectid
+		/// @return Duplicated Entity
+		Entity* DuplicateSeed(uint64 Seed);
+
 		/// @brief Add or Remove the entity from the world
 		/// @return Has the entity been Added/Removed
 		/// !!!Duplicated entities are entirely removed!!!
@@ -683,7 +869,7 @@ class Game // Native
 		void SetIsHidden(bool IsHidden);
 
 		/// @brief Victim takes damage by amount and type (attribution).
-		void GiveDamage(int32 Amount, uint32 DamageType, objectid VictimID /* Entity */);
+		void GiveDamage(int32 Amount, uint32 DamageType, objectid VictimID /*Entity*/);
 
 		/// @brief Take damage by amount and type.
 		void TakeDamage(int32 Amount, uint32 DamageType);
@@ -732,17 +918,13 @@ class Game // Native
 		/// @brief Returns the name of the player
 		string Name();
 
-		/// @brief Use eTeam from the core module
-		enum Team : uint8
-		{
-			A,
-			B,
-			Spectator,
-			Invalid
-		};
+		/// @details Use eTeam
+		/// @brief Returns the Team of the controller
+		uint32 Team();
 
-		/// @brief Returns the controller team
-		Team Team();
+		/// @details Use eAlliance
+		/// @brief Returns the Alliance of the controller
+		uint32 Alliance();
 
 		/// @brief Returns the PlayerID of the controller
 		uint64 PlayerID();
@@ -816,7 +998,7 @@ class Game // Native
 	PlayerController* GetViewPlayer();
 
 	/// @brief Get PlayerController instance by PlayerID
-	PlayerController* GetPlayerByID();
+	PlayerController* GetPlayerByID(uint64 PlayerID);
 
 	/// @brief Returns an array of PlayerController instances
 	Array<PlayerController*> GetPlayerList();
@@ -988,14 +1170,13 @@ class Game // Native
 		Array<CastHit> Hits();
 	};
 
-	/// @brief Fires a raycast from and to the specified origin coordinates (Uses projectile collision)
+	/// @brief Fires a raycast from and to the specified origin coordinates (Uses projectile filtering)
 	/// @param Start       | Start Origin
 	/// @param End		   | End Origin
 	/// @param Count       | How many surfaces does it go trough
-	/// @param Character
 	RaycastResult Raycast(Vector3 Start, Vector3 End, uint8 Count);
 
-	/// @brief Uses character gravity filtering instead of projectiles.
+	/// @brief Uses character gravity filtering instead of projectile filtering.
 	RaycastResult RaycastCharacter(Vector3 Start, Vector3 End, uint8 Count);
 
 	//////////////////////////////////////////////
@@ -1108,9 +1289,11 @@ class Game // Native
 // !! RoundStart is kept across world reloads. !!
 // !! Every other Callback is cleared. !!
 
+/// @details Not Threaded !
 /// @brief Called when the user requests the modules to be shutdown.
 void AddCallback_Shutdown(function Func);
 
+/// @details Not Threaded !
 /// @brief Called every game tick.
 void AddCallback_Update(function Func);
 
