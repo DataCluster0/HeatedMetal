@@ -7,7 +7,7 @@
 /////////////////////////////////////////////
 
 /////////////////////////////////////////////
-// VS Code Extentions
+// VS Code Extensions
 /////////////////////////////////////////////
 // https://marketplace.visualstudio.com/items?itemName=marcinbar.vscode-squirrel
 // https://marketplace.visualstudio.com/items?itemName=mepsoid.vscode-s-quirrel
@@ -410,14 +410,14 @@ class Renderer // SDK Native
 		/// @brief Adds text
 		ElementText* Text(string Text);
 
-		/// @brief Adds a seperator
+		/// @brief Adds a separator
 		Element* SameLine();
 
-		/// @brief Adds a seperator
-		Element* Seperator();
+		/// @brief Adds a separator
+		Element* Separator();
 
-		/// @brief Adds a text seperator
-		ElementText* SeperatorText(string Text);
+		/// @brief Adds a text separator
+		ElementText* SeparatorText(string Text);
 
 		/// @brief Adds a button
 		Button* Button(string Name, function Callback);
@@ -641,17 +641,88 @@ class Game // Native
 
 	class DamageComponent : Component
 	{
+		class DamageData
+		{
+			/// @brief Set/Get health threshold for low health.
+			void SetHealthLow(int32 Health);
+			int32 GetHealthLow();
+		
+			/// @brief Set/Get health threshold for critical health.
+			void SetHealthCritical(int32 Health);
+			int32 GetHealthCritical();
+
+			/// @brief Set/Get DBNO health amount
+			void SetHealthDBNO(int32 Health);
+			int32 GetHealthDBNO();
+		
+			/// @brief Set/Get max health
+			void SetHealthMax(int32 Health);
+			int32 GetHealthMax();
+		
+			/// @brief Set/Get how much extra health you can have
+			void SetHealthMaxExtra(int32 Health);
+			int32 GetHealthMaxExtra();
+
+			// Set/Get how much fall damage to take
+			void SetFallDamage(int32 Health);
+			int32 GetFallDamage();
+
+			///////////////////////////////
+			/// DBNO
+
+			// Set/Get maximum revives (-1 for infinite)
+			void SetMaxRevives(int32 Revives);
+			int32 GetMaxRevives();
+		
+			/// @brief Set/Get bleed out time (seconds)
+			void SetBleedoutTime(int32 Time);
+			int32 GetBleedoutTime();
+		
+			/// @brief Set/Get bleed out pressure
+			void SetBleedoutPressure(float Multiplier);
+			float GetBleedoutPressure();
+		
+			/// @brief Set/Get bleed out speed up
+			void SetBleedoutSpeedUp(float Multiplier);
+			float GetBleedoutSpeedUp();
+		
+			/// @brief Set/Get health percentage gain when revived
+			void SetRevivedHealth();
+			float GetRevivedHealth();
+
+			/// @brief Set/Get health percentage gain when revived via doc stim
+			void SetRevivedHealthDoc();
+			float GetRevivedHealthDoc();
+		
+			///////////////////////////////
+			/// Lethality (Damage Multipliers)
+
+			/// @brief Set/Get melee damage multiplier
+			void SetMeleeDamage(float Multiplier);
+			float GetMeleeDamage();
+
+			/// @brief Set/Get explosion damage multiplier
+			void SetExplosionDamage(float Multiplier);
+			float GetExplosionDamage();
+
+			///////////////////////////////
+			/// Toggles
+
+			/// @brief Set/Get if DBNO is enabled
+			void SetDBNO(bool Value);
+			bool GetDBNO();
+
+			/// @brief Set/Get if extra health stacking is enabled
+			void SetExtraHealthStacking();
+			void GetExtraHealthStacking();
+		};
+
 		/// @brief Set/Get health
 		int32 GetHealth();
 		void SetHealth(int32 Health);
 
-		/// @brief Set/Get Max health
-		int32 GetMaxHealth();
-		void SetMaxHealth(uint32 MaxHealth);
-
-		/// @brief Set/Get Max health
-		int32 GetFallDamage();
-		void SetFallDamage(int32 FallDamage);
+		/// @brief Get DamageData Instance (Global Settings)
+		DamageData *DamageData();
 	};
 
 	class WeaponComponent : Component
@@ -1422,7 +1493,7 @@ void AddCallback_DefuserSabotaged(function Func);
 /// @param PlayerController  | Instigator
 /// @param uint32            | Alliance (eAlliance)
 /// @param Entity            | Bomb
-void AddCallback_DefuserSucceded(function Func);
+void AddCallback_DefuserSucceeded(function Func);
 
 /// @brief Called when a Player Drops/Picks up a Defuser
 /// @param PlayerController  | Instigator

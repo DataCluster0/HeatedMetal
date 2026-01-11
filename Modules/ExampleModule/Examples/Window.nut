@@ -10,7 +10,7 @@ function CreateLayout() {
 	local Tab = Window.Tab("Layout")
 
 
-	Tab.SeperatorText("Sliders")
+	Tab.SeparatorText("Sliders")
 
 	{
 
@@ -20,7 +20,7 @@ function CreateLayout() {
 
 	////////////////////////////////////////////
 
-	Tab.SeperatorText("Same Line")
+	Tab.SeparatorText("Same Line")
 
 	{
 		Tab.Button("Button1", function() {})
@@ -30,18 +30,18 @@ function CreateLayout() {
 
 
 	{
-		local Seperator = Tab.SeperatorText("Colors")
+		local Separator = Tab.SeparatorText("Colors")
 		local Text = Tab.Text("Colored Text");
 
 		local NewColor = Color(0.0, 1, 0.0, 1.0);
 
 		Text.Color = NewColor;
-		Seperator.Color = NewColor;
+		Separator.Color = NewColor;
 	}
 
 	/////////////////////////////////////////
 
-	Tab.SeperatorText("Buttons")
+	Tab.SeparatorText("Buttons")
 
 	{
 		Tab.Button("Print Text", function() {
@@ -59,7 +59,7 @@ function CreateLayout() {
 
 	////////////////////////////////////////////
 
-	Tab.SeperatorText("Element Properties")
+	Tab.SeparatorText("Element Properties")
 
 	{
 		local HideMeText = Tab.Text("Hide Me Text!");
@@ -70,7 +70,7 @@ function CreateLayout() {
 
 	////////////////////////////////////////////
 
-	Tab.SeperatorText("Buttons")
+	Tab.SeparatorText("Buttons")
 
 	{
 		local ToggleState = false
@@ -87,7 +87,7 @@ function CreateLayout() {
 
 	/////////////////////////////////////////
 
-	Tab.SeperatorText("Trees")
+	Tab.SeparatorText("Trees")
 
 	{
 		local Tree1 = Tab.Tree("Tree 1", true);
@@ -101,11 +101,10 @@ function CreateLayout() {
 	}
 }
 
-function CreateErrors()
-{
+function CreateErrors() {
 	local Tab = Window.Tab("Errors")
 
-	Tab.SeperatorText("Error Handling")
+	Tab.SeparatorText("Error Handling")
 
 	{
 		Tab.Toggle("Invalid arg size", false, function() {})
@@ -129,7 +128,7 @@ function CreateProperties() {
 		TextSize.SetText("Size : X " + Window.Size.x + " Y " + Window.Size.y);
 	});
 
-	Tab.Seperator();
+	Tab.Separator();
 
 	Tab.SliderFloat("Alpha", 1.0, 0.0, 1.0, function(NewValue) {
 		Window.Alpha = NewValue;
@@ -147,7 +146,7 @@ function CreateProperties() {
 function CreateFlags() {
 	local Tab = Window.Tab("Flags")
 
-	Tab.SeperatorText("Window")
+	Tab.SeparatorText("Window")
 
 	Tab.Toggle("Block Input", true, function(NewValue) {
 		Window.BlockInput = NewValue;
@@ -168,7 +167,7 @@ function CreateFlags() {
 
 
 
-	Tab.SeperatorText("User Actions")
+	Tab.SeparatorText("User Actions")
 
 
 	Tab.Toggle("No Resize", false, function(NewValue) {

@@ -4,9 +4,11 @@ local {
 
 // Jank Team Win Helper
 function TeamWin(Team) {
-	if (!Game.IsHost()) return false
+	if (!Game.IsHost())
+		return false
 
-	foreach(Player in Game.GetPlayerList()) {
+	foreach(Player in Game.GetPlayerList())
+	{
 
 		if (Team == Player.Team())
 			continue
