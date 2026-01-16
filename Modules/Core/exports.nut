@@ -9,7 +9,6 @@ function TeamWin(Team) {
 
 	foreach(Player in Game.GetPlayerList())
 	{
-
 		if (Team == Player.Team())
 			continue
 

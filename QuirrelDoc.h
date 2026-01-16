@@ -357,7 +357,7 @@ class Renderer // SDK Native
 
 	class Element
 	{
-		/// @brief Is this element being drawing?
+		/// @brief Is this element being drawn?
 		bool Active;
 
 		/// @brief Is this element disabled?
@@ -990,14 +990,14 @@ class Game // Native
 		string Name();
 
 		/// @details Use eTeam
-		/// @brief Returns the Team of the controller
+		/// @brief Returns the Team of the player
 		uint32 Team();
 
 		/// @details Use eAlliance
-		/// @brief Returns the Alliance of the controller
+		/// @brief Returns the Alliance of the player
 		uint32 Alliance();
 
-		/// @brief Returns the PlayerID of the controller
+		/// @brief Returns the PlayerID of the player
 		uint64 PlayerID();
 
 		/// @brief Returns the spectated controller if spectating
@@ -1006,15 +1006,19 @@ class Game // Native
 		/// @brief Returns the controller entity
 		Entity* Entity();
 
-		/// @brief Sets the controllers entity origin
+		/// @brief Returns a forward vector of where the player is looking
+		Vector3 Forward();
+
+		/// @brief Sets the players entity origin
 		void SetOrigin(Vector3 Origin);
-
-		/// @brief Returns the current instance of a weapon being held by the controller
-		WeaponComponent* Weapon();
-
+		
+		//////////////////////////////////////////////////////////////////////
+		
 		/// @brief Returns the damage component instance
 		DamageComponent* Damage();
 
+		//////////////////////////////////////////////////////////////////////
+		
 		/// @brief Defined as eItemSlot in core module
 		enum ItemSlot
 		{
@@ -1027,9 +1031,21 @@ class Game // Native
 
 			Character // Causes bugs use with caution
 		};
+		
+		/// @brief Returns the current instance of the weapon being held by the player
+		WeaponComponent* Weapon();
+			
+		/// @brief Returns the ObjectID of the weapon being held by the player
+		objectid WeaponID();
+		
+		/// @brief Returns the ItemSlot index of the weapon being held by the player
+		ItemSlot WeaponSlot();
+	
+		/// @brief Applies the currently equipped item with the provided ObjectID
+		void ItemSlotApply(ItemSlot Slot, objectid ObjectID);
 
-		/// @brief Swaps the currently equipped item with the provided ObjectID
-		void SetItemSlot(ItemSlot Slot, objectid ObjectID);
+		/// @brief Removes the currently equipped item
+		void ItemSlotRemove(ItemSlot Slot);
 
 		/// @brief Returns the ObjectID of the equipped Primary
 		objectid PrimaryID();
@@ -1061,17 +1077,17 @@ class Game // Native
 	// Controller & Entity Functions
 	/////////////////////////////////////////////
 
-	/// @brief Get the local PlayerController instance
+	/// @brief Get the local Player instance
 	PlayerController* GetLocalPlayer();
 
-	/// @brief Get the local view PlayerController instance
-	/// (if the local PlayerController is spectating an other PlayerController this will return the spectated PlayerController)
+	/// @brief Get the local view Player instance
+	/// (if the local Player is spectating an other Player this will return the spectated Player)
 	PlayerController* GetViewPlayer();
 
-	/// @brief Get PlayerController instance by PlayerID
+	/// @brief Get Player instance by PlayerID
 	PlayerController* GetPlayerByID(uint64 PlayerID);
 
-	/// @brief Returns an array of PlayerController instances
+	/// @brief Returns an array of Player instances
 	Array<PlayerController*> GetPlayerList();
 
 	/// @brief Returns an array of AI Entity instances
@@ -1097,9 +1113,9 @@ class Game // Native
 	/// @return Returns an Entity instance of an Object
 	Entity* GetEntity(objectid ObjectID);
 
-	/// @brief Create an Entity from external addons
+	/// @brief Create an Entity from addons
 	/// @return Returns a duplicated entity
-	Entity* CreateExternalEntity(objectid ObjectID);
+	Entity* CreateEntityAddon(objectid ObjectID);
 
 	/////////////////////////////////////////////
 
@@ -1123,8 +1139,17 @@ class Game // Native
 	/// @return Is the current player in the editor?
 	bool IsEditor();
 
-	/// @return Is the hud disabled?
-	bool IsHudEnabled();
+	/// @return Is the current player in the context menu?
+	bool IsContext();
+
+	/// @return Is the in-game UI disabled?
+	bool IsUIDisabled();
+
+	/// @brief Set the in-game ui disabled state.
+	void SetIsUIDisabled(bool IsDisabled);
+
+	/// @return Is the UI disabled by the user? (ToggleHideUI)
+	bool IsUIDisabledUser();
 
 	/////////////////////////////////////////////
 
@@ -1372,6 +1397,9 @@ void AddCallback_Update(function Func);
 /// @param ObjectID | WorldID (eMap in core module)
 void AddCallback_RoundStart(function Func);
 
+/// @brief Called at Round End
+void AddCallback_RoundEnd(function Func);
+
 /// @brief Called when a bullet hits the ground
 /// @param Vector3 | Start
 /// @param Vector3 | End
@@ -1450,16 +1478,25 @@ void AddCallback_Ping(function Func);
 /// @brief Called when a Gadget is spawned
 /// @param PlayerController  | Instigator
 /// @param Entity            | Gadget
+/// @param ObjectID          | Gadget ObjectID
 void AddCallback_GadgetSpawned(function Func);
+
+/// @brief Called when a Gadget is picked up
+/// @param PlayerController  | Instigator
+/// @param Entity            | Gadget
+/// @param ObjectID          | Gadget ObjectID
+void AddCallback_GadgetPickup(function Func);
 
 /// @brief Called when a Gadget has stuck to a wall
 /// @param PlayerController  | Instigator
 /// @param Entity            | Gadget
+/// @param ObjectID          | Gadget ObjectID
 void AddCallback_GadgetStickied(function Func);
 
 /// @brief Called when a Gadget has blown up
 /// @param PlayerController  | Instigator
 /// @param Entity            | Gadget
+/// @param ObjectID          | Gadget ObjectID
 void AddCallback_GadgetDetonated(function Func);
 
 /////////////////////////////////////////////

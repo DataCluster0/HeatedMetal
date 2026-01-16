@@ -9,17 +9,17 @@
     ]
   },
   {
-    "ID": 13,
-    "ImageID": "0x5F1983C05",
-    "Title": "Patch Notes ( v0.3.7 )",
-    "Subtitle": "v0.3.7",
-    "Description": [
-      "* Bug Fixes.",
-      "* Optimizations",
-      "+ New Quirrel Functions.",
-
-      "",
-      "Check latest GitHub release for more details."
-    ]
-  }
+  "ID": 14,
+  "ImageID": "0x5F1983C05",
+  "Title": "Patch Notes ( v0.4.0 )",
+  "Subtitle": "v0.4.0",
+  "Description": [
+    "* Fixed crashes.",
+    "* Improved stability.",
+    "+ Added Arctic.",
+    "+ New Quirrel functions & callbacks.",
+    "",
+    "Check latest GitHub release for full details."
+  ]
+}
 ]

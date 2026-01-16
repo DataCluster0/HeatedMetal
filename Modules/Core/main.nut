@@ -27,7 +27,7 @@ Init()
 
 RegisterModuleImpl("Core", CoreImpl)
 
-// Use RegisterModule(Name, Table) to register functions this helper is globaly defined
+// Use RegisterModule(Name, Table) to register functions this helper is globally defined
 
 // Use Core to access these functions
 // Example : Core.TeamWin(eTeam.A)
