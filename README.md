@@ -47,26 +47,12 @@
 
 # Features
 Full extended scripting language (***Quarrel***)
-Multi-pick for all operators
-# Enhanced Main Menu
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/MainMenu.gif" style="width: 500px !important; height: 300px !important;" >
 
 <summary><h2>Unrestricted Items</h2></summary>
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CharacterHeadgear.gif" style="width: 500px !important; height: 300px !important;" >
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CharacterUniform.gif" style="width: 500px !important; height: 300px !important;" >
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponAttachments.png" style="width: 500px !important; height: 250px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponAttachments.gif" style="width: 600px !important; height: 300px !important;" >
 
 <summary><h2>Map Editor</h2></summary>
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/EditorModes.gif" style="width: 500px !important; height: 300px !important;" >
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/EditorWorld.gif" style="width: 500px !important; height: 300px !important;" >
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/Editor.gif" style="width: 600px !important; height: 300px !important;" >
 
-<summary><h2>Restored Content</h2></summary>
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CutContent1.png" style="width: 500px !important; height: 200px !important;" >
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/CutContent2.png" style="width: 500px !important; height: 200px !important;" >
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/RecruitUniforms.png" style="width: 500px !important; height: 250px !important;" >
-
-<summary><h2>Custom Features</h2></summary>
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/OperatorAlbumATK.png" style="width: 500px !important; height: 300px !important;" >
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/OperatorAlbumDEF.png" style="width: 500px !important; height: 300px !important;" >
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponAttachmentSkins.gif" style="width: 500px !important; height: 300px !important;" >
-<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponInspect.gif" style="width: 500px !important; height: 300px !important;" >
+<summary><h2>Other Features</h2></summary>
+<img src="https://github.com/DataCluster0/HeatedMetal/blob/main/Resources/WeaponInspect.gif" style="width: 600px !important; height: 300px !important;" >
