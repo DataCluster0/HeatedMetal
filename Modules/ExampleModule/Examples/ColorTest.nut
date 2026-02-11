@@ -9,29 +9,35 @@ local math = require("math")
 
 local LineThickness = 1.0
 
-local AnimationDuration = 4.0 // Animation duration in seconds
+local AnimationDuration = 4.0 // seconds
 local HalfAnimationDuration = AnimationDuration / 2.0
-local AnimationProgress = 0.0 // Current progress of the animation (0.0 to 1.0)
+local AnimationProgress = 0.0
 
-// Create an instance of Timer and start it
 local AnimationTimer = Timer(true)
 local ColorTimer = Timer(true)
 local Radius = 10.0
 local ColorTime = 0.1
 
+local Enabled = false
+
 function Frame() {
+	if(!Enabled)
+		return;
+
 	local LocalPlayer = Game.GetLocalPlayer()
 
-	if (!LocalPlayer) return;
+	if (!LocalPlayer)
+		return;
 
-	local Entity = LocalPlayer.Entity()
+	local Entity = LocalPlayer.Entity
 
-	if (!Entity) return;
+	if (!Entity)
+		return;
 
 	local Color_ = Color.Rainbow(1.0)
 
-	local Origin = Entity.GetOrigin()
-	local EndOrigin = Origin + (Entity.GetForward() * 20.0)
+	local Origin = Entity.Origin
+	local EndOrigin = Origin + (LocalPlayer.Forward * 20.0)
 	local Angles = Vector3(0, 0, 0)
 
 	local elapsedTime = AnimationTimer.ElapsedTime()
@@ -52,7 +58,6 @@ function Frame() {
 
 	local Position = Origin + (EndOrigin - Origin) * progressFactor
 
-
 	Renderer.Text("Funny Text", EndOrigin, Color_)
 	Renderer.Line(Origin, EndOrigin, Color_, LineThickness)
 
@@ -62,13 +67,12 @@ function Frame() {
 		Game.CreateDust(Position, Radius, Color_)
 }
 
-function main() {
-	print("Hello World 2")
-	AddCallback_Update(Frame)
+AddCallback_Update(Frame);
+
+function Command(Args) {
+	Enabled = !Enabled;
 }
 
-main()
+RegisterCommand(Command, "TestColor", "", "Color Test");
 
-return {
-	main
-}
+return {}

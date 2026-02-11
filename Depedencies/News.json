@@ -10,14 +10,14 @@
   },
   {
   "ID": 14,
-  "ImageID": "0x5F1983C05",
-  "Title": "Patch Notes ( v0.4.0 )",
-  "Subtitle": "v0.4.0",
+  "ImageID": "0x1D103DF901",
+  "Title": "Patch Notes ( v0.4.2 )",
+  "Subtitle": "v0.4.2",
   "Description": [
-    "* Fixed crashes.",
-    "* Improved stability.",
-    "+ Added Arctic.",
-    "+ New Quirrel functions & callbacks.",
+    "* Crash Fixes.",
+    "* UI Changes.",
+    "* Stability Improvements.",
+    "And more.",
     "",
     "Check latest GitHub release for full details."
   ]

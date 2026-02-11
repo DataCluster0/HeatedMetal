@@ -5,7 +5,7 @@ local {
 
 
 function FireWeapon(WeaponComponent) {
-	local Ent = WeaponComponent.Entity()
+	local Ent = WeaponComponent.Entity
 	if (Ent)
 		Ent.RemoveFromWorld()
 }

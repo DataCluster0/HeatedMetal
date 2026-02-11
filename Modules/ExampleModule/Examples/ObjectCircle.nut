@@ -7,28 +7,24 @@ local math = require("math")
 
 local EntityTable = {};
 
-local MasterEntity = 0x1E600B8D1C7C7F0;
+local MasterEntity = 0x5D1947CD9;
 
-function Action(ent, data) {
+function Action(ent, data)
+{
 	if (!ent)
 		return
 
 	data.Rotation += 5.0
-	if (data.Rotation >= 360.0) data.Rotation = 0.0
-	ent.SetAngles(Vector3(0, 0, data.Rotation))
+	if (data.Rotation >= 360.0)
+		data.Rotation = 0.0
+
+	ent.Angles = Vector3(0, 0, data.Rotation)
 
 	if (!data.Target)
 		return
 
-	local dmg = data.Target.DamageComponent()
-	if (!dmg || dmg.GetHealth() <= 0) {
-		EntityTable.rawdelete(ent)
-		ent.RemoveFromWorld()
-		return
-	}
-
-	local srcPos = ent.GetOrigin()
-	local tgtPos = data.Target.GetOrigin()
+	local srcPos = ent.Origin
+	local tgtPos = data.Target.Origin
 	local delta = tgtPos - srcPos
 
 	if (delta.Length() > 0.0) {
@@ -36,13 +32,13 @@ function Action(ent, data) {
 		// use MoveSpeed to control chase speed
 		local newPos = srcPos + dir * data.MoveSpeed
 
-
 		if (srcPos.Distance(tgtPos) >= 4.0)
-			ent.SetOrigin(newPos)
+			ent.Origin = newPos
 	}
 }
 
-function BulletHit(start, end, normal, delta, entity) {
+function BulletHit(start, end, normal, delta, entity)
+{
 	if (!(entity in EntityTable))
 		return
 
@@ -58,7 +54,8 @@ function BulletHit(start, end, normal, delta, entity) {
 	}
 }
 
-function RespawnObjects() {
+function RespawnObjects()
+{
 	local father = Game.GetEntity(MasterEntity)
 	if (!father)
 		return
@@ -66,28 +63,24 @@ function RespawnObjects() {
 	local players = Game.GetPlayerList()
 	local radius = 100.0
 
-	for (local i = 0; i < players.len(); ++i) {
-		local plyEnt = players[i].Entity()
-		local dmg = plyEnt.DamageComponent()
-		if (!dmg || dmg.GetHealth() <= 0)
-			continue
+	for (local i = 0; i < players.len(); ++i)
+	{
+		local plyEnt = players[i].Entity
 
-		local pos = plyEnt.GetOrigin()
+		local pos = plyEnt.Origin
 		local count = 50
 
-		for (local n = 0; n < count; ++n) {
+		for (local n = 0; n < count; ++n)
+		{
 			local angle = (2 * math.PI / count) * n
 			local offsetX = math.cos(angle) * radius
 			local offsetZ = math.sin(angle) * radius
 
-			local toilet = father.Duplicate()
-			toilet.SetOrigin(Vector3(pos.x + offsetX, pos.y + offsetZ, pos.z))
-
-			//local destr = toilet.DestructionComponent()
-			//if (destr) destr.SetActive(false)
+			local duplicate = father.Duplicate()
+			duplicate.Origin = Vector3(pos.x + offsetX, pos.y + offsetZ, pos.z)
 
 			local health = RandomIntRange(100, 200)
-			EntityTable[toilet] <- {
+			EntityTable[duplicate] <- {
 				Target = plyEnt,
 				Rotation = RandomFloatRange(0, 360),
 				MoveSpeed = 0.05,
@@ -123,16 +116,15 @@ function Shutdown() {
 }
 
 function Main() {
-	if (!Game.IsHost()) // House
+	if (!Game.IsHost())
 		return;
 
-	//Sleep(4000.0)
+	Shutdown();
 
-	RespawnObjects()
+	RespawnObjects();
 
-	AddCallback_Update(EngineFrame)
-	//AddCallback_BulletHit(BulletHit)
-	AddCallback_Shutdown(Shutdown)
+	AddCallback_Update(EngineFrame);
+	AddCallback_Shutdown(Shutdown);
 
 	print("ObjectCircle Init")
 }

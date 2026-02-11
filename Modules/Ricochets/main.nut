@@ -2,11 +2,12 @@ local {
 	Game,
 	Renderer
 } = require("HeatedMetal")
+
 local math = require("math")
 
 const RICOCHET_COUNT = 2
 
-const RICOCHET_DEBUG = false
+const RICOCHET_DEBUG = true
 const DamageAmount = 10
 
 local BulletTable = {}
@@ -15,7 +16,7 @@ function DebugDraw() {
 	local BulletRemoveQueue = [];
 
 	foreach(ID, Bullet in BulletTable) {
-		Renderer.Line(Bullet.Start, Bullet.End, Bullet.BulletColor, 2.0)
+		Renderer.Line(Bullet.Start, Bullet.End, Bullet.BulletColor, 1.0)
 
 		if (Bullet.Timer.HasElapsed(5.0))
 			BulletRemoveQueue.append(ID)
@@ -28,6 +29,7 @@ function DebugDraw() {
 
 function Bullet(Start, End, Normal, Delta, Entity) {
 	local _Color = Color.Random();
+	_Color.A = 1;
 
 	if (RICOCHET_DEBUG) {
 		BulletTable[RandomInt(10000)] <- {
@@ -46,29 +48,29 @@ function Bullet(Start, End, Normal, Delta, Entity) {
 	for (local i = 0; i < RICOCHET_COUNT; i++) {
 		local Result = Game.Raycast(RicochetStart, RicochetStart + (RicochetDir * 1000.0), 1);
 
-		if (Result.DidHit()) {
-			foreach(Hit in Result.Hits()) {
+		if (Result.DidHit) {
+			foreach(Hit in Result.Hits) {
 
 				if (RICOCHET_DEBUG) {
 					BulletTable[RandomInt(10000)] <- {
 						Start = RicochetStart,
-						End = Hit.Origin(),
+						End = Hit.Origin,
 						BulletColor = _Color,
 						Timer = Timer(true)
 					}
 
-					Game.CreateDust(Hit.Origin(), 0.2, _Color)
+					Game.CreateDust(Hit.Origin, 0.2, _Color)
 				}
 
-				local Ent = Hit.Entity()
+				local Ent = Hit.Entity
 				if (Ent) {
 					Ent.TakeDamage(DamageAmount, eDamageType.Bullet);
 				}
 
 
-				local surfaceNormal = Hit.Normal()
+				local surfaceNormal = Hit.Normal
 
-				RicochetStart = Hit.Origin() + (surfaceNormal * 0.1)
+				RicochetStart = Hit.Origin + (surfaceNormal * 0.1)
 
 				local dotProduct = RicochetDir.Dot(surfaceNormal)
 				RicochetDir = RicochetDir - (surfaceNormal * (2.0 * dotProduct))
@@ -83,7 +85,8 @@ function Shutdown() {
 }
 
 function Main(WorldID) {
-	if (!Game.IsHost()) return;
+	if (!Game.IsHost())
+		return;
 
 	print("Ricoshets init")
 

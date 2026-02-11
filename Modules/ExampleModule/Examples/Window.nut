@@ -83,8 +83,6 @@ function CreateLayout() {
 		})
 	}
 
-	////////////////////////////////////////////
-
 	/////////////////////////////////////////
 
 	Tab.SeparatorText("Trees")
@@ -110,12 +108,11 @@ function CreateErrors() {
 		Tab.Toggle("Invalid arg size", false, function() {})
 
 		Tab.Button("Runtime Error", function() {
-			Game.GetEntity(0x0).Name()
+			Game.GetEntity(0x0).Name
 		});
 	}
 
 }
-
 
 function CreateProperties() {
 	local Tab = Window.Tab("Properties")
@@ -124,8 +121,8 @@ function CreateProperties() {
 	local TextSize = Tab.Text("Size : X " + Window.Size.x + " Y " + Window.Size.y);
 
 	Tab.Button("Update Text", function() {
-		TextPos.SetText("Position : X " + Window.Position.x + " Y " + Window.Position.y);
-		TextSize.SetText("Size : X " + Window.Size.x + " Y " + Window.Size.y);
+		TextPos.Text = "Position : X " + Window.Position.x + " Y " + Window.Position.y;
+		TextSize.Text = "Size : X " + Window.Size.x + " Y " + Window.Size.y;
 	});
 
 	Tab.Separator();
@@ -135,11 +132,11 @@ function CreateProperties() {
 	})
 
 	Tab.Button("Move to center", function() {
-		Window.SetPosition((Renderer.DisplaySize() - Window.Size) * 0.5);
+		Window.Position = (Renderer.DisplaySize() - Window.Size) * 0.5;
 	});
 
 	Tab.Button("Half the size", function() {
-		Window.SetSize(Window.Size * 0.5);
+		Window.Size = Window.Size * 0.5;
 	});
 }
 
@@ -160,15 +157,11 @@ function CreateFlags() {
 		Window.NoScrollBar = NewValue;
 	});
 
-
 	Tab.Toggle("Auto Resize", false, function(NewValue) {
 		Window.AutoResize = NewValue;
 	});
 
-
-
 	Tab.SeparatorText("User Actions")
-
 
 	Tab.Toggle("No Resize", false, function(NewValue) {
 		Window.NoResize = NewValue;

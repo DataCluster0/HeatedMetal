@@ -170,9 +170,7 @@ function RoundStart(WorldID) {
 	// Move up hidden floor
 	local FloorBase = Game.GetEntity(0x118517D59E);
 	if (FloorBase)
-		FloorBase.SetOrigin(Vector3(0.0, 0.0, 0.2)); // Set the initial height based on the first floor
-
-
+		FloorBase.Origin = Vector3(0.0, 0.0, 0.2); // Set the initial height based on the first floor
 
 	m_Timer.Start();
 	stopTimer.Start();

@@ -151,7 +151,7 @@ class Timer
 	bool HasElapsed(float time);
 };
 
-/// @brief know what you are doing!!!!
+/// @brief You should know how to use this otherwise don't
 class Pointer
 {
 	/// @brief Read/Write a boolean value.
@@ -222,15 +222,6 @@ class Pointer
 // Modules, Classes, Functions
 /////////////////////////////////////////////
 
-// Globals
-
-/// @brief Yield (use for while loops)
-void Yield();
-
-/// @param MilliSeconds
-/// @return did sleep
-bool Sleep(uint32 MilliSeconds);
-
 /* KeyNames
 0 1 2 3 4 5 6 7 8 9 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 - = , . ; / ` [ \ ] ' F1 F2 F3 F4 F5 F6 F7 F8 F9 F10 F11 F12
@@ -239,6 +230,10 @@ RightAlt LeftAlt RightCtrl LeftCtrl RightMouse LeftMouse
 MiddleMouse RightShift LeftShift NumLock Pageup Pagedown
 Pause ScrollLock Shift Space Tab Up Mouse4 Mouse5
 */
+
+/// @param MilliSeconds
+/// @return did sleep
+bool Sleep(uint32 MilliSeconds);
 
 /// @brief Check if the key is was pressed.
 /// @return Was the key pressed
@@ -259,7 +254,7 @@ bool RegisterKeybind(string KeyName, function Callback);
 /// @param Array<String> | Arguments
 bool RegisterCommand(function Callback, string Name, string Arguments, string Description);
 
-/// @return Heated Metal version string (Ex: 0.1.8)
+/// @return Heated Metal version string (Ex: 0.4.0)
 string HMVersion();
 
 /// @return Heated Metal version numbers.
@@ -319,6 +314,12 @@ class Renderer // SDK Native
 	/// @brief Returns the current display size as a Vector2.
 	Vector2 DisplaySize();
 
+	/// @brief Returns the current mouse display coordinates.
+	Vector2 MousePos();
+
+	/// @brief Returns direction vector from the specified screen coordinates
+	Vector3 ScreenToWorld(Vector2 Screen);
+
 	/// @brief Calculates alpha value based on distance.
 	float DistanceToAlpha(float Distance, float MaxDistance, float MinAlpha = 25.0, float MaxAlpha = 255.0);
 
@@ -367,13 +368,10 @@ class Renderer // SDK Native
 	class ElementText : Element
 	{
 		/// @brief Current text.
-		const string Text;
+		string Text;
 
 		/// @brief What color is the text.
 		Color Color;
-
-		/// @brief Update text
-		void SetText(string Text);
 	};
 
 	class Button : Element
@@ -388,8 +386,8 @@ class Renderer // SDK Native
 		const int32 Value;
 
 		/// @brief Slider Min/Max
-		const int32 Min;
-		const int32 Max;
+		int32 Min;
+		int32 Max;
 	};
 
 	class SliderFloat : Element
@@ -398,8 +396,8 @@ class Renderer // SDK Native
 		const float Value;
 
 		/// @brief Slider Min/Max
-		const float Min;
-		const float Max;
+		float Min;
+		float Max;
 	};
 
 	class Gui : Element
@@ -443,22 +441,16 @@ class Renderer // SDK Native
 		/// @brief Create a tab element.
 		Gui* Tab(string Name);
 
-		/// @brief Resize the window.
-		void SetSize(Vector2 Size);
-
-		/// @brief Move the window to a position on the screen.
-		void SetPosition(Vector2 Position);
-
 		/////////////////////////////////////////////
 
 		/// @brief Background Alpha.
 		float Alpha = 1.0;
 
 		/// @brief Current window size.
-		const Vector2 Size;
+		Vector2 Size;
 
 		/// @brief Current window position.
-		const Vector2 Position;
+		Vector2 Position;
 
 		/////////////////////////////////////////////
 
@@ -515,11 +507,8 @@ class Renderer // SDK Native
 
 	class OverlayText : ElementOverlay
 	{	
-		/// @brief Update text
-		void SetText(string Text);
-
 		/// @brief What are we rendering?
-		const string Text;
+		string Text;
 
 		/// @brief How is the text?
 		float Scale = 1.0;
@@ -589,18 +578,17 @@ class Renderer // SDK Native
 		/// @brief Add a circle.
 		OverlayCircle* Circle(Vector2 Position, float Radius, int Segments);
 
-		/// @brief Add a triangle
-		OverlayTriangle* Triangle(Vector2 Position1, Vector2 Position2, Vector2 Position3);
-
 		/// @brief Add a Rectangle
 		OverlayRectangle* Rectangle(Vector2 Position, Vector2 Size, float Rounding);
+
+		/// @brief Add a triangle
+		OverlayTriangle* Triangle(Vector2 Position1, Vector2 Position2, Vector2 Position3);
 
 		/// @brief Add a Quad
 		OverlayQuad* Quad(Vector2 Position1, Vector2 Position2, Vector2 Position3, Vector2 Position4);
 	};
 
 	/////////////////////////////////////////////
-
 
 	/// @brief Creates a window instance.
 	/// Use Window.Active = true to enable the window.
@@ -628,294 +616,267 @@ class Game // Native
 	class Component : ManagedObject
 	{
 		/// @brief Returns the component name
-		string Name();
+		const string Name;
 
-		/// @brief Get the Components Owned Entity
-		/// @return Owner Entity
-		Entity* Entity();
+		/// @brief Owner Entity
+		const Entity* Entity;
 
-		/// @brief Get/Set the components state
-		bool GetActive();
-		void SetActive(bool Active);
+		/// @brief component state
+		bool Active;
 	};
 
 	class DamageComponent : Component
 	{
 		class DamageData
 		{
-			/// @brief Set/Get health threshold for low health.
-			void SetHealthLow(int32 Health);
-			int32 GetHealthLow();
+			/// @brief Health threshold for low health.
+			int32 HealthLow;
 		
-			/// @brief Set/Get health threshold for critical health.
-			void SetHealthCritical(int32 Health);
-			int32 GetHealthCritical();
+			/// @brief Health threshold for critical health.
+			int32 HealthCritical;
 
-			/// @brief Set/Get DBNO health amount
-			void SetHealthDBNO(int32 Health);
-			int32 GetHealthDBNO();
+			/// @brief DBNO health amount
+			int32 HealthDBNO;
 		
-			/// @brief Set/Get max health
-			void SetHealthMax(int32 Health);
-			int32 GetHealthMax();
+			/// @brief Max health
+			int32 HealthMax;
 		
-			/// @brief Set/Get how much extra health you can have
-			void SetHealthMaxExtra(int32 Health);
-			int32 GetHealthMaxExtra();
+			/// @brief How much extra health you can have
+			int32 HealthMaxExtra;
 
-			// Set/Get how much fall damage to take
-			void SetFallDamage(int32 Health);
-			int32 GetFallDamage();
+			// How much fall damage to take
+			int32 FallDamage;
 
 			///////////////////////////////
 			/// DBNO
 
-			// Set/Get maximum revives (-1 for infinite)
-			void SetMaxRevives(int32 Revives);
-			int32 GetMaxRevives();
+			// Maximum revives (-1 for infinite)
+			int32 MaxRevives;
 		
-			/// @brief Set/Get bleed out time (seconds)
-			void SetBleedoutTime(int32 Time);
-			int32 GetBleedoutTime();
+			/// @brief Bleed out time (seconds)
+			int32 BleedoutTime;
 		
-			/// @brief Set/Get bleed out pressure
-			void SetBleedoutPressure(float Multiplier);
-			float GetBleedoutPressure();
+			/// @brief Bleed out pressure
+			float BleedoutPressure;
 		
-			/// @brief Set/Get bleed out speed up
-			void SetBleedoutSpeedUp(float Multiplier);
-			float GetBleedoutSpeedUp();
+			/// @brief Bleed out speed up
+			float BleedoutSpeedUp;
 		
-			/// @brief Set/Get health percentage gain when revived
-			void SetRevivedHealth();
-			float GetRevivedHealth();
+			/// @brief Health percentage gain when revived
+			float RevivedHealth;
 
-			/// @brief Set/Get health percentage gain when revived via doc stim
-			void SetRevivedHealthDoc();
-			float GetRevivedHealthDoc();
+			/// @brief Health percentage gain when revived via doc stim
+			float RevivedHealthDoc;
 		
 			///////////////////////////////
 			/// Lethality (Damage Multipliers)
 
-			/// @brief Set/Get melee damage multiplier
-			void SetMeleeDamage(float Multiplier);
-			float GetMeleeDamage();
+			/// @brief Melee damage multiplier
+			float MeleeDamage;
 
-			/// @brief Set/Get explosion damage multiplier
-			void SetExplosionDamage(float Multiplier);
-			float GetExplosionDamage();
+			/// @brief Explosion damage multiplier
+			float ExplosionDamage;
 
 			///////////////////////////////
 			/// Toggles
 
-			/// @brief Set/Get if DBNO is enabled
-			void SetDBNO(bool Value);
-			bool GetDBNO();
+			/// @brief if DBNO is enabled
+			bool DBNO;
 
-			/// @brief Set/Get if extra health stacking is enabled
-			void SetExtraHealthStacking();
-			void GetExtraHealthStacking();
+			/// @brief if extra health stacking is enabled
+			bool ExtraHealthStacking;
 		};
 
-		/// @brief Set/Get health
-		int32 GetHealth();
-		void SetHealth(int32 Health);
+		/// @brief Current health
+		int32 Health;
 
-		/// @brief Get DamageData Instance (Global Settings)
-		DamageData *DamageData();
+		/// @brief DamageData Instance (Global Settings)
+		const DamageData *DamageData;
 	};
 
 	class WeaponComponent : Component
 	{
-		/// @brief Returns weapon data name (wip names most of the time)
-		string Name();
+		/// @brief Weapon data name (wip names most of the time)
+		const string Name;
 
-		/// @brief Returns true if the weapon is reloading
-		bool IsReloading();
+		/// @brief Is the weapon reloading?
+		const bool IsReloading;
 
-		/// @brief Set/Get the current clip count
-		uint32 GetAmmo();
-		void SetAmmo(uint32 Value);
+		/// @brief Current clip count
+		//uint32 Ammo;
+
+		/// @brief Current weapon rpm (how many bullets per second are we firing)
+		const float RPM;
 
 		class DamageWeaponData
 		{
-			/// @brief Set/Get Health Damage
-			uint32 GetDamage();
-			void SetDamage(uint32 Damage);
+			/// @brief How much damage will the bullet deal to entities with a damage component?
+			uint32 Damage;
 
-			/// @brief Set/Get Environmental Damage
-			uint32 GetDamageEnv();
-			void SetDamageEnv(uint32 Damage);
+			/// @brief How much damage to the environment will the bullet deal (Example: 0 the bullet will passthrough a single glass panel)
+			uint32 DamageEnv;
 		};
 
 		class AmmoWeaponData
 		{
 			/// @brief Should the clip remove ammo on firing a shot
-			void InfiniteClip(bool Input);
+			bool InfiniteClip;
 
 			/// @brief Should the ammo reverse remove ammo on reload
-			void InfiniteReserve(bool Input);
+			bool InfiniteReserve;
 
-			/// @brief Set/Get the RPM
-			uint32 GetFireRate();
-			void SetFireRate(uint32 RPM);
+			/// @brief How fast will the weapon fire?
+			uint32 FireRate;
 
-			/// @brief Set/Get the bullets per shot
-			uint32 GetBulletCount();
-			void SetBulletCount(uint32 Count);
+			/// @brief How many bullet will the gun fire at once?
+			uint32 BulletCount;
 
-			/// @brief Set/Get the distance in Meters before the bullet gets ignored
-			float GetBulletReach();
-			void SetBulletReach(float Range);
+			/// @brief At what distance will the bullets be ignored?
+			float BulletReach;
 
-			/// @brief Set/Get the Clip Max Capacity
-			uint32 GetClipCapacity();
-			void SetClipCapacity(uint32 Count);
+			/// @brief How much ammo does the clip have?
+			uint32 ClipCapacity;
 
-			/// @brief Set/Get the caliber
-			uint32 GetCaliber();
-			void SetCaliber(uint32 Caliber);
+			/// @brief What kind of damage to walls does the bullet do? (eCaliberID)
+			uint32 Caliber;
 		};
 
 		class AccuracyWeaponData
 		{
-			/// @brief Set/Get base accuracy
-			float GetBase();
-			void SetBase(float Value);
+			/// @brief Base accuracy
+			float Base;
 
-			/// @brief Set/Get Walk accuracy
-			float GetWalk();
-			void SetWalk(float Value);
+			/// @brief Walk accuracy
+			float Walk;
 
-			/// @brief Set/Get crouch accuracy
-			float GetCrouch();
-			void SetCrouch(float Value);
+			/// @brief Crouch accuracy
+			float Crouch;
 
-			/// @brief Set/Get prone accuracy
-			float GetProne();
-			void SetProne(float Value);
+			/// @brief Prone accuracy
+			float Prone;
 
-			/// @brief Set/Get aim accuracy
-			float GetAim();
-			void SetAim(float Value);
+			/// @brief Aim accuracy
+			float Aim;
 
-			/// @brief Set/Get Weapon fire accuracy
-			float GetFire();
-			void SetFire(float Value);
+			/// @brief Fire accuracy
+			float Fire;
 
-			/// @brief Set/Get fast recovery (Instant spread recovery)
-			bool GetFastRecovery();
-			void SetFastRecovery(bool Statement);
+			/// @brief Fast recovery (Instant spread recovery)
+			bool FastRecovery;
 		};
 
 		class AnimationWeaponData
 		{
-			/// @brief Set/Get Weapon draw speed
-			float GetDraw();
-			void SetDraw(float Value);
+			/// @brief Weapon draw speed
+			float Draw;
 
-			/// @brief Set/Get Weapon holster speed
-			float GetHolster();
-			void SetHolster(float Value);
+			/// @brief Weapon holster speed
+			float Holster;
 
-			/// @brief Set/Get Weapon aim speed during sprint
-			float GetSprintZoomIn();
-			void SetSprintZoomIn(float Value);
+			/// @brief Weapon aim speed during sprint
+			float SprintZoomIn;
 
-			/// @brief Set/Get Weapon aim speed
-			float GetZoomIn();
-			void SetZoomIn(float Value);
+			/// @brief Weapon aim speed
+			float ZoomIn;
 
-			/// @brief Set/Get Weapon de-aim speed
-			float GetZoomOut();
-			void SetZoomOut(float Value);
+			/// @brief Weapon de-aim speed
+			float ZoomOut;
 
-			/// @brief Set/Get Weapon manual reload speed
-			float GetReloadManual();
-			void SetReloadManual(float Value);
+			/// @brief Weapon manual reload speed
+			float ReloadManual;
 
-			/// @brief Set/Get Weapon automatic reload speed
-			float GetReloadAuto();
-			void SetReloadAuto(float Value);
+			/// @brief Weapon automatic reload speed
+			float ReloadAuto;
 		};
 
 		/// @brief Returns the Damage Data instance for the weapon
-		DamageWeaponData* GetDamageData();
+		const DamageWeaponData* DamageData;
 
 		/// @brief Returns the Ammo Data instance for the weapon
-		AmmoWeaponData* GetAmmoData();
+		const AmmoWeaponData* AmmoData;
 
 		/// @brief Returns the Accuracy Data instance for the weapon
-		AccuracyWeaponData* GetAccuracyData();
+		const AccuracyWeaponData* AccuracyData;
 
 		/// @brief Returns the Animation Data instance for the weapon
-		AnimationWeaponData* GetAnimationData();
+		const AnimationWeaponData* AnimationData;
 	};
 
 	class PhysicComponent : Component
 	{
-		/// @brief Set/Get Collision Tag (eCollisionTag)
-		uint32 GetCollisionTag();
-		void SetCollisionTag(uint32 Tag);
+		/// @brief What collision tag does this physic component use? (eCollisionTag)
+		uint32 CollisionTag;
 	};
 
 	class SpawnedGadgetComponent : Component
 	{
-		/// @brief Returns the owner of this gadget
-		PlayerController* Owner();
+		/// @brief Owner of this gadget
+		const PlayerController* Owner;
 
-		/// @brief Returns the gadget ObjectID
-		objectid GadgetID();
+		/// @brief Gadget ObjectID
+		const objectid GadgetID;
 	};
 
 	class Entity : ManagedObject
 	{
 		/// @brief Get the name of the entity
-		string Name();
+		const string Name;
 
 		/// @brief Check if the entity still exists and is not unloaded
-		bool IsValid();
+		const bool IsValid;
 
 		/// @brief Was the entity created from quirrel?
-		bool IsQuirrel();
+		const bool IsQuirrel;
 
 		/// @brief Is the entity a editor duplicate?
-		bool IsEditor();
+		const bool IsEditor;
 
 		/// @brief Is the entity a local?
-		bool IsLocal();
+		const bool IsLocal;
 
-		/// @brief Set/Get the entity World Origin
-		Vector3 GetOrigin();
-		void SetOrigin(Vector3 Origin);
+		/// @brief DeActivate/ReActivate all of the components of an entity
+		/// Use this to temporarily Disable entities
+		bool Active;
 
-		/// @brief Get the entity World Center Origin
-		Vector3 GetCenter();
+		/// @brief Hide all visuals
+		void SetIsHidden(bool IsHidden);
 
-		/// @brief Set/Get the entity Angles
-		Vector3 GetAngles();
-		void SetAngles(Vector3 Angles);
+		////////////////////////////////////////////////
 
-		/// @brief Set/Get the entity Scale
-		Vector3 GetScale();
-		void SetScale(Vector3 Scale);
+		/// @brief World Center Origin
+		const Vector3 Center;
 
-		/// @brief Set/Get the entity Min/Max
-		Vector3 GetMin();
-		Vector3 GetMax();
+		/// @brief World Origin
+		Vector3 Origin;
 
-		/// @brief Get the entity Up/Right/Forward vector
-		Vector3 GetRight();
-		Vector3 GetForward();
-		Vector3 GetUp();
+		/// @brief Angles
+		Vector3 Angles;
+
+		/// @brief Scale
+		Vector3 Scale;
+
+		////////////////////////////////////////////////
+
+		/// @brief entity Min/Max
+		const Vector3 Min;
+		const Vector3 Max;
+
+		/// @brief entity Up/Right/Forward vector
+		const Vector3 Right;
+		const Vector3 Forward;
+		const Vector3 Up;
 
 		/// @brief Gets the GLOBAL origin of the bone (returns entity origin if not found).
 		/// Enum can be found in the core module (eBone).
 		/// @param Bone | Index
 		Vector3 GetBoneOrigin(uint32 Bone);
 
+		////////////////////////////////////////////////
+
 		/// @brief Sets an outline of the entity (client side)
 		void SetOutline(Color Color);
+
+		////////////////////////////////////////////////
 
 		/// @brief Get a clone of this entity
 		/// @return Duplicated Entity
@@ -925,19 +886,18 @@ class Game // Native
 		/// @return Duplicated Entity
 		Entity* DuplicateSeed(uint64 Seed);
 
+		/// @brief Get a clone of this entity as an editor entity
+		/// @return Duplicated Editor Entity (Saved in world file)
+		Entity* DuplicateEditor();
+
+
 		/// @brief Add or Remove the entity from the world
 		/// @return Has the entity been Added/Removed
 		/// !!!Duplicated entities are entirely removed!!!
 		bool AddToWorld();
 		bool RemoveFromWorld();
 
-		/// @brief DeActivate/ReActivate all of the components of an entity
-		/// Use this to temporarily Disable entities
-		bool GetActive();
-		void SetActive(bool IsActive);
-
-		/// @brief Hide all visuals
-		void SetIsHidden(bool IsHidden);
+		////////////////////////////////////////////////
 
 		/// @brief Victim takes damage by amount and type (attribution).
 		void GiveDamage(int32 Amount, uint32 DamageType, objectid VictimID /*Entity*/);
@@ -966,48 +926,54 @@ class Game // Native
 		////////////////////////////////////////////////
 
 		/// @brief Returns the Damage Component if the entity has one
-		DamageComponent* DamageComponent();
+		const DamageComponent* DamageComponent;
 
 		/// @brief Returns the Weapon Component if the entity has one
 		/// Only returns on host and changes are updated every 5s
-		WeaponComponent* WeaponComponent();
+		const WeaponComponent* WeaponComponent;
 
 		/// @brief Returns the Destruction Component if the entity has one
 		/// Disable this to disable destruction
-		Component* DestructionComponent();
+		const Component* DestructionComponent;
 
 		/// @brief Returns the Physics Component if the entity has one
 		/// Disable this to disable Collision
-		PhysicComponent* PhysicComponent();
+		const PhysicComponent* PhysicComponent;
 
 		/// @brief Returns the Gadget Component if the entity has one
-		SpawnedGadgetComponent* GadgetComponent();
+		const SpawnedGadgetComponent* GadgetComponent;
 	};
 
 	class PlayerController
 	{
-		/// @brief Returns the name of the player
-		string Name();
+		/// @brief Name of the player
+		const string Name;
 
 		/// @details Use eTeam
-		/// @brief Returns the Team of the player
-		uint32 Team();
+		/// @brief Team of the player
+		const uint32 Team;
 
 		/// @details Use eAlliance
-		/// @brief Returns the Alliance of the player
-		uint32 Alliance();
+		/// @brief Alliance of the player
+		const uint32 Alliance;
 
-		/// @brief Returns the PlayerID of the player
-		uint64 PlayerID();
+		/// @brief PlayerID of the player
+		const uint64 PlayerID;
 
-		/// @brief Returns the spectated controller if spectating
-		PlayerController* Spectator();
+		/// @brief Spectated player if spectating
+		const PlayerController* Spectator;
 
-		/// @brief Returns the controller entity
-		Entity* Entity();
+		/// @brief Controlled entity
+		const Entity* Entity;
 
-		/// @brief Returns a forward vector of where the player is looking
-		Vector3 Forward();
+		/// @brief Forward vector of where the player is looking
+		const Vector3 Forward;
+
+		/// @brief Velocity vector of where the entity is going
+		const Vector3 Velocity;
+
+		/// @brief Mobility ( 100 baseline ) how fast is the base speed? (Resets after item swap)
+		uint32 Mobility;
 
 		/// @brief Sets the players entity origin
 		void SetOrigin(Vector3 Origin);
@@ -1015,7 +981,7 @@ class Game // Native
 		//////////////////////////////////////////////////////////////////////
 		
 		/// @brief Returns the damage component instance
-		DamageComponent* Damage();
+		const DamageComponent* DamageComponent;
 
 		//////////////////////////////////////////////////////////////////////
 		
@@ -1033,44 +999,48 @@ class Game // Native
 		};
 		
 		/// @brief Returns the current instance of the weapon being held by the player
-		WeaponComponent* Weapon();
-			
-		/// @brief Returns the ObjectID of the weapon being held by the player
-		objectid WeaponID();
-		
-		/// @brief Returns the ItemSlot index of the weapon being held by the player
-		ItemSlot WeaponSlot();
-	
+		const WeaponComponent* Weapon;
+
+		//////////////////////////////////////////////////////////////////////
+
 		/// @brief Applies the currently equipped item with the provided ObjectID
 		void ItemSlotApply(ItemSlot Slot, objectid ObjectID);
 
 		/// @brief Removes the currently equipped item
 		void ItemSlotRemove(ItemSlot Slot);
 
+		//////////////////////////////////////////////////////////////////////
+
+		/// @brief Returns the ItemSlot index of the weapon being held by the player
+		const ItemSlot WeaponSlot;
+
+		/// @brief Returns the ObjectID of the weapon being held by the player
+		const objectid WeaponID;
+		
 		/// @brief Returns the ObjectID of the equipped Primary
-		objectid PrimaryID();
+		const objectid PrimaryID;
 
 		/// @brief Returns the ObjectID of the equipped Secondary
-		objectid SecondaryID();
+		const objectid SecondaryID;
 
 		/// @brief Returns the ObjectID of the equipped Tertiary
-		objectid TertiaryID();
+		const objectid TertiaryID;
 
 		/// @brief Returns the ObjectID of the equipped Primary Gadget
-		objectid PrimaryGadgetID();
+		const objectid PrimaryGadgetID;
 
 		/// @brief Returns the ObjectID of the equipped Secondary Gadget
-		objectid SecondaryGadgetID();
+		const objectid SecondaryGadgetID;
 
 		/// @brief Returns the ObjectID of the equipped Headgear
-		objectid HeadgearID();
+		const objectid HeadgearID;
 
 		/// @brief Returns the ObjectID of the equipped Uniform
-		objectid UniformID();
+		const objectid UniformID;
 
 		/// @brief Returns the ObjectID of the character
 		/// enum eCharacter in the core module
-		objectid CharacterID();
+		const objectid CharacterID;
 	};
 
 	//////////////////////////////////////////////
@@ -1152,6 +1122,13 @@ class Game // Native
 	bool IsUIDisabledUser();
 
 	/////////////////////////////////////////////
+
+	/// @brief Is a custom map currently loaded?
+	bool IsCustomMap();
+
+	/// @brief Returns the currently loaded custom map name (World MetaData must be set)
+	/// @return string | Map Name
+	string GetCustomMap();
 
 	/// @brief Returns the ObjectID of the current World
 	uint64 GetWorld();
@@ -1241,29 +1218,29 @@ class Game // Native
 
 	class CastHit
 	{
-		/// @brief Get the hit origin
-		Vector3 Origin();
+		/// @brief Hit origin
+		const Vector3 Origin;
 
-		/// @brief Get the hit delta
-		float Delta();
+		/// @brief Hit delta
+		const float Delta;
 
-		/// @brief Get the hit normal
-		Vector3 Normal();
+		/// @brief Hit normal
+		const Vector3 Normal;
 
-		/// @brief Get the entity
-		Entity* Entity();
+		/// @brief Entity
+		const Entity* Entity;
 
-		/// @brief Get the Physic Component
-		PhysicComponent* Component();
+		/// @brief  Physic Component
+		const PhysicComponent* Component;
 	};
 
 	class RaycastResult
 	{
 		/// @brief Did the raycast hit anything?
-		bool DidHit();
+		const bool DidHit;
 
 		/// @brief Get the array of hits
-		Array<CastHit> Hits();
+		const Array<CastHit> Hits;
 	};
 
 	/// @brief Fires a raycast from and to the specified origin coordinates (Uses projectile filtering)
@@ -1281,25 +1258,21 @@ class Game // Native
 
 	class View
 	{
-		/// @brief Get camera Right
+		/// @brief Camera Right
 		/// @return Returns the right direction vector of the camera as a quaternion.
-		Quaternion Right();
+		const Quaternion Right;
 
-		/// @brief Get camera Up
-		/// @return Returns the up direction vector of the camera as a quaternion.
-		Quaternion Up();
+		/// @brief Camera Up
+		const Quaternion Up;
 
-		/// @brief  Get camera Forward
-		/// @return Returns the forward direction vector of the camera as a Vector4.
-		Vector4 Forward();
+		/// @brief Camera Forward
+		const Vector4 Forward;
 
-		/// @brief Get camera Origin
-		/// @return Returns the position of the camera in the world as a Vector4.
-		Vector4 Origin();
+		/// @brief Camera Origin
+		const Vector4 Origin;
 
-		/// @brief Get Camera Fov
-		/// @return Returns the field of view of the camera as a Vector2.
-		Vector2 Fov();
+		/// @brief Camera Fov
+		const Vector2 Fov;
 	};
 
 	/// @brief Returns the current view camera instance
@@ -1311,65 +1284,49 @@ class Game // Native
 	{
 		// Client Side
 
-		/// @brief Get/Set if fog is enabled
-		bool IsEnabled();
-		void SetIsEnabled(bool IsEnabled);
+		/// @brief Is the fog enabled?
+		bool IsEnabled;
 
-		/// @brief Get/Set sky lighting influence on fog
-		float GetSkyLightingPower();
-		void SetSkyLightingPower(float Power);
+		/// @brief Sky lighting influence on fog
+		float SkyLightingPower;
 
-		/// @brief Get/Set the distance at which fog reaches full intensity
-		float GetFullLightingDistance();
-		void SetFullLightingDistance(float Distance);
+		/// @brief The distance at which fog reaches full intensity
+		float FullLightingDistance;
 
-		/// @brief Get/Set fog density
-		float GetDensity();
-		void SetDensity(float Density);
+		/// @brief Fog density
+		float Density;
 
-		/// @brief Get/Set upper height limit of fog
-		float GetTop();
-		void SetTop(float Top);
+		/// @brief Upper height limit of fog
+		float Top;
 
-		/// @brief Get/Set lower height limit of fog
-		float GetBottom();
-		void SetBottom(float Bottom);
+		/// @brief Lower height limit of fog
+		float Bottom;
 
-		/// @brief Get/Set fog direction on X axis
-		float GetDirectionX();
-		void SetDirectionX(float Dir);
+		/// @brief Fog direction on X axis
+		float DirectionX;
 
-		/// @brief Get/Set fog direction on Z axis
-		float GetDirectionZ();
-		void SetDirectionZ(float Dir);
+		/// @brief Fog direction on Z axis
+		float DirectionZ;
 	};
 
 	class Skylight
 	{
-		// Client Side
+		/// @brief Suns lighting Intensity
+		float SunIntensity;
 
-		/// @brief Get/Set the suns lighting Intensity
-		float GetSunIntensity();
-		void SetSunIntensity(float Intensity);
+		/// @brief Skybox Intensity
+		float SkyboxIntensity;
 
-		/// @brief Get/Set the skybox Intensity
-		float GetSkyboxIntensity();
-		void SetSkyboxIntensity(float Intensity);
-
-		/// @brief Get/Set the Sun elevations Min/Max Intensity
+		/// @brief Sun elevations Min/Max Intensity
 		// (Min Controls the elevation Max acts as a hardlimit)
-		float GetSunElevationMin();
-		void SetSunElevationMin(float Min);
+		float SunElevationMin;
+		float SunElevationMax;
 
-		float GetSunElevationMax();
-		void SetSunElevationMax(float Max);
-
-		/// @brief Get/Set the sun Rotation
-		float GetSunRotation();
-		void SetSunRotation(float Rotation);
+		/// @brief Sun Rotation
+		float GetSunRotation;
 
 		// Get the Fog Settings
-		VolumetricFog GetVolumetricFog();
+		const VolumetricFog VolumetricFog;
 	};
 
 	/// @brief Returns the current skylight instance
@@ -1469,6 +1426,10 @@ void AddCallback_Prone(function Func);
 void AddCallback_Melee(function Func);
 void AddCallback_Interact(function Func);
 void AddCallback_AccessDrone(function Func);
+
+/// @brief Called when a player does a yellow ping
+/// @param PlayerController  | Instigator
+/// @param Vector3           | World Position
 void AddCallback_Ping(function Func);
 
 /////////////////////////////////////////////
